@@ -1,0 +1,515 @@
+.gscd {
+	height:calc(100vh - 100px);
+	width:100%; 
+}
+
+.gscd-category {
+    background-color: #C0C0C0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 5px;
+    padding: 10px 15px;
+	font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.gscd-container {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+}
+
+.gscd-container-header {
+    background-color: #d0d0d0;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px;
+    position: relative;
+}
+
+.gscd-container-header:hover .gscd-remove-btn {
+    opacity: 1;
+}
+
+.gscd-containertype {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 5px;
+    padding: 10px 15px;
+    transition: all 0.2s ease;
+}
+
+.gscd-containertype:active {
+    background-color: #d0e8ff;
+}
+
+.gscd-containertype:hover {
+    background-color: #e6f3ff;
+    border-color: #4a90e2;
+}
+
+.gscd-containertype.selected {
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
+}
+
+.gscd-datatype {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 5px;
+    padding: 10px 15px;
+    transition: all 0.2s ease;
+}
+
+.gscd-datatype:active {
+    background-color: #d0e8ff;
+}
+
+.gscd-datatype:hover {
+    background-color: #e6f3ff;
+    border-color: #4a90e2;
+}
+
+.gscd-datatype.selected {
+    background-color: #4a90e2;
+    border-color: #357abd;
+    color: white;
+}
+
+.gscd-datatypes {
+    background-color: #f4f4f4;
+    border-right: 1px solid #ddd;
+    flex-shrink: 0;
+    overflow-y: auto;
+    padding: 10px;
+    width: 250px;
+}
+
+.gscd-horizontal-container {
+    background-color: #f5f5f5;
+    border: 1px solid #666;
+    margin: 10px 0;
+}
+
+.gscd-horizontal-content {
+    display: flex;
+    gap: 10px;
+    min-height: 80px;
+    padding: 10px;
+}
+
+.gscd-layouteditor {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow-y: auto;
+    padding: 20px;
+    background: #fff;
+}
+
+.gscd-layouteditor-field {
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 1px solid #999;
+    cursor: move;
+    display: flex;
+    font-size: 14px;
+    height: 40px;
+    margin-bottom: 5px;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.gscd-layouteditor-field:hover {
+    background-color: #e6f3ff;
+    border-color: #4a90e2;
+}
+
+.gscd-layouteditor-field:hover .gscd-remove-btn {
+    opacity: 1;
+}
+
+.gscd-layouteditor-field:last-child {
+    margin-bottom: 0;
+}
+
+.gscd-layouteditor-section {
+    background-color: #fafafa;
+    border: 2px dashed #ccc;
+    margin-bottom: 20px;
+    min-height: 100px;
+}
+
+.gscd-layoutdata,
+.gscd-layoutpreview {
+    background: #f7faff;
+    border-left: 1px solid #ddd;
+    flex: 1 1 0;
+    min-width: 0;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.gscd-maintabbar {
+	background: #f0f0f0; 
+	border-bottom: 1px solid #ccc;
+	padding: 10px; 
+	text-align: center; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+.gscd-maintabbutton {
+	background: transparent;
+	border: none;
+	color: #6c757d;
+	cursor: pointer;
+	flex: 1;
+    min-width: 120px;
+	font-weight: 500;
+	outline: none;
+	padding: 6px 10px;
+	transition: all 0.2s ease;
+}
+.gscd-maintabbutton:hover {
+	background: #e9ecef;
+	color: #495057;
+}
+.gscd-maintabbutton.active {
+	background: grey;
+	color: white;
+	font-weight: 600;
+}
+
+.gscd-propertyeditor {
+    background: #f9f9f9;
+    border-left: 1px solid #ddd;
+    flex: 1 1 0;
+    min-width: 0;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.gscd-remove-btn {
+    color: #ff4444;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.2s ease;
+}
+
+.gscd-readonly {
+	background-color: #e0e0e0 !important; 
+	color: #6c757d;
+}
+
+.gscd-remove-btn:hover {
+    color: #cc0000;
+}
+
+.gscd-section-content {
+    min-height: 60px;
+    padding: 10px;
+}
+
+.gscd-section-header {
+    background-color: #e0e0e0;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+    padding: 10px;
+    position: relative;
+}
+
+.gscd-section-header:hover .gscd-remove-btn {
+    opacity: 1;
+}
+
+.gscd-section-heading {
+    background-color: #333;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 10px 0 5px 0;
+    padding: 10px 15px;
+    text-transform: uppercase;
+}
+
+.gscd-separator {
+    background-color: #ddd;
+    color: #666;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 10px 0 5px 0;
+    padding: 10px 15px;
+    text-transform: uppercase;
+}
+
+.gscd-tabbar {
+    display: none;
+}
+
+.gscd-tabs {
+    display: flex;
+    flex: 1;
+	height: 100%;
+	min-width: 0;
+}
+
+.gscd-title {
+    background-color: #333;
+    color: white;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+}
+
+.gscd-vertical-container {
+    background-color: #f5f5f5;
+    border: 1px solid #666;
+    flex: 1;
+    margin: 10px 0;
+}
+
+.gscd-vertical-content {
+    min-height: 80px;
+    padding: 10px;
+}
+
+/* Large Screen Layout - Show all sections side by side */
+@media (min-width: 1921px) {
+    .gscd-tabs {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .gscd-tabbar {
+        display: none;
+    }
+    
+    .gscd-layouteditor,
+    .gscd-propertyeditor,
+    .gscd-layoutdata,
+    .gscd-layoutpreview {
+        display: block !important;
+        flex: 1;
+        border-right: 1px solid #ddd;
+        min-width: 300px;
+        border-left: 1px solid #ddd;
+    }
+    
+    .gscd-layouteditor:last-child,
+    .gscd-propertyeditor:last-child,
+    .gscd-layoutdata:last-child,
+    .gscd-layoutpreview:last-child {
+        border-right: none;
+    }
+}
+
+/* Medium to Large Screens - Original tabbed layout */
+@media (max-width: 1920px) {
+    .gscd-tabs {
+        flex-direction: column;
+    }
+
+    .gscd-tabbar {
+        background: #f8f9fa;
+        display: flex;
+        flex-shrink: 0;
+        gap: 4px;
+        padding: 8px;
+        flex-wrap: wrap;
+    }
+
+    .gscd-tabbutton {
+        background: transparent;
+        border: none;
+        color: #6c757d;
+        cursor: pointer;
+        flex: 1;
+        min-width: 100px;
+        font-weight: 500;
+        outline: none;
+        padding: 6px 10px;
+        transition: all 0.2s ease;
+    }
+
+    .gscd-tabbutton:hover {
+        background: #e9ecef;
+        color: #495057;
+    }
+
+    .gscd-tabbutton.active {
+        background: grey;
+        color: white;
+        font-weight: 600;
+    }
+
+    .gscd-layouteditor,
+    .gscd-propertyeditor,
+    .gscd-layoutdata,
+    .gscd-layoutpreview {
+        border-left: none;
+        border-right: none;
+        display: none;
+        flex: 1;
+        overflow-y: auto;
+        width: 100% !important;
+    }
+
+    .gscd-layouteditor.active,
+    .gscd-propertyeditor.active,
+    .gscd-layoutdata.active,
+    .gscd-layoutpreview.active {
+        display: block;
+    }
+}
+
+/* Tablet breakpoint - Stack datatypes on top */
+@media (max-width: 1024px) {
+    .gscd-container {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .gscd-datatypes {
+        width: 100%;
+        max-height: 200px;
+        order: 2;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .gscd-tabs {
+        order: 1;
+        min-height: 400px;
+    }
+    
+    .gscd-horizontal-content {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+    .gscd {
+        height: calc(100vh - 80px);
+    }
+    
+    .gscd-title {
+        font-size: 12px;
+        padding: 8px;
+    }
+    
+    .gscd-maintabbar {
+        padding: 8px;
+        gap: 2px;
+    }
+    
+    .gscd-maintabbutton {
+        flex: 1 1 calc(50% - 2px);
+        min-width: auto;
+        padding: 8px 6px;
+        font-size: 12px;
+    }
+    
+    .gscd-tabbar {
+        padding: 6px;
+        gap: 2px;
+    }
+    
+    .gscd-tabbutton {
+        flex: 1 1 calc(50% - 2px);
+        min-width: auto;
+        padding: 6px 4px;
+        font-size: 11px;
+    }
+    
+    .gscd-datatypes {
+        max-height: 150px;
+        padding: 8px;
+    }
+    
+    .gscd-datatype,
+    .gscd-containertype {
+        padding: 8px 12px;
+        font-size: 12px;
+        margin-bottom: 3px;
+    }
+    
+    .gscd-section-heading {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+    
+    .gscd-layouteditor,
+    .gscd-propertyeditor,
+    .gscd-layoutdata,
+    .gscd-layoutpreview {
+        padding: 15px;
+    }
+    
+    .gscd-layouteditor-field {
+        height: 35px;
+        padding: 8px;
+        font-size: 12px;
+    }
+    
+    .gscd-section-header,
+    .gscd-container-header {
+        padding: 8px;
+        font-size: 12px;
+    }
+    
+    .gscd-remove-btn {
+        width: 18px;
+        height: 18px;
+        font-size: 14px;
+        right: 8px;
+    }
+}
+
+/* Very small mobile screens */
+@media (max-width: 480px) {
+    .gscd-maintabbutton {
+        flex: 1 1 100%;
+        margin-bottom: 2px;
+    }
+    
+    .gscd-tabbutton {
+        flex: 1 1 100%;
+        margin-bottom: 2px;
+    }
+    
+    .gscd-datatypes {
+        max-height: 120px;
+        padding: 6px;
+    }
+    
+    .gscd-horizontal-content {
+        padding: 6px;
+    }
+    
+    .gscd-vertical-content {
+        padding: 6px;
+    }
+}
