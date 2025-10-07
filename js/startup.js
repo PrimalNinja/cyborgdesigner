@@ -1595,28 +1595,6 @@ $(document).ready(function()
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
-				{ 
-					type: 'aigeneric', 
-					caption: 'Generic', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						
-						{ name: 'flavour', label: 'Flavour', value: 'claude', datatype: 'nativetextbox' },
-						{ name: 'apikey', label: 'API Key', value: '', datatype: 'nativetextbox' },
-						{ name: 'endpoint', label: 'Endpoint', value: 'https://api.anthropic.com/v1/messages', datatype: 'nativetextbox' },
-						{ name: 'model', label: 'Model', value: 'claude-3-5-sonnet-20241022', datatype: 'nativetextbox' },
-						{ name: 'parallel', label: 'Parallel', value: 'Y', datatype: 'nativetextbox' },
-						{ name: 'maxtokens', label: 'Max Tokens', value: '2000', datatype: 'nativetextbox' },
-						{ name: 'temperature', label: 'Temperature', value: '0.7', datatype: 'nativetextbox' },
-						{ name: 'proxy', label: 'Proxy', datatype: 'nativetextbox' },
-						
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
 				{ type: '--', caption: 'Controls', container: false, properties: [] },
 				{ 
 					type: 'codeeditor', 
