@@ -41,6 +41,13 @@ $(document).ready(function()
 		createReportLayout();
 	});
 
+	element('#gecd-maintabbar', '.gecd-aiorchestration').on('click', function() 
+	{
+		element('#gecd-maintabbar', '.gecd-maintabbutton').removeClass('active');
+		element('#gecd-maintabbar', '.gecd-aiorchestration').addClass('active');
+		createAIOrchestrationLayout();
+	});
+
 	var arrNativeDatatypes = [
 		{ 
 			type: 'nativetextbox', 
@@ -167,6 +174,7 @@ $(document).ready(function()
 			cbTransformer: function(objRaw_a) { return objRaw_a; },
 			target: strTarget,
 			datatypes: [
+				{ type: '--', caption: 'Controls', container: false, properties: [] },
 				{ 
 					type: 'heading', 
 					caption: 'Heading', 
@@ -482,6 +490,7 @@ $(document).ready(function()
 			cbTransformer: function(objRaw_a) { return objRaw_a; },
 			target: strTarget,
 			datatypes: [
+				{ type: '--', caption: 'Controls', container: false, properties: [] },
 				{ 
 					type: 'barcode', 
 					caption: 'Barcode', 
@@ -773,7 +782,7 @@ $(document).ready(function()
 						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
 						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativemultilinetextbox' },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
@@ -993,7 +1002,7 @@ $(document).ready(function()
 							label: 'Form Header',
 							children: [
 								{ id: getGUID('field-'), type: 'textbox', caption: 'Entity Name', label: 'Entity Name', name: 'ENTITYNAME', container: false },
-								{ id: getGUID('field-'), type: 'number', caption: 'Form Version', label: 'Form Version', name: 'FORMVERSION', container: false },
+								{ id: getGUID('field-'), type: 'number', caption: 'Form Version', label: 'Form Version', name: 'FORMVERSION', value: '1', container: false },
 								{ id: getGUID('field-'), type: 'textbox', caption: 'Code', label: 'Code', name: 'CODE', container: false },
 								{ id: getGUID('field-'), type: 'textbox', caption: 'Description', label: 'Description', name: 'DESCRIPTION', container: false },
 								{ id: getGUID('field-'), type: 'checkbox', caption: 'Is Enabled?', label: 'Is Enabled?', name: 'ISENABLED', container: false }
@@ -1012,7 +1021,7 @@ $(document).ready(function()
 							name: 'DATAHEADER',
 							label: 'Data Header',
 							children: [
-								{ id: getGUID('field-'), type: 'number', caption: 'Data Version', label: 'Data Version', name: 'DATAVERSION', container: false }
+								{ id: getGUID('field-'), type: 'number', caption: 'Data Version', label: 'Data Version', name: 'DATAVERSION', value: '1', container: false }
 							]
 						}
 					]
@@ -1049,6 +1058,7 @@ $(document).ready(function()
 			cbTransformer: function(objRaw_a) { return objRaw_a; },
 			target: strTarget,
 			datatypes: [
+				{ type: '--', caption: 'Menus', container: false, properties: [] },
 				{ 
 					type: 'menuitem', 
 					caption: 'Menu Item', 
@@ -1170,6 +1180,7 @@ $(document).ready(function()
 			cbTransformer: function(objRaw_a) { return objRaw_a; },
 			target: strTarget,
 			datatypes: [
+				{ type: '--', caption: 'Controls', container: false, properties: [] },
 				{ 
 					type: 'barcode', 
 					caption: 'Barcode', 
@@ -1248,7 +1259,7 @@ $(document).ready(function()
 					properties: [
 						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativemultilinetextbox' },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1448,7 +1459,7 @@ $(document).ready(function()
 							caption: 'Vertical Container',
 							children: [
 								{ id: getGUID('field-'), type: 'textbox', caption: 'Report Name', name: 'NAME', container: false },
-								{ id: getGUID('field-'), type: 'textbox', caption: 'Report Version', name: 'VERSION', container: false },
+								{ id: getGUID('field-'), type: 'textbox', caption: 'Report Version', name: 'VERSION', value: '1', container: false },
 								{ id: getGUID('field-'), type: 'textbox', caption: 'Code', name: 'CODE', container: false },
 								{ id: getGUID('field-'), type: 'textbox', caption: 'Description', name: 'DESCRIPTION', container: false }
 							]
@@ -1467,6 +1478,594 @@ $(document).ready(function()
 								{ id: getGUID('field-'), type: 'heading', caption: 'Report Title', name: 'TITLE', container: false },
 								{ id: getGUID('field-'), type: 'textbox', caption: 'Summary Text', name: 'SUMMARY', container: false },
 								{ id: getGUID('field-'), type: 'barchart', caption: 'Bar Chart', name: 'BARCHART', container: false }
+							]
+						}
+					]
+				}
+			]
+		});
+	}
+	
+	function createAIOrchestrationLayout()
+	{
+		var objCD = new cyborgDesigner(
+		{
+			cbElement: element,
+			cbDataRenderer: function(objRaw_a) { element(strTarget, '.gecd-layoutdata').html(JSON.stringify(objRaw_a)); },
+			cbPreviewRenderer: function(objRaw_a) { element(strTarget, '.gecd-layoutpreview').html(JSON.stringify(objRaw_a)); },
+			cbTransformer: function(objRaw_a) { return objRaw_a; },
+			target: strTarget,
+			datatypes: [
+				{ type: '--', caption: 'AI Agents', container: false, properties: [] },
+				{ 
+					type: 'aiclaude', 
+					caption: 'Claude', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', value: 'Claude', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', value: 'Claude', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						
+						{ name: 'flavour', label: 'Flavour', value: 'claude', datatype: 'nativetextbox' },
+						{ name: 'apikey', label: 'API Key', value: '', datatype: 'nativetextbox' },
+						{ name: 'endpoint', label: 'Endpoint', value: 'https://api.anthropic.com/v1/messages', datatype: 'nativetextbox' },
+						{ name: 'model', label: 'Model', value: 'claude-3-5-sonnet-20241022', datatype: 'nativetextbox' },
+						{ name: 'parallel', label: 'Parallel', value: 'Y', datatype: 'nativetextbox' },
+						{ name: 'maxtokens', label: 'Max Tokens', value: '2000', datatype: 'nativetextbox' },
+						{ name: 'temperature', label: 'Temperature', value: '0.7', datatype: 'nativetextbox' },
+						{ name: 'proxy', label: 'Proxy', datatype: 'nativetextbox' },
+						
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'aigemini', 
+					caption: 'Gemini', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', value: 'Gemini', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', value: 'Gemini', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						
+						{ name: 'flavour', label: 'Flavour', value: 'gemini', datatype: 'nativetextbox' },
+						{ name: 'apikey', label: 'API Key', value: '', datatype: 'nativetextbox' },
+						{ name: 'endpoint', label: 'Endpoint', value: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', datatype: 'nativetextbox' },
+						{ name: 'model', label: 'Model', value: 'gemini-1.5-flash', datatype: 'nativetextbox' },
+						{ name: 'parallel', label: 'Parallel', value: 'Y', datatype: 'nativetextbox' },
+						{ name: 'maxtokens', label: 'Max Tokens', value: '1000', datatype: 'nativetextbox' },
+						{ name: 'temperature', label: 'Temperature', value: '0.9', datatype: 'nativetextbox' },
+						{ name: 'proxy', label: 'Proxy', datatype: 'nativetextbox' },
+						
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'aigeneric', 
+					caption: 'Generic', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						
+						{ name: 'flavour', label: 'Flavour', value: 'claude', datatype: 'nativetextbox' },
+						{ name: 'apikey', label: 'API Key', value: '', datatype: 'nativetextbox' },
+						{ name: 'endpoint', label: 'Endpoint', value: 'https://api.anthropic.com/v1/messages', datatype: 'nativetextbox' },
+						{ name: 'model', label: 'Model', value: 'claude-3-5-sonnet-20241022', datatype: 'nativetextbox' },
+						{ name: 'parallel', label: 'Parallel', value: 'Y', datatype: 'nativetextbox' },
+						{ name: 'maxtokens', label: 'Max Tokens', value: '2000', datatype: 'nativetextbox' },
+						{ name: 'temperature', label: 'Temperature', value: '0.7', datatype: 'nativetextbox' },
+						{ name: 'proxy', label: 'Proxy', datatype: 'nativetextbox' },
+						
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ type: '--', caption: 'Transformers', container: false, properties: [] },
+				{ 
+					type: 'xfrm_speak', 
+					caption: 'Speak Transformer', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						
+						{ name: 'accent', label: 'Accent', datatype: 'nativetextbox' },
+						
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'xfrm_translate', 
+					caption: 'Translate Transformer', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						
+						{ name: 'provider', label: 'Provider', datatype: 'nativetextbox' },
+						{ name: 'language', label: 'Language', datatype: 'nativetextbox' },
+						
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'aigeneric', 
+					caption: 'Generic', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						
+						{ name: 'flavour', label: 'Flavour', value: 'claude', datatype: 'nativetextbox' },
+						{ name: 'apikey', label: 'API Key', value: '', datatype: 'nativetextbox' },
+						{ name: 'endpoint', label: 'Endpoint', value: 'https://api.anthropic.com/v1/messages', datatype: 'nativetextbox' },
+						{ name: 'model', label: 'Model', value: 'claude-3-5-sonnet-20241022', datatype: 'nativetextbox' },
+						{ name: 'parallel', label: 'Parallel', value: 'Y', datatype: 'nativetextbox' },
+						{ name: 'maxtokens', label: 'Max Tokens', value: '2000', datatype: 'nativetextbox' },
+						{ name: 'temperature', label: 'Temperature', value: '0.7', datatype: 'nativetextbox' },
+						{ name: 'proxy', label: 'Proxy', datatype: 'nativetextbox' },
+						
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ type: '--', caption: 'Controls', container: false, properties: [] },
+				{ 
+					type: 'codeeditor', 
+					caption: 'Code Editor', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'date', 
+					caption: 'Date', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'document', 
+					caption: 'Document', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'dropbox', 
+					caption: 'Drop Box', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+
+						{ name: 'values', label: 'Value List', datatype: [ 'nativelistoption' ] },
+						{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
+
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' }
+					]
+				},
+				{ 
+					type: 'html', 
+					caption: 'HTML', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'image', 
+					caption: 'Image', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'instructionaltext', 
+					caption: 'Instructional Text', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'list', 
+					caption: 'List', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+
+						{ name: 'value', label: 'Value', datatype: 'nativelistoption' },
+						{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
+
+						{ name: 'datasource', label: 'Data Source', datatype: 'nativetextbox' },
+						{ name: 'datafilter', label: 'Data Filter', datatype: 'nativetextbox' },
+						{ name: 'datafields', label: 'Data Fields', datatype: 'nativetextbox' },
+
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'metadata', 
+					caption: 'Meta Data', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'multilist', 
+					caption: 'Multi List', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+
+						{ name: 'values', label: 'Value List', datatype: [ 'nativelistoption' ] },
+						{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
+
+						{ name: 'datasource', label: 'Data Source', datatype: 'nativetextbox' },
+						{ name: 'datafilter', label: 'Data Filter', datatype: 'nativetextbox' },
+						{ name: 'datafields', label: 'Data Fields', datatype: 'nativetextbox' },
+
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'multilinetextbox', 
+					caption: 'Multiline Text', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativemultilinetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'number', 
+					caption: 'Number', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'password', 
+					caption: 'Password', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'relatedlinks', 
+					caption: 'Related Links', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'textbox', 
+					caption: 'Text', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'texthtml', 
+					caption: 'Text HTML', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'time', 
+					caption: 'Time', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'url', 
+					caption: 'URL', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'yesno', 
+					caption: 'Yes / No', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				}
+			],
+			containers: [
+				{ type: '--', caption: 'Containers', container: false, properties: [] },
+				{ 
+					type: 'horizontalcontainer', 
+					caption: 'Parallel Container', 
+					container: true,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'verticalcontainer', 
+					caption: 'Sequential Container', 
+					container: true,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ type: '--', caption: 'Sections', container: false, properties: [] },
+				{ 
+					type: 'layoutsection', 
+					caption: 'Orchestration Section', 
+					container: true,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				}
+			],
+			allowNativeDatatypes: false,
+			nativeDatatypes: arrNativeDatatypes,
+			layoutSections: [
+				{ 
+					id: getGUID('section-'), 
+					caption: 'Orchestration Header',
+					containers: [
+						{
+							id: getGUID('container-'),
+							type: 'verticalcontainer',
+							caption: 'Orchestration Header Container',
+							name: 'FORMHEADER',
+							label: 'Orchestration Header',
+							children: [
+								{ id: getGUID('field-'), type: 'number', caption: 'Orchestration Version', label: 'Orchestration Version', name: 'ORCHESTRATIONVERSION', value: '1', container: false },
+								{ id: getGUID('field-'), type: 'textbox', caption: 'Code', label: 'Code', name: 'CODE', container: false },
+								{ id: getGUID('field-'), type: 'textbox', caption: 'Description', label: 'Description', name: 'DESCRIPTION', container: false }
+							]
+						}
+					]
+				},
+				{ 
+					id: getGUID('section-'), 
+					caption: 'Orchestration Section',
+					containers: [
+						{
+							id: getGUID('container-'),
+							type: 'verticalcontainer',
+							caption: 'AI Agent Container',
+							name: 'AIAGENTS',
+							label: 'AI Agents',
+							children: [
+								{ id: getGUID('field-'), type: 'aiclaude', caption: 'Claude', label: 'Claude', name: 'AGENT_CLAUDE', value: '1', container: false }
+							]
+						}
+					]
+				},
+				{ 
+					id: getGUID('section-'), 
+					caption: 'Orchestration Section',
+					containers: [
+						{
+							id: getGUID('container-'),
+							type: 'verticalcontainer',
+							caption: 'Prompt',
+							children: [
+								{ id: getGUID('field-'), type: 'multilinetextbox', caption: 'Enter Text to Translate', label: 'Enter Text to Translate', name: 'TEXT', container: false }
+							]
+						},
+						{
+							id: getGUID('container-'),
+							type: 'verticalcontainer',
+							caption: 'Translate to Japanese',
+							children: [
+								{ id: getGUID('field-'), type: 'xfrm_translate', caption: 'Translate Transformer', label: 'Translate', name: 'TRANSLATE_XFRM', provider: 'claude', language: 'japanese', container: false }
+							]
+						},
+						{
+							id: getGUID('container-'),
+							type: 'verticalcontainer',
+							caption: 'Speak Japanese',
+							children: [
+								{ id: getGUID('field-'), type: 'xfrm_speak', caption: 'Speak Transformer', label: 'Speak', name: 'SPEAK_XFRM', accent: 'ja-jp', container: false }
 							]
 						}
 					]
