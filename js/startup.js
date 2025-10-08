@@ -1,7 +1,9 @@
-// CyborgDesigner v2025925
+// CyborgDesigner v20251009
 // (c) 2025 Cyborg Unicorn Pty Ltd.
 // This software is released under MIT License.
 
+// TODO:
+//	add the following Designers: Compound DataType (eg: Address), Dock
 $(document).ready(function() 
 {
 	var strTarget = '#gecd';
@@ -18,6 +20,13 @@ $(document).ready(function()
 		element('#gecd-maintabbar', '.gecd-maintabbutton').removeClass('active');
 		element('#gecd-maintabbar', '.gecd-dashboard').addClass('active');
 		createDashboardLayout();
+	});
+    
+	element('#gecd-maintabbar', '.gecd-database').on('click', function() 
+	{
+		element('#gecd-maintabbar', '.gecd-maintabbutton').removeClass('active');
+		element('#gecd-maintabbar', '.gecd-database').addClass('active');
+		createDatabaseLayout();
 	});
     
 	element('#gecd-maintabbar', '.gecd-form').on('click', function() 
@@ -54,15 +63,15 @@ $(document).ready(function()
 			caption: 'Native Text', 
 			container: false,
 			properties: [
-				{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-				{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+				{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+				{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 				{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-				{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+				{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 				{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 				{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-				{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+				{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 				{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 				{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 			]
@@ -72,16 +81,16 @@ $(document).ready(function()
 			caption: 'Native Multiline Text', 
 			container: false,
 			properties: [
-				{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-				{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+				{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+				{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 				{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-				{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+				{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 				{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 				{ name: 'lines', label: 'Total Lines', datatype: 'nativetextbox' },
 				{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-				{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+				{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 				{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 				{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 			]
@@ -91,22 +100,22 @@ $(document).ready(function()
 			caption: 'Native List', 
 			container: false,
 			properties: [
-				{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-				{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+				{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+				{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 				{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 				{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 				{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 
-				{ name: 'value', label: 'Value', datatype: 'nativelistoption' },
+				{ name: 'value', label: 'Value', datatype: 'nativelistoption', showinbuilder: true },
 				{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
 
 				{ name: 'datasource', label: 'Data Source', datatype: 'nativetextbox' },
 				{ name: 'datafilter', label: 'Data Filter', datatype: 'nativetextbox' },
 				{ name: 'datafields', label: 'Data Fields', datatype: 'nativetextbox' },
 
-				{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+				{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 				{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 				{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 			]
@@ -116,22 +125,22 @@ $(document).ready(function()
 			caption: 'Native Multi List', 
 			container: false,
 			properties: [
-				{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-				{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+				{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+				{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 				{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 				{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 				{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 
-				{ name: 'values', label: 'Value List', datatype: [ 'nativelistoption' ]},
+				{ name: 'values', label: 'Value List', datatype: [ 'nativelistoption' ], showinbuilder: true},
 				{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
 
 				{ name: 'datasource', label: 'Data Source', datatype: 'nativetextbox' },
 				{ name: 'datafilter', label: 'Data Filter', datatype: 'nativetextbox' },
 				{ name: 'datafields', label: 'Data Fields', datatype: 'nativetextbox' },
 
-				{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+				{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 				{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 				{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 			]
@@ -151,13 +160,13 @@ $(document).ready(function()
 			caption: 'Native Yes/No', 
 			container: false,
 			properties: [
-				{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-				{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+				{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+				{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 				{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-				{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-				{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+				{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
+				{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+				{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 				{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 				{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 			]
@@ -180,8 +189,8 @@ $(document).ready(function()
 					caption: 'Heading', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -195,8 +204,8 @@ $(document).ready(function()
 					caption: 'Horizontal Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -207,8 +216,8 @@ $(document).ready(function()
 					caption: 'Vertical Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -220,8 +229,8 @@ $(document).ready(function()
 					caption: 'Application Section', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -308,7 +317,7 @@ $(document).ready(function()
 					caption: 'Area Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					] 
 				},
@@ -317,7 +326,7 @@ $(document).ready(function()
 					caption: 'Bar Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -326,7 +335,7 @@ $(document).ready(function()
 					caption: 'Bubble Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -335,7 +344,7 @@ $(document).ready(function()
 					caption: 'Doughnut Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -344,7 +353,7 @@ $(document).ready(function()
 					caption: 'Line Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -353,7 +362,7 @@ $(document).ready(function()
 					caption: 'Pie Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -362,7 +371,7 @@ $(document).ready(function()
 					caption: 'Scatter Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -371,7 +380,7 @@ $(document).ready(function()
 					caption: 'Stacked Area Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -380,7 +389,7 @@ $(document).ready(function()
 					caption: 'Stacked Bar Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -390,7 +399,7 @@ $(document).ready(function()
 					caption: 'Heatmap', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					] 
 				},
@@ -399,7 +408,7 @@ $(document).ready(function()
 					caption: 'Treemap', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					] 
 				}
@@ -411,8 +420,8 @@ $(document).ready(function()
 					caption: 'Horizontal Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -423,8 +432,8 @@ $(document).ready(function()
 					caption: 'Vertical Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -436,8 +445,8 @@ $(document).ready(function()
 					caption: 'Dashboard Section', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -480,6 +489,123 @@ $(document).ready(function()
 		});
 	}
 
+	function createDatabaseLayout()
+	{
+		var objCD = new cyborgDesigner(
+		{
+			cbElement: element,
+			cbDataRenderer: function(objRaw_a) { element(strTarget, '.gecd-layoutdata').html(JSON.stringify(objRaw_a)); },
+			cbPreviewRenderer: function(objRaw_a) { element(strTarget, '.gecd-layoutpreview').html(JSON.stringify(objRaw_a)); },
+			cbTransformer: function(objRaw_a) { return objRaw_a; },
+			target: strTarget,
+			datatypes: [
+				{ type: '--', caption: 'DataTypes', container: false, properties: [] },
+				{ 
+					type: 'boolean', 
+					caption: 'Boolean', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'default', label: 'Default', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'length', label: 'Length', value: 1, datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true }
+					]
+				},
+				{ 
+					type: 'date', 
+					caption: 'Date', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'default', label: 'Default', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'length', label: 'Length', value: 10, datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true }
+					]
+				},
+				{ 
+					type: 'number', 
+					caption: 'Number', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'default', label: 'Default', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true }
+					]
+				},
+				{ 
+					type: 'text', 
+					caption: 'Text', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'default', label: 'Default', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true }
+					]
+				}
+			],
+			containers: [
+				{ type: '--', caption: 'Containers', container: false, properties: [] },
+				{ 
+					type: 'verticalcontainer', 
+					caption: 'Table', 
+					container: true,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ type: '--', caption: 'Sections', container: false, properties: [] },
+				{ 
+					type: 'layoutsection', 
+					caption: 'Database', 
+					container: true,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				}
+			],
+			allowNativeDatatypes: false,
+			nativeDatatypes: arrNativeDatatypes,
+			layoutSections: [
+				{ 
+					id: getGUID('section-'), 
+					caption: 'Database',
+					containers: [
+						{
+							id: getGUID('container-'),
+							type: 'verticalcontainer',
+							caption: 'User Table',
+							children: [
+								{ id: getGUID('field-'), type: 'text', caption: 'User ID', label: 'User ID', name: 'userid', container: false },
+								{ id: getGUID('field-'), type: 'text', caption: 'First Name', label: 'First Name', name: 'firstname', container: false },
+								{ id: getGUID('field-'), type: 'text', caption: 'Last Name', label: 'Last Name', name: 'lastname', container: false },
+								{ id: getGUID('field-'), type: 'boolean', caption: 'Is Enabled?', label: 'Is Enabled?', name: 'isenabled', container: false }
+							]
+						}
+					]
+				}
+			]
+		});
+	}
+
 	function createFormLayout()
 	{
 		var objCD = new cyborgDesigner(
@@ -496,15 +622,15 @@ $(document).ready(function()
 					caption: 'Barcode', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -514,8 +640,8 @@ $(document).ready(function()
 					caption: 'Button', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -526,15 +652,15 @@ $(document).ready(function()
 					caption: 'Chart', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -544,15 +670,15 @@ $(document).ready(function()
 					caption: 'Checkbox', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -562,15 +688,15 @@ $(document).ready(function()
 					caption: 'Code Editor', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -580,15 +706,15 @@ $(document).ready(function()
 					caption: 'Date', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -598,15 +724,15 @@ $(document).ready(function()
 					caption: 'Document', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -616,15 +742,15 @@ $(document).ready(function()
 					caption: 'GPS', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -634,8 +760,8 @@ $(document).ready(function()
 					caption: 'Heading', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -646,15 +772,15 @@ $(document).ready(function()
 					caption: 'HTML', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -664,14 +790,14 @@ $(document).ready(function()
 					caption: 'Image', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -681,8 +807,8 @@ $(document).ready(function()
 					caption: 'Instructional Text', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -693,15 +819,15 @@ $(document).ready(function()
 					caption: 'Label', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -711,22 +837,22 @@ $(document).ready(function()
 					caption: 'List', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 
-						{ name: 'value', label: 'Value', datatype: 'nativelistoption' },
+						{ name: 'value', label: 'Value', datatype: 'nativelistoption', showinbuilder: true },
 						{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
 
 						{ name: 'datasource', label: 'Data Source', datatype: 'nativetextbox' },
 						{ name: 'datafilter', label: 'Data Filter', datatype: 'nativetextbox' },
 						{ name: 'datafields', label: 'Data Fields', datatype: 'nativetextbox' },
 
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -736,15 +862,15 @@ $(document).ready(function()
 					caption: 'Meta Data', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -754,22 +880,22 @@ $(document).ready(function()
 					caption: 'Multi List', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 
-						{ name: 'values', label: 'Value List', datatype: [ 'nativelistoption' ] },
+						{ name: 'values', label: 'Value List', datatype: [ 'nativelistoption' ], showinbuilder: true },
 						{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
 
 						{ name: 'datasource', label: 'Data Source', datatype: 'nativetextbox' },
 						{ name: 'datafilter', label: 'Data Filter', datatype: 'nativetextbox' },
 						{ name: 'datafields', label: 'Data Fields', datatype: 'nativetextbox' },
 
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -779,15 +905,15 @@ $(document).ready(function()
 					caption: 'Multiline Text', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativemultilinetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativemultilinetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -797,15 +923,15 @@ $(document).ready(function()
 					caption: 'Number', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -815,15 +941,15 @@ $(document).ready(function()
 					caption: 'Password', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -833,15 +959,15 @@ $(document).ready(function()
 					caption: 'Related Links', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -851,8 +977,8 @@ $(document).ready(function()
 					caption: 'Spacer', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -863,15 +989,15 @@ $(document).ready(function()
 					caption: 'Text', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -881,15 +1007,15 @@ $(document).ready(function()
 					caption: 'Text HTML', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -899,15 +1025,15 @@ $(document).ready(function()
 					caption: 'Time', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -917,15 +1043,15 @@ $(document).ready(function()
 					caption: 'URL', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -935,13 +1061,13 @@ $(document).ready(function()
 					caption: 'Yes / No', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -954,8 +1080,8 @@ $(document).ready(function()
 					caption: 'Horizontal Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -966,8 +1092,8 @@ $(document).ready(function()
 					caption: 'Vertical Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -979,8 +1105,8 @@ $(document).ready(function()
 					caption: 'Form Section', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1064,8 +1190,8 @@ $(document).ready(function()
 					caption: 'Menu Item', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1076,9 +1202,9 @@ $(document).ready(function()
 					caption: 'Sub Menu', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'submenuname', label: 'Sub Menu Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'submenuname', label: 'Sub Menu Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1092,8 +1218,8 @@ $(document).ready(function()
 					// caption: 'Horizontal Container', 
 					// container: true,
 					// properties: [
-						// { name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						// { name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						// { name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						// { name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						// { name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						// { name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						// { name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1104,8 +1230,8 @@ $(document).ready(function()
 					caption: 'Menu', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1117,8 +1243,8 @@ $(document).ready(function()
 					caption: 'Menu Set', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1186,9 +1312,9 @@ $(document).ready(function()
 					caption: 'Barcode', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1199,9 +1325,9 @@ $(document).ready(function()
 					caption: 'Chart', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1212,7 +1338,7 @@ $(document).ready(function()
 					caption: 'Heading', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -1222,9 +1348,9 @@ $(document).ready(function()
 					caption: 'HTML', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1235,9 +1361,9 @@ $(document).ready(function()
 					caption: 'Image', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -1247,7 +1373,7 @@ $(document).ready(function()
 					caption: 'Instructional Text', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -1257,9 +1383,9 @@ $(document).ready(function()
 					caption: 'Multiline Text', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativemultilinetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativemultilinetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1270,9 +1396,9 @@ $(document).ready(function()
 					caption: 'Text', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1283,9 +1409,9 @@ $(document).ready(function()
 					caption: 'Text HTML', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1296,9 +1422,9 @@ $(document).ready(function()
 					caption: 'URL', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1310,7 +1436,7 @@ $(document).ready(function()
 					caption: 'Area Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					] 
 				},
@@ -1319,7 +1445,7 @@ $(document).ready(function()
 					caption: 'Bar Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -1328,7 +1454,7 @@ $(document).ready(function()
 					caption: 'Bubble Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -1337,7 +1463,7 @@ $(document).ready(function()
 					caption: 'Doughnut Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -1346,7 +1472,7 @@ $(document).ready(function()
 					caption: 'Line Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -1355,7 +1481,7 @@ $(document).ready(function()
 					caption: 'Pie Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -1364,7 +1490,7 @@ $(document).ready(function()
 					caption: 'Scatter Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -1373,7 +1499,7 @@ $(document).ready(function()
 					caption: 'Stacked Area Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -1382,7 +1508,7 @@ $(document).ready(function()
 					caption: 'Stacked Bar Chart', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -1392,7 +1518,7 @@ $(document).ready(function()
 					caption: 'Heatmap', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					] 
 				},
@@ -1401,7 +1527,7 @@ $(document).ready(function()
 					caption: 'Treemap', 
 					container: false, 
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					] 
 				}
@@ -1413,8 +1539,8 @@ $(document).ready(function()
 					caption: 'Horizontal Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1425,8 +1551,8 @@ $(document).ready(function()
 					caption: 'Vertical Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1438,8 +1564,8 @@ $(document).ready(function()
 					caption: 'Report Section', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1502,19 +1628,19 @@ $(document).ready(function()
 					caption: 'Claude', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', value: 'Claude', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', value: 'Claude', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', value: 'CLAUDE', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', value: 'Claude', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						
 						{ name: 'flavour', label: 'Flavour', value: 'claude', datatype: 'nativetextbox' },
 						{ name: 'apikey', label: 'API Key', value: '', datatype: 'nativetextbox' },
 						{ name: 'endpoint', label: 'Endpoint', value: 'https://api.anthropic.com/v1/messages', datatype: 'nativetextbox' },
-						{ name: 'model', label: 'Model', value: 'claude-3-5-sonnet-20241022', datatype: 'nativetextbox' },
-						{ name: 'parallel', label: 'Parallel', value: 'Y', datatype: 'nativetextbox' },
-						{ name: 'maxtokens', label: 'Max Tokens', value: '2000', datatype: 'nativetextbox' },
-						{ name: 'temperature', label: 'Temperature', value: '0.7', datatype: 'nativetextbox' },
-						{ name: 'proxy', label: 'Proxy', datatype: 'nativetextbox' },
+						{ name: 'model', label: 'Model', value: 'claude-3-5-sonnet-20241022', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'parallel', label: 'Parallel', value: 'yes', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'maxtokens', label: 'Max Tokens', value: '2000', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'temperature', label: 'Temperature', value: '0.7', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'proxy', label: 'Proxy', datatype: 'nativetextbox', showinbuilder: true },
 						
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -1524,18 +1650,18 @@ $(document).ready(function()
 					caption: 'Gemini', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', value: 'Gemini', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', value: 'Gemini', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', value: 'GEMINI', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', value: 'Gemini', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						
 						{ name: 'flavour', label: 'Flavour', value: 'gemini', datatype: 'nativetextbox' },
 						{ name: 'apikey', label: 'API Key', value: '', datatype: 'nativetextbox' },
 						{ name: 'endpoint', label: 'Endpoint', value: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', datatype: 'nativetextbox' },
-						{ name: 'model', label: 'Model', value: 'gemini-1.5-flash', datatype: 'nativetextbox' },
-						{ name: 'parallel', label: 'Parallel', value: 'Y', datatype: 'nativetextbox' },
-						{ name: 'maxtokens', label: 'Max Tokens', value: '1000', datatype: 'nativetextbox' },
-						{ name: 'temperature', label: 'Temperature', value: '0.9', datatype: 'nativetextbox' },
+						{ name: 'model', label: 'Model', value: 'gemini-1.5-flash', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'parallel', label: 'Parallel', value: 'yes', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'maxtokens', label: 'Max Tokens', value: '1000', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'temperature', label: 'Temperature', value: '0.9', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'proxy', label: 'Proxy', datatype: 'nativetextbox' },
 						
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1546,20 +1672,52 @@ $(document).ready(function()
 					caption: 'Generic', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						
 						{ name: 'flavour', label: 'Flavour', value: 'claude', datatype: 'nativetextbox' },
 						{ name: 'apikey', label: 'API Key', value: '', datatype: 'nativetextbox' },
 						{ name: 'endpoint', label: 'Endpoint', value: 'https://api.anthropic.com/v1/messages', datatype: 'nativetextbox' },
-						{ name: 'model', label: 'Model', value: 'claude-3-5-sonnet-20241022', datatype: 'nativetextbox' },
-						{ name: 'parallel', label: 'Parallel', value: 'Y', datatype: 'nativetextbox' },
-						{ name: 'maxtokens', label: 'Max Tokens', value: '2000', datatype: 'nativetextbox' },
-						{ name: 'temperature', label: 'Temperature', value: '0.7', datatype: 'nativetextbox' },
+						{ name: 'model', label: 'Model', value: 'claude-3-5-sonnet-20241022', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'parallel', label: 'Parallel', value: 'yes', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'maxtokens', label: 'Max Tokens', value: '2000', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'temperature', label: 'Temperature', value: '0.7', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'proxy', label: 'Proxy', datatype: 'nativetextbox' },
 						
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ type: '--', caption: 'Prompts', container: false, properties: [] },
+				{ 
+					type: 'dropbox', 
+					caption: 'Drop Box', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+
+						{ name: 'values', label: 'Value List', datatype: [ 'nativelistoption' ], showinbuilder: true },
+						{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
+
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
+						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
+					]
+				},
+				{ 
+					type: 'prompt', 
+					caption: 'Prompt', 
+					container: false,
+					properties: [
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
+
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
+
+						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
@@ -1569,12 +1727,12 @@ $(document).ready(function()
 					caption: 'Speak Transformer', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						
-						{ name: 'accent', label: 'Accent', datatype: 'nativetextbox' },
+						{ name: 'accent', label: 'Accent', datatype: 'nativetextbox', showinbuilder: true },
 						
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -1584,270 +1742,32 @@ $(document).ready(function()
 					caption: 'Translate Transformer', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						
-						{ name: 'provider', label: 'Provider', datatype: 'nativetextbox' },
-						{ name: 'language', label: 'Language', datatype: 'nativetextbox' },
+						{ name: 'provider', label: 'Provider', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'language', label: 'Language', datatype: 'nativetextbox', showinbuilder: true },
 						
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
 				},
 				{ type: '--', caption: 'Controls', container: false, properties: [] },
 				{ 
-					type: 'codeeditor', 
-					caption: 'Code Editor', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'date', 
-					caption: 'Date', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'document', 
-					caption: 'Document', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'dropbox', 
-					caption: 'Drop Box', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-
-						{ name: 'values', label: 'Value List', datatype: [ 'nativelistoption' ] },
-						{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
-
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' }
-					]
-				},
-				{ 
-					type: 'html', 
-					caption: 'HTML', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'image', 
-					caption: 'Image', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'instructionaltext', 
-					caption: 'Instructional Text', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'list', 
-					caption: 'List', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-
-						{ name: 'value', label: 'Value', datatype: 'nativelistoption' },
-						{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
-
-						{ name: 'datasource', label: 'Data Source', datatype: 'nativetextbox' },
-						{ name: 'datafilter', label: 'Data Filter', datatype: 'nativetextbox' },
-						{ name: 'datafields', label: 'Data Fields', datatype: 'nativetextbox' },
-
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'metadata', 
-					caption: 'Meta Data', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'multilist', 
-					caption: 'Multi List', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-
-						{ name: 'values', label: 'Value List', datatype: [ 'nativelistoption' ] },
-						{ name: 'options', label: 'Option List', datatype: [ 'nativelistoption' ] },
-
-						{ name: 'datasource', label: 'Data Source', datatype: 'nativetextbox' },
-						{ name: 'datafilter', label: 'Data Filter', datatype: 'nativetextbox' },
-						{ name: 'datafields', label: 'Data Fields', datatype: 'nativetextbox' },
-
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'multilinetextbox', 
-					caption: 'Multiline Text', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativemultilinetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
 					type: 'number', 
 					caption: 'Number', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'password', 
-					caption: 'Password', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'relatedlinks', 
-					caption: 'Related Links', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -1857,85 +1777,15 @@ $(document).ready(function()
 					caption: 'Text', 
 					container: false,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
+						{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
 						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'texthtml', 
-					caption: 'Text HTML', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'time', 
-					caption: 'Time', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'url', 
-					caption: 'URL', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'length', label: 'Length', datatype: 'nativetextbox' },
-						{ name: 'qty', label: 'Qty', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
-						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
-						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
-					]
-				},
-				{ 
-					type: 'yesno', 
-					caption: 'Yes / No', 
-					container: false,
-					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
-						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-						{ name: 'value', label: 'Value', datatype: 'nativetextbox' },
-						{ name: 'required', label: 'Required', datatype: 'nativeyesno' },
-						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno' },
-						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno' },
+						{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
+						{ name: 'searchable', label: 'Searchable', datatype: 'nativeyesno', showinbuilder: true },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
 					]
@@ -1948,8 +1798,8 @@ $(document).ready(function()
 					caption: 'Parallel Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1960,8 +1810,8 @@ $(document).ready(function()
 					caption: 'Sequential Container', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -1973,8 +1823,8 @@ $(document).ready(function()
 					caption: 'Orchestration Section', 
 					container: true,
 					properties: [
-						{ name: 'name', label: 'Name', datatype: 'nativetextbox' },
-						{ name: 'label', label: 'Label', datatype: 'nativetextbox' },
+						{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
+						{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 						{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
 						{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
 						{ name: 'metadata', label: 'Meta Data', datatype: 'nativemultilinetextbox' }
@@ -2027,7 +1877,7 @@ $(document).ready(function()
 							type: 'verticalcontainer',
 							caption: 'Prompt',
 							children: [
-								{ id: getGUID('field-'), type: 'multilinetextbox', caption: 'Enter Text to Translate', label: 'Enter Text to Translate', name: 'TEXT', container: false }
+								{ id: getGUID('field-'), type: 'prompt', caption: 'Enter Text to Translate', label: 'Enter Text to Translate', name: 'PROMPT', container: false }
 							]
 						},
 						{

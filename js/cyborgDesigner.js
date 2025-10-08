@@ -1,4 +1,4 @@
-// CyborgDesigner v2025925
+// CyborgDesigner v20251009
 // (c) 2025 Cyborg Unicorn Pty Ltd.
 // This software is released under MIT License.
 
@@ -53,10 +53,99 @@ function cyborgDesigner(objOptions_a)
 		}
 	}
 	
+	function buildDefaultDescription(objField_a) 
+	{
+		var arrParts = [];
+		var objSchema = findSchemaByType(objField_a.type);
+
+		if (objSchema && objSchema.properties) 
+		{
+			for (var intI = 0; intI < objSchema.properties.length; intI++) 
+			{
+				var objProp = objSchema.properties[intI];
+				if (objProp.showinbuilder && objField_a[objProp.name]) 
+				{
+					arrParts.push(objProp.label + ': ' + objField_a[objProp.name]);
+				}
+			}
+		}
+
+		return arrParts.join(' | ');
+	}
+
+	function createFieldFromDatatype(objDatatype_a) 
+	{
+		var objField = {
+			id: getGUID('field-'),
+			type: objDatatype_a.type,
+			caption: objDatatype_a.caption,
+			container: objDatatype_a.container || false
+		};
+		
+		// Extract default values from properties schema
+		if (objDatatype_a.properties) 
+		{
+			for (var intI = 0; intI < objDatatype_a.properties.length; intI++) 
+			{
+				var objProp = objDatatype_a.properties[intI];
+				if (objProp.value !== undefined) 
+				{
+					objField[objProp.name] = objProp.value;
+				}
+			}
+		}
+		
+		return objField;
+	}
+
 	function doNothing()
 	{
 	}
 	
+	function findSchemaByType(strType_a) 
+	{
+		var objResult = null;
+		var intI;
+		
+		for (intI = 0; intI < m_objOptions.datatypes.length; intI++) 
+		{
+			if (m_objOptions.datatypes[intI].type === strType_a) 
+			{
+				objResult = m_objOptions.datatypes[intI];
+				break;
+			}
+		}
+		
+		if (objResult === null)
+		{
+			if (m_objOptions.containers) 
+			{
+				for (intI = 0; intI < m_objOptions.containers.length; intI++) 
+				{
+					if (m_objOptions.containers[intI].type === strType_a) 
+					{
+						objResult = m_objOptions.containers[intI];
+						break;
+					}
+				}
+			}
+			
+			if (objResult === null)
+			{
+				for (intI = 0; intI < m_objOptions.nativeDatatypes.length; intI++) 
+				{
+					if (m_objOptions.nativeDatatypes[intI].type === strType_a) 
+					{
+						objResult = m_objOptions.nativeDatatypes[intI];
+						break;
+					}
+				}
+			}
+		}
+		
+		return objResult;
+	}
+
 	function isFunction(fn_a)
 	{
 		var getType = {};
@@ -908,6 +997,7 @@ function cyborgDesigner(objOptions_a)
 				{
 					strContainerHtml += '<div class="gecd-layouteditor-field gscd-layouteditor-field" draggable="true" data-field-id="' + objChild.id + '">' +
 										'<span>' + objChild.caption + '</span>' +
+										'<span style="font-size:0.85em; color:#666;">' + buildDefaultDescription(objChild) + '</span>' +
 										'<span class="gecd-remove-btn gscd-remove-btn" data-field-id="' + objChild.id + '">×</span>' +
 										'</div>';
 				}
@@ -1259,50 +1349,6 @@ function cyborgDesigner(objOptions_a)
 					break;
 				}
 			}
-			return objResult;
-		}
-
-		function findSchemaByType(strType_a) 
-		{
-			var objResult = null;
-			var intI;
-			
-			for (intI = 0; intI < m_objOptions.datatypes.length; intI++) 
-			{
-				if (m_objOptions.datatypes[intI].type === strType_a) 
-				{
-					objResult = m_objOptions.datatypes[intI];
-					break;
-				}
-			}
-			
-			if (objResult === null)
-			{
-				if (m_objOptions.containers) 
-				{
-					for (intI = 0; intI < m_objOptions.containers.length; intI++) 
-					{
-						if (m_objOptions.containers[intI].type === strType_a) 
-						{
-							objResult = m_objOptions.containers[intI];
-							break;
-						}
-					}
-				}
-				
-				if (objResult === null)
-				{
-					for (intI = 0; intI < m_objOptions.nativeDatatypes.length; intI++) 
-					{
-						if (m_objOptions.nativeDatatypes[intI].type === strType_a) 
-						{
-							objResult = m_objOptions.nativeDatatypes[intI];
-							break;
-						}
-					}
-				}
-			}
-			
 			return objResult;
 		}
 
@@ -1921,13 +1967,8 @@ function cyborgDesigner(objOptions_a)
 				objSourceDatatype = getNativeDatatypePropertiesByDragData(strData_a);
 				if (objSourceDatatype) 
 				{
-					objNewField = 
-					{
-						id: getGUID('field-'),
-						type: objSourceDatatype.type,
-						caption: objSourceDatatype.caption,
-						container: objSourceDatatype.container
-					};
+					objNewField = createFieldFromDatatype(objSourceDatatype);
+
 					objTarget_a.children = objTarget_a.children || [];
 					objTarget_a.children.push(objNewField);
 					renderLayout();
@@ -1939,13 +1980,8 @@ function cyborgDesigner(objOptions_a)
 				objSourceDatatype = getDatatypePropertiesByDragData(strData_a);
 				if (objSourceDatatype) 
 				{
-					objNewField = 
-					{
-						id: getGUID('field-'),
-						type: objSourceDatatype.type,
-						caption: objSourceDatatype.caption,
-						container: objSourceDatatype.container
-					};
+					objNewField = createFieldFromDatatype(objSourceDatatype);
+
 					objTarget_a.children = objTarget_a.children || [];
 					objTarget_a.children.push(objNewField);
 					renderLayout();
@@ -2659,12 +2695,12 @@ function cyborgDesigner(objOptions_a)
 			
 			if (objTarget) 
 			{
-				var targetIndex = -1;
+				var intTargetIndex = -1;
 				for (intI = 0; intI < objTarget.children.length; intI++) 
 				{
 					if (objTarget.children[intI].id === strTargetID_a) 
 					{					
-						targetIndex = intI; 
+						intTargetIndex = intI; 
 						break; 
 					}
 				}
@@ -2675,13 +2711,7 @@ function cyborgDesigner(objOptions_a)
 					var objSourceDatatype = getDatatypePropertiesByDragData(strData_a);
 					if (objSourceDatatype) 
 					{
-						objNewField = 
-						{						
-							id: getGUID('field-'), 
-							type: objSourceDatatype.type, 
-							caption: objSourceDatatype.caption, 
-							container: objSourceDatatype.container 
-						};
+						objNewField = createFieldFromDatatype(objSourceDatatype);
 					}
 				} 
 				else if (strData_a.startsWith(DRAG_NATIVE_DATATYPE)) 
@@ -2689,19 +2719,13 @@ function cyborgDesigner(objOptions_a)
 					var objSourceNative = getNativeDatatypePropertiesByDragData(strData_a);
 					if (objSourceNative) 
 					{
-						objNewField = 
-						{						
-							id: getGUID('field-'), 
-							type: objSourceNative.type, 
-							caption: objSourceNative.caption, 
-							container: objSourceNative.container 
-						};
+						objNewField = createFieldFromDatatype(objSourceNative);
 					}
 				}
 				
-				if (objNewField && targetIndex !== -1) 
+				if (objNewField && intTargetIndex !== -1) 
 				{
-					objTarget.children.splice(targetIndex, 0, objNewField);
+					objTarget.children.splice(intTargetIndex, 0, objNewField);
 					renderLayout();
 					blnResult = true;
 				}
