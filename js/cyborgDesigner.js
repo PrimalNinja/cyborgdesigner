@@ -1737,11 +1737,11 @@ function cyborgDesigner(objOptions_a)
 					{
 						if (this.checked) 
 						{
-							objSelected[strN] = "yes";
+							objSelected[strN] = true;
 						} 
 						else 
 						{
-							objSelected[strN] = "no";
+							objSelected[strN] = false;
 						}
 					} 
 					else 

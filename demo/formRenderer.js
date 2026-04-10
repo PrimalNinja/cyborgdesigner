@@ -78,6 +78,11 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         strResult = strResult.replace(/'/g, '&#39;');
         return strResult;
     }
+	
+	function toBoolean(strValue_a)
+	{
+		return (strValue_a === 'yes' || strValue_a === 'true' || strValue_a === '1' || strValue_a === true);
+	}
     
     function makeFieldClass(strContainerName_a, strFieldName_a)
     {
@@ -116,8 +121,8 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
         var strValue = objField_a.value || '';
         var strLabel = htmlEncode(objField_a.label || objField_a.caption);
-        var blnRequired = (objField_a.required === 'yes' || objField_a.required === true);
-        var blnReadOnly = (objField_a.readonly === 'yes' || objField_a.readonly === true) || m_blnReadOnly;
+        var blnRequired = objField_a.required;
+        var blnReadOnly = objField_a.readonly || m_blnReadOnly;
         var strClasses = objField_a.classes || '';
         
         strHTML += '<div class="gscr-form-group">';
@@ -131,7 +136,6 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         strHTML += '    value="' + htmlEncode(strValue) + '" ';
         strHTML += '    data-fieldname="' + htmlEncode(objField_a.name) + '" ';
         strHTML += '    data-containername="' + htmlEncode(strContainerName_a) + '" ';
-        if (blnRequired) { strHTML += '    data-required="yes" '; }
         if (blnReadOnly) { strHTML += '    readonly '; }
         if (objField_a.length) { strHTML += '    maxlength="' + objField_a.length + '" '; }
         strHTML += '  />';
@@ -146,8 +150,8 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
         var strValue = objField_a.value || '';
         var strLabel = htmlEncode(objField_a.label || objField_a.caption);
-        var blnRequired = (objField_a.required === 'yes' || objField_a.required === true);
-        var blnReadOnly = (objField_a.readonly === 'yes' || objField_a.readonly === true) || m_blnReadOnly;
+        var blnRequired = objField_a.required;
+        var blnReadOnly = objField_a.readonly || m_blnReadOnly;
         var strClasses = objField_a.classes || '';
         
         strHTML += '<div class="gscr-form-group">';
@@ -161,7 +165,6 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         strHTML += '    value="' + htmlEncode(strValue) + '" ';
         strHTML += '    data-fieldname="' + htmlEncode(objField_a.name) + '" ';
         strHTML += '    data-containername="' + htmlEncode(strContainerName_a) + '" ';
-        if (blnRequired) { strHTML += '    data-required="yes" '; }
         if (blnReadOnly) { strHTML += '    readonly '; }
         strHTML += '  />';
         strHTML += '</div>';
@@ -175,8 +178,8 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
         var strValue = objField_a.value || '';
         var strLabel = htmlEncode(objField_a.label || objField_a.caption);
-        var blnRequired = (objField_a.required === 'yes' || objField_a.required === true);
-        var blnReadOnly = (objField_a.readonly === 'yes' || objField_a.readonly === true) || m_blnReadOnly;
+        var blnRequired = objField_a.required;
+        var blnReadOnly = objField_a.readonly || m_blnReadOnly;
         var strClasses = objField_a.classes || '';
         
         strHTML += '<div class="gscr-form-group">';
@@ -190,7 +193,6 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         strHTML += '    value="' + htmlEncode(strValue) + '" ';
         strHTML += '    data-fieldname="' + htmlEncode(objField_a.name) + '" ';
         strHTML += '    data-containername="' + htmlEncode(strContainerName_a) + '" ';
-        if (blnRequired) { strHTML += '    data-required="yes" '; }
         if (blnReadOnly) { strHTML += '    readonly '; }
         strHTML += '  />';
         strHTML += '</div>';
@@ -203,10 +205,10 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         var strHTML = '';
         var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
         var strValue = objField_a.value || '';
-        var blnChecked = (strValue === 'yes' || strValue === 'true' || strValue === '1' || strValue === true);
+        var blnChecked = toBoolean(strValue);
         var strLabel = htmlEncode(objField_a.label || objField_a.caption);
-        var blnRequired = (objField_a.required === 'yes' || objField_a.required === true);
-        var blnReadOnly = (objField_a.readonly === 'yes' || objField_a.readonly === true) || m_blnReadOnly;
+        var blnRequired = objField_a.required;
+        var blnReadOnly = objField_a.readonly || m_blnReadOnly;
         var strClasses = objField_a.classes || '';
         
         strHTML += '<div class="gscr-form-group gscr-form-check">';
@@ -217,7 +219,6 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         strHTML += '    data-fieldname="' + htmlEncode(objField_a.name) + '" ';
         strHTML += '    data-containername="' + htmlEncode(strContainerName_a) + '" ';
         if (blnChecked) { strHTML += '    checked '; }
-        if (blnRequired) { strHTML += '    data-required="yes" '; }
         if (blnReadOnly) { strHTML += '    disabled '; }
         strHTML += '  />';
         strHTML += '  <label class="gscr-form-label gscr-form-check-label">';
@@ -235,8 +236,8 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
         var strValue = objField_a.value || '';
         var strLabel = htmlEncode(objField_a.label || objField_a.caption);
-        var blnRequired = (objField_a.required === 'yes' || objField_a.required === true);
-        var blnReadOnly = (objField_a.readonly === 'yes' || objField_a.readonly === true) || m_blnReadOnly;
+        var blnRequired = objField_a.required;
+        var blnReadOnly = objField_a.readonly || m_blnReadOnly;
         var strClasses = objField_a.classes || '';
         var intRows = objField_a.lines || 4;
         
@@ -251,7 +252,6 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         strHTML += '    rows="' + intRows + '" ';
         strHTML += '    data-fieldname="' + htmlEncode(objField_a.name) + '" ';
         strHTML += '    data-containername="' + htmlEncode(strContainerName_a) + '" ';
-        if (blnRequired) { strHTML += '    data-required="yes" '; }
         if (blnReadOnly) { strHTML += '    readonly '; }
         if (objField_a.length) { strHTML += '    maxlength="' + objField_a.length + '" '; }
         strHTML += '  >';
@@ -268,8 +268,8 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
 		var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
 		var strValue = objField_a.value || '';
 		var strLabel = htmlEncode(objField_a.label || objField_a.caption);
-		var blnRequired = (objField_a.required === 'yes' || objField_a.required === true);
-		var blnReadOnly = (objField_a.readonly === 'yes' || objField_a.readonly === true) || m_blnReadOnly;
+		var blnRequired = objField_a.required;
+		var blnReadOnly = objField_a.readonly || m_blnReadOnly;
 		var strClasses = objField_a.classes || '';
 		var arrOptions = objField_a.options || [];
 		
@@ -313,7 +313,6 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
 			strHTML += '    name="' + htmlEncode(getFullName(strContainerName_a, objField_a.name)) + '" ';
 			strHTML += '    data-fieldname="' + htmlEncode(objField_a.name) + '" ';
 			strHTML += '    data-containername="' + htmlEncode(strContainerName_a) + '" ';
-			if (blnRequired) { strHTML += '    data-required="yes" '; }
 			strHTML += '  >';
 			
 			// Add blank option
@@ -383,8 +382,8 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
         var strValue = objField_a.value || '';
         var strLabel = htmlEncode(objField_a.label || objField_a.caption);
-        var blnRequired = (objField_a.required === 'yes' || objField_a.required === true);
-        var blnReadOnly = (objField_a.readonly === 'yes' || objField_a.readonly === true) || m_blnReadOnly;
+        var blnRequired = objField_a.required;
+        var blnReadOnly = objField_a.readonly || m_blnReadOnly;
         var strClasses = objField_a.classes || '';
         
         strHTML += '<div class="gscr-form-group">';
@@ -398,7 +397,6 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         strHTML += '    value="' + htmlEncode(strValue) + '" ';
         strHTML += '    data-fieldname="' + htmlEncode(objField_a.name) + '" ';
         strHTML += '    data-containername="' + htmlEncode(strContainerName_a) + '" ';
-        if (blnRequired) { strHTML += '    data-required="yes" '; }
         if (blnReadOnly) { strHTML += '    readonly '; }
         strHTML += '  />';
         strHTML += '</div>';
@@ -412,8 +410,8 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
         var strValue = objField_a.value || '';
         var strLabel = htmlEncode(objField_a.label || objField_a.caption);
-        var blnRequired = (objField_a.required === 'yes' || objField_a.required === true);
-        var blnReadOnly = (objField_a.readonly === 'yes' || objField_a.readonly === true) || m_blnReadOnly;
+        var blnRequired = objField_a.required;
+        var blnReadOnly = objField_a.readonly || m_blnReadOnly;
         var strClasses = objField_a.classes || '';
         
         strHTML += '<div class="gscr-form-group">';
@@ -429,7 +427,6 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         strHTML += '      placeholder="latitude,longitude" ';
         strHTML += '      data-fieldname="' + htmlEncode(objField_a.name) + '" ';
         strHTML += '      data-containername="' + htmlEncode(strContainerName_a) + '" ';
-        if (blnRequired) { strHTML += '      data-required="yes" '; }
         if (blnReadOnly) { strHTML += '      readonly '; }
         strHTML += '    />';
         strHTML += '    <div class="gscr-input-group-append">';
@@ -447,8 +444,8 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
         var strValue = objField_a.value || '';
         var strLabel = htmlEncode(objField_a.label || objField_a.caption);
-        var blnRequired = (objField_a.required === 'yes' || objField_a.required === true);
-        var blnReadOnly = (objField_a.readonly === 'yes' || objField_a.readonly === true) || m_blnReadOnly;
+        var blnRequired = objField_a.required;
+        var blnReadOnly = objField_a.readonly || m_blnReadOnly;
         var strClasses = objField_a.classes || '';
         
         strHTML += '<div class="gscr-form-group">';
@@ -467,10 +464,6 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         strHTML += '      placeholder="File path..." ';
         strHTML += '      data-fieldname="' + htmlEncode(objField_a.name) + '" ';
         strHTML += '      data-containername="' + htmlEncode(strContainerName_a) + '" ';
-        if (blnRequired)
-        {
-            strHTML += '      data-required="yes" ';
-        }
         if (blnReadOnly)
         {
             strHTML += '      readonly ';
@@ -775,7 +768,7 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
 				
 				if (objField.fieldType === 'checkbox')
 				{
-					strValue = objElement.is(':checked') ? 'yes' : 'no';
+					strValue = objElement.is(':checked');
 				}
 				else
 				{
@@ -806,7 +799,7 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
 				{
 					if (objField.fieldType === 'checkbox')
 					{
-						objInput.prop('checked', (strValue === 'yes' || strValue === 'true' || strValue === '1'));
+						objInput.prop('checked', toBoolean(strValue));
 					}
 					else
 					{
@@ -819,55 +812,116 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
 		setDirty(false);
 	};
     
-    this.validate = function()
-    {
-        var arrErrors = [];
-        
-        // Check required fields
-        os.element('#' + m_strFormID, '.ge-input').each(function()
-        {
-            var strValue = '';
-            var objInput = os.element(this);
-            var strRequired = objInput.attr('data-required');
-            
-            if (strRequired !== 'yes')
-            {
-                return;
-            }
-            
-            if (objInput.attr('type') === 'checkbox')
-            {
-                // Checkboxes are always valid for now
-                return;
-            }
-            else
-            {
-                strValue = $.trim(objInput.val());
-            }
-            
-            if (strValue.length === 0)
-            {
-                var strFieldName = objInput.attr('data-fieldname');
-                var objParent = objInput.closest('.gscr-form-group');
-                var objLabel = objParent.find('.gscr-form-label').first();
-                var strLabel = objLabel.text().replace('*', '').trim();
-                
-                arrErrors.push(strLabel + ' is required.');
-            }
-        });
-        
-        // Custom validation callback
-        if (m_cbOnValidate && typeof m_cbOnValidate === 'function')
-        {
-            var arrCustomErrors = m_cbOnValidate(m_objThis.getData());
-            if (arrCustomErrors && arrCustomErrors.length > 0)
-            {
-                arrErrors = arrErrors.concat(arrCustomErrors);
-            }
-        }
-        
-        return arrErrors;
-    };
+	this.validate = function()
+	{
+		var arrErrors = [];
+		var strLabel;
+		
+		// Helper to find DOM element for a field using its class
+		function findFieldElement(strContainerName_a, strFieldName_a)
+		{
+			var strClass = makeFieldClass(strContainerName_a, strFieldName_a);
+			return os.element('#' + m_strFormID, '.' + strClass);
+		}
+		
+		// Helper to get field value based on its type
+		function getFieldValue(objField_a, objElement_a)
+		{
+			if (objField_a.type === 'checkbox')
+			{
+				return objElement_a.is(':checked');
+			}
+			else
+			{
+				return $.trim(objElement_a.val());
+			}
+		}
+		
+		// Loop through all sections
+		for (var intS = 0; intS < m_arrLayoutSections.length; intS++)
+		{
+			var objSection = m_arrLayoutSections[intS];
+			if (!objSection.containers) continue;
+			
+			// Loop through all containers
+			for (var intC = 0; intC < objSection.containers.length; intC++)
+			{
+				var objContainer = objSection.containers[intC];
+				if (!objContainer.children) continue;
+				
+				// Recursive function to traverse nested containers
+				function traverseChildren(arrChildren)
+				{
+					for (var intF = 0; intF < arrChildren.length; intF++)
+					{
+						var objField = arrChildren[intF];
+						
+						// If this is a nested container, traverse its children
+						if (objField.children)
+						{
+							traverseChildren(objField.children);
+							continue;
+						}
+						
+						// Skip non-data fields
+						if (objField.type === 'button' || objField.type === 'heading')
+						{
+							continue;
+						}
+						
+						// Check if field is required
+						if (!objField.required)
+						{
+							continue;
+						}
+						
+						// Get the DOM element
+						var objElement = findFieldElement(objContainer.name, objField.name);
+						if (objElement.length === 0)
+						{
+							// Field not found in DOM — could be hidden or not rendered
+							continue;
+						}
+						
+						// Get the value
+						var strValue = getFieldValue(objField, objElement);
+						
+						// Validate based on field type
+						if (objField.type === 'checkbox')
+						{
+							if (strValue !== true && strValue !== 'yes' && strValue !== 'true' && strValue !== 1)
+							{
+								strLabel = objField.label || objField.caption || objField.name;
+								arrErrors.push(strLabel + ' must be checked.');
+							}
+						}
+						else
+						{
+							if (strValue === null || strValue === undefined || strValue === '')
+							{
+								strLabel = objField.label || objField.caption || objField.name;
+								arrErrors.push(strLabel + ' is required.');
+							}
+						}
+					}
+				}
+				
+				traverseChildren(objContainer.children);
+			}
+		}
+		
+		// Custom validation callback
+		if (m_cbOnValidate && typeof m_cbOnValidate === 'function')
+		{
+			var arrCustomErrors = m_cbOnValidate(m_objThis.getData());
+			if (arrCustomErrors && arrCustomErrors.length > 0)
+			{
+				arrErrors = arrErrors.concat(arrCustomErrors);
+			}
+		}
+		
+		return arrErrors;
+	};
     
     this.isDirty = function()
     {
