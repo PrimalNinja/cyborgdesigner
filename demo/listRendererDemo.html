@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Renderer Demo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="3p/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- listRenderer CSS -->
+    <link href="listRenderer.css" rel="stylesheet">
+    
+    <style>
+        body {
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .demo-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .demo-description {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .test-area {
+            height: 700px;
+            overflow: hidden;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .event-log {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .event-log-entry {
+            padding: 2px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>List Renderer Demo</h1>
+        <p class="lead">Testing metadata-driven list and gallery components</p>
+        
+        <!-- Demo 1: LIST view with PAGED flow -->
+        <div class="demo-container">
+            <div class="demo-title">Demo 1: LIST View (Paged)</div>
+            <div class="demo-description">
+                Table view with pagination, sorting, and search. Click column headers to sort (Shift+Click for multi-sort).
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-sm btn-secondary" onclick="demo1.refresh()">Refresh</button>
+                <button class="btn btn-sm btn-secondary" onclick="clearLog('log1')">Clear Log</button>
+                <button class="btn btn-sm btn-info" onclick="simulateServerDelay('demo1')">Simulate Server Delay</button>
+            </div>
+            
+            <div id="demo1-container" class="test-area"></div>
+            
+            <div id="log1" class="event-log">
+                <div class="event-log-entry"><strong>Event Log:</strong></div>
+            </div>
+        </div>
+        
+        <!-- Demo 2: GALLERY view -->
+        <div class="demo-container">
+            <div class="demo-title">Demo 2: GALLERY View (Paged)</div>
+            <div class="demo-description">
+                Gallery view with thumbnails, custom descriptions, and pagination.
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-sm btn-secondary" onclick="demo2.refresh()">Refresh</button>
+                <button class="btn btn-sm btn-secondary" onclick="clearLog('log2')">Clear Log</button>
+            </div>
+            
+            <div id="demo2-container" class="test-area"></div>
+            
+            <div id="log2" class="event-log">
+                <div class="event-log-entry"><strong>Event Log:</strong></div>
+            </div>
+        </div>
+        
+        <!-- Demo 3: LIST view with CONTINUOUS scroll -->
+        <div class="demo-container">
+            <div class="demo-title">Demo 3: LIST View (Continuous Scroll)</div>
+            <div class="demo-description">
+                Table view with infinite scroll. Scroll to bottom to load more records. Data is randomly generated as you scroll.
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-sm btn-secondary" onclick="demo3.refresh()">Refresh</button>
+                <button class="btn btn-sm btn-secondary" onclick="clearLog('log3')">Clear Log</button>
+                <span class="badge bg-info" id="demo3-count">Records loaded: 30</span>
+            </div>
+            
+            <div id="demo3-container" class="test-area"></div>
+            
+            <div id="log3" class="event-log">
+                <div class="event-log-entry"><strong>Event Log:</strong></div>
+            </div>
+        </div>
+        
+        <!-- Demo 4: GALLERY view with CONTINUOUS scroll -->
+        <div class="demo-container">
+            <div class="demo-title">Demo 4: GALLERY View (Continuous Scroll)</div>
+            <div class="demo-description">
+                Gallery view with infinite scroll. Scroll to bottom to load more images. Data is randomly generated as you scroll.
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-sm btn-secondary" onclick="demo4.refresh()">Refresh</button>
+                <button class="btn btn-sm btn-secondary" onclick="clearLog('log4')">Clear Log</button>
+                <span class="badge bg-info" id="demo4-count">Items loaded: 20</span>
+            </div>
+            
+            <div id="demo4-container" class="test-area"></div>
+            
+            <div id="log4" class="event-log">
+                <div class="event-log-entry"><strong>Event Log:</strong></div>
+            </div>
+        </div>
+        
+        <!-- Demo 5: LIST view with EXPAND flow -->
+        <div class="demo-container">
+            <div class="demo-title">Demo 5: LIST View (Expand - All Data)</div>
+            <div class="demo-description">
+                Table view showing ALL data at once with no pagination or scrolling. Expands to show full dataset.
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-sm btn-secondary" onclick="demo5.refresh()">Refresh</button>
+                <button class="btn btn-sm btn-secondary" onclick="clearLog('log5')">Clear Log</button>
+                <span class="badge bg-success" id="demo5-count">Items shown: 5000</span>
+            </div>
+            
+            <div id="demo5-container"></div>
+            
+            <div id="log5" class="event-log">
+                <div class="event-log-entry"><strong>Event Log:</strong></div>
+            </div>
+        </div>
+        
+        <!-- Demo 6: GALLERY view with EXPAND flow -->
+        <div class="demo-container">
+            <div class="demo-title">Demo 6: GALLERY View (Expand - All Data)</div>
+            <div class="demo-description">
+                Gallery view showing ALL items at once with no pagination or scrolling. Expands to show full dataset.
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-sm btn-secondary" onclick="demo6.refresh()">Refresh</button>
+                <button class="btn btn-sm btn-secondary" onclick="clearLog('log6')">Clear Log</button>
+                <span class="badge bg-success" id="demo6-count">Items shown: 5000</span>
+            </div>
+            
+            <div id="demo6-container"></div>
+            
+            <div id="log6" class="event-log">
+                <div class="event-log-entry"><strong>Event Log:</strong></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- jQuery -->
+    <script src="3p/jquery-3.7.1.min.js"></script>
+    
+    <!-- listRenderer -->
+    <script src="listRenderer.js"></script>
+    
+    <script>
+        // Mock API object
+        var api = {
+            element: function(strScope_a, strClass_a) {
+                if (arguments.length === 1) {
+                    return $(strScope_a);
+                } else {
+                    return $(strClass_a, strScope_a);
+                }
+            }
+        };
+        
+        // Mock data generator
+        function generateMockData(intOffset, intLimit) {
+            var arrData = [];
+            var intStart = intOffset;
+            var intEnd = intOffset + intLimit;
+            var intTotal = 5000; // Increased to 5000 for better testing
+            
+            for (var i = intStart; i < intEnd && i < intTotal; i++) {
+                var intRowNum = i + 1;
+                var strCode = 'ITEM' + String(intRowNum).padStart(4, '0');
+                var strDescription = 'Test Item ' + intRowNum + ' - ' + ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon'][i % 5];
+                var blnEnabled = (i % 3) !== 0;
+                var strDate = new Date(2024, 0, 1 + (i % 365)).toISOString();
+                
+                // Use local images randomly
+                var intImageNum = (i % 5) + 1;
+                var strImageURL = 'images/image' + intImageNum + '.jpg';
+                
+                arrData.push([
+                    'ID' + intRowNum,           // ID (hidden)
+                    intRowNum,                  // ROWNUM
+                    strCode,                    // CODE
+                    strDescription,             // DESCRIPTION
+                    blnEnabled,                 // ISENABLED
+                    strDate,                    // MODIFYDATE
+                    strImageURL                 // IMAGEURL (for gallery)
+                ]);
+            }
+            
+            return {
+                control: {
+                    offset: intOffset,
+                    limit: intLimit,
+                    more: intEnd < intTotal,
+                    total: intTotal
+                },
+                operations: [
+                    { code: 'ADD', caption: 'Add', requiresselection: false },
+                    { code: 'EDIT', caption: 'Edit', requiresselection: true },
+                    { code: 'DELETE', caption: 'Delete', requiresselection: true },
+                    { code: 'VIEW', caption: 'View', requiresselection: true },
+                    { code: 'CLONE', caption: 'Clone', requiresselection: true }
+                ],
+                fields: [
+                    { code: 'ID', caption: 'ID', type: 'STRING', sortable: false, visible: false },
+                    { code: 'ROWNUM', caption: '#', type: 'NUMBER', sortable: true, visible: true },
+                    { code: 'CODE', caption: 'Code', type: 'STRING', sortable: true, visible: true },
+                    { code: 'DESCRIPTION', caption: 'Description', type: 'STRING', sortable: true, visible: true },
+                    { code: 'ISENABLED', caption: 'Enabled', type: 'BOOLEAN', sortable: true, visible: true },
+                    { code: 'MODIFYDATE', caption: 'Modified', type: 'DATE', sortable: true, visible: true },
+                    { code: 'IMAGEURL', caption: 'Image', type: 'STRING', sortable: false, visible: false }
+                ],
+                data: arrData
+            };
+        }
+        
+        // Logging helper
+        function logEvent(strLogID, strMessage) {
+            var strTimestamp = new Date().toLocaleTimeString();
+            var strEntry = '<div class="event-log-entry">[' + strTimestamp + '] ' + strMessage + '</div>';
+            $('#' + strLogID).append(strEntry);
+            
+            // Auto-scroll to bottom
+            var objLog = document.getElementById(strLogID);
+            objLog.scrollTop = objLog.scrollHeight;
+        }
+        
+        function clearLog(strLogID) {
+            $('#' + strLogID).html('<div class="event-log-entry"><strong>Event Log:</strong></div>');
+        }
+        
+        // Demo 1: LIST view with PAGED flow
+        var demo1 = null;
+        
+        $(document).ready(function() {
+            // Create a temporary container measurement
+            var intHeight = $('#demo1-container').height() || 600;
+            var intAvailableHeight = intHeight - 130; // toolbar + pagination
+            var intPageSize = Math.max(Math.floor((intAvailableHeight - 40) / 40), 10);
+            
+            demo1 = new listRenderer(api, 'demo1-container', {
+                dataSource: 'mock://carriers',
+                type: 'LIST',
+                flow: 'PAGED',
+                target: '',
+                initialData: generateMockData(0, intPageSize),
+                cbLoadData: function(objRequest, cb) {
+                    // Extract parameters from request
+                    var intOffset = 0;
+                    var intLimit = 20;
+                    
+                    for (var i = 0; i < objRequest.parameters.length; i++) {
+                        if (objRequest.parameters[i].name === 'offset') {
+                            intOffset = parseInt(objRequest.parameters[i].value);
+                        }
+                        if (objRequest.parameters[i].name === 'limit') {
+                            intLimit = parseInt(objRequest.parameters[i].value);
+                        }
+                    }
+                    
+                    logEvent('log1', 'Loading data: offset=' + intOffset + ', limit=' + intLimit);
+                    
+                    // Simulate server delay
+                    setTimeout(function() {
+                        cb(generateMockData(intOffset, intLimit));
+                    }, 300);
+                },
+                cbOnClick: function(arrRow, strID) {
+                    logEvent('log1', 'Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnDblClick: function(arrRow, strID) {
+                    logEvent('log1', 'Double-Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnOperation: function(strOperation, arrRow, strID) {
+                    if (arrRow) {
+                        alert('Operation: ' + strOperation + '\n\nData:\n' + JSON.stringify({
+                            ID: arrRow[0],
+                            RowNum: arrRow[1],
+                            Code: arrRow[2],
+                            Description: arrRow[3],
+                            Enabled: arrRow[4],
+                            ModifyDate: arrRow[5]
+                        }, null, 2));
+                        logEvent('log1', 'Operation: ' + strOperation + ' on ID=' + strID + ', Code=' + arrRow[2]);
+                    } else {
+                        alert('Operation: ' + strOperation + '\n\n(No selection required)');
+                        logEvent('log1', 'Operation: ' + strOperation + ' (no selection)');
+                    }
+                }
+            });
+            
+            // Render directly into container
+            $('#demo1-container').html(demo1.render());
+        });
+        
+        // Demo 2: GALLERY view (Paged)
+        var demo2 = null;
+        
+        $(document).ready(function() {
+            var intHeight = $('#demo2-container').height() || 600;
+            var intAvailableHeight = intHeight - 130;
+            var intColumns = Math.floor(($('#demo2-container').width() - 40) / 130) || 4;
+            var intRows = Math.floor(intAvailableHeight / 160) || 3;
+            var intPageSize = intRows * intColumns;
+            
+            demo2 = new listRenderer(api, 'demo2-container', {
+                dataSource: 'mock://carriers',
+                type: 'GALLERY',
+                flow: 'PAGED',
+                target: '',
+                thumbsize: { X: 120, Y: 120 },
+                imagefield: 'IMAGEURL',
+                initialData: generateMockData(0, intPageSize),
+                cbLoadData: function(objRequest, cb) {
+                    var intOffset = 0;
+                    var intLimit = 24;
+                    
+                    for (var i = 0; i < objRequest.parameters.length; i++) {
+                        if (objRequest.parameters[i].name === 'offset') {
+                            intOffset = parseInt(objRequest.parameters[i].value);
+                        }
+                        if (objRequest.parameters[i].name === 'limit') {
+                            intLimit = parseInt(objRequest.parameters[i].value);
+                        }
+                    }
+                    
+                    logEvent('log2', 'Loading data: offset=' + intOffset + ', limit=' + intLimit);
+                    
+                    setTimeout(function() {
+                        cb(generateMockData(intOffset, intLimit));
+                    }, 300);
+                },
+                cbGetDescription: function(arrRow) {
+                    return arrRow[2] + '\n' + (arrRow[4] ? '✓ Enabled' : '✗ Disabled');
+                },
+                cbOnClick: function(arrRow, strID) {
+                    logEvent('log2', 'Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnDblClick: function(arrRow, strID) {
+                    logEvent('log2', 'Double-Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnOperation: function(strOperation, arrRow, strID) {
+                    if (arrRow) {
+                        alert('Operation: ' + strOperation + '\n\nData:\n' + JSON.stringify({
+                            ID: arrRow[0],
+                            Code: arrRow[2],
+                            Description: arrRow[3],
+                            Enabled: arrRow[4]
+                        }, null, 2));
+                        logEvent('log2', 'Operation: ' + strOperation + ' on ID=' + strID + ', Code=' + arrRow[2]);
+                    } else {
+                        alert('Operation: ' + strOperation + '\n\n(No selection required)');
+                        logEvent('log2', 'Operation: ' + strOperation + ' (no selection)');
+                    }
+                }
+            });
+            
+            $('#demo2-container').html(demo2.render());
+        });
+        
+        // Demo 3: LIST view with CONTINUOUS scroll
+        var demo3 = null;
+        var demo3TotalLoaded = 0;
+        
+        $(document).ready(function() {
+            var intHeight = $('#demo3-container').height() || 600;
+            var intAvailableHeight = intHeight - 70; // just toolbar, no pagination
+            var intPageSize = Math.max(Math.floor((intAvailableHeight - 40) / 40), 15);
+            demo3TotalLoaded = intPageSize;
+            
+            demo3 = new listRenderer(api, 'demo3-container', {
+                dataSource: 'mock://carriers',
+                type: 'LIST',
+                flow: 'CONTINUOUS',
+                target: '',
+                initialData: generateMockData(0, intPageSize),
+                cbLoadData: function(objRequest, cb) {
+                    var intOffset = 0;
+                    var intLimit = 30;
+                    
+                    for (var i = 0; i < objRequest.parameters.length; i++) {
+                        if (objRequest.parameters[i].name === 'offset') {
+                            intOffset = parseInt(objRequest.parameters[i].value);
+                        }
+                        if (objRequest.parameters[i].name === 'limit') {
+                            intLimit = parseInt(objRequest.parameters[i].value);
+                        }
+                    }
+                    
+                    logEvent('log3', 'Loading more data: offset=' + intOffset + ', limit=' + intLimit);
+                    
+                    // Simulate server delay and random data
+                    setTimeout(function() {
+                        var objData = generateMockData(intOffset, intLimit);
+                        demo3TotalLoaded += objData.data.length;
+                        $('#demo3-count').text('Records loaded: ' + demo3TotalLoaded);
+                        cb(objData);
+                    }, 500);
+                },
+                cbOnClick: function(arrRow, strID) {
+                    logEvent('log3', 'Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnDblClick: function(arrRow, strID) {
+                    logEvent('log3', 'Double-Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnOperation: function(strOperation, arrRow, strID) {
+                    if (arrRow) {
+                        alert('Operation: ' + strOperation + '\n\nData:\n' + JSON.stringify({
+                            ID: arrRow[0],
+                            Code: arrRow[2],
+                            Description: arrRow[3]
+                        }, null, 2));
+                        logEvent('log3', 'Operation: ' + strOperation + ' on ID=' + strID + ', Code=' + arrRow[2]);
+                    } else {
+                        alert('Operation: ' + strOperation + '\n\n(No selection required)');
+                        logEvent('log3', 'Operation: ' + strOperation + ' (no selection)');
+                    }
+                }
+            });
+            
+            $('#demo3-container').html(demo3.render());
+            
+            logEvent('log3', 'Scroll to bottom to load more records...');
+        });
+        
+        // Demo 4: GALLERY view with CONTINUOUS scroll
+        var demo4 = null;
+        var demo4TotalLoaded = 0;
+        
+        $(document).ready(function() {
+            var intHeight = $('#demo4-container').height() || 600;
+            var intAvailableHeight = intHeight - 70;
+            var intColumns = Math.floor(($('#demo4-container').width() - 40) / 130) || 4;
+            var intRows = Math.floor(intAvailableHeight / 160) || 4;
+            var intPageSize = intRows * intColumns;
+            demo4TotalLoaded = intPageSize;
+            
+            demo4 = new listRenderer(api, 'demo4-container', {
+                dataSource: 'mock://carriers',
+                type: 'GALLERY',
+                flow: 'CONTINUOUS',
+                target: '',
+                thumbsize: { X: 120, Y: 120 },
+                imagefield: 'IMAGEURL',
+                initialData: generateMockData(0, intPageSize),
+                cbLoadData: function(objRequest, cb) {
+                    var intOffset = 0;
+                    var intLimit = 20;
+                    
+                    for (var i = 0; i < objRequest.parameters.length; i++) {
+                        if (objRequest.parameters[i].name === 'offset') {
+                            intOffset = parseInt(objRequest.parameters[i].value);
+                        }
+                        if (objRequest.parameters[i].name === 'limit') {
+                            intLimit = parseInt(objRequest.parameters[i].value);
+                        }
+                    }
+                    
+                    logEvent('log4', 'Loading more items: offset=' + intOffset + ', limit=' + intLimit);
+                    
+                    // Simulate server delay and random data
+                    setTimeout(function() {
+                        var objData = generateMockData(intOffset, intLimit);
+                        demo4TotalLoaded += objData.data.length;
+                        $('#demo4-count').text('Items loaded: ' + demo4TotalLoaded);
+                        cb(objData);
+                    }, 500);
+                },
+                cbGetDescription: function(arrRow) {
+                    return arrRow[2] + '\n' + (arrRow[4] ? '✓ Enabled' : '✗ Disabled');
+                },
+                cbOnClick: function(arrRow, strID) {
+                    logEvent('log4', 'Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnDblClick: function(arrRow, strID) {
+                    logEvent('log4', 'Double-Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnOperation: function(strOperation, arrRow, strID) {
+                    if (arrRow) {
+                        alert('Operation: ' + strOperation + '\n\nData:\n' + JSON.stringify({
+                            ID: arrRow[0],
+                            Code: arrRow[2],
+                            Description: arrRow[3]
+                        }, null, 2));
+                        logEvent('log4', 'Operation: ' + strOperation + ' on ID=' + strID + ', Code=' + arrRow[2]);
+                    } else {
+                        alert('Operation: ' + strOperation + '\n\n(No selection required)');
+                        logEvent('log4', 'Operation: ' + strOperation + ' (no selection)');
+                    }
+                }
+            });
+            
+            $('#demo4-container').html(demo4.render());
+            
+            logEvent('log4', 'Scroll to bottom to load more items...');
+        });
+        
+        // Demo 5: LIST view with EXPAND flow
+        var demo5 = null;
+        
+        $(document).ready(function() {
+            demo5 = new listRenderer(api, 'demo5-container', {
+                dataSource: 'mock://carriers',
+                type: 'LIST',
+                flow: 'EXPAND',
+                target: '',
+                initialData: generateMockData(0, 5000), // Load ALL data at once
+                cbOnClick: function(arrRow, strID) {
+                    logEvent('log5', 'Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnDblClick: function(arrRow, strID) {
+                    logEvent('log5', 'Double-Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnOperation: function(strOperation, arrRow, strID) {
+                    if (arrRow) {
+                        alert('Operation: ' + strOperation + '\n\nData:\n' + JSON.stringify({
+                            ID: arrRow[0],
+                            Code: arrRow[2],
+                            Description: arrRow[3]
+                        }, null, 2));
+                        logEvent('log5', 'Operation: ' + strOperation + ' on ID=' + strID + ', Code=' + arrRow[2]);
+                    } else {
+                        alert('Operation: ' + strOperation + '\n\n(No selection required)');
+                        logEvent('log5', 'Operation: ' + strOperation + ' (no selection)');
+                    }
+                }
+            });
+            
+            $('#demo5-container').html(demo5.render());
+            
+            logEvent('log5', 'Showing all 5000 records with no pagination');
+        });
+        
+        // Demo 6: GALLERY view with EXPAND flow
+        var demo6 = null;
+        
+        $(document).ready(function() {
+            demo6 = new listRenderer(api, 'demo6-container', {
+                dataSource: 'mock://carriers',
+                type: 'GALLERY',
+                flow: 'EXPAND',
+                target: '',
+                thumbsize: { X: 120, Y: 120 },
+                imagefield: 'IMAGEURL',
+                initialData: generateMockData(0, 5000), // Load ALL data at once
+                cbGetDescription: function(arrRow) {
+                    return arrRow[2] + '\n' + (arrRow[4] ? '✓ Enabled' : '✗ Disabled');
+                },
+                cbOnClick: function(arrRow, strID) {
+                    logEvent('log6', 'Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnDblClick: function(arrRow, strID) {
+                    logEvent('log6', 'Double-Click: ID=' + strID + ', Code=' + arrRow[2]);
+                },
+                cbOnOperation: function(strOperation, arrRow, strID) {
+                    if (arrRow) {
+                        alert('Operation: ' + strOperation + '\n\nData:\n' + JSON.stringify({
+                            ID: arrRow[0],
+                            Code: arrRow[2],
+                            Description: arrRow[3]
+                        }, null, 2));
+                        logEvent('log6', 'Operation: ' + strOperation + ' on ID=' + strID + ', Code=' + arrRow[2]);
+                    } else {
+                        alert('Operation: ' + strOperation + '\n\n(No selection required)');
+                        logEvent('log6', 'Operation: ' + strOperation + ' (no selection)');
+                    }
+                }
+            });
+            
+            $('#demo6-container').html(demo6.render());
+            
+            logEvent('log6', 'Showing all 5000 items with no pagination');
+        });
+        
+        // Simulate server delay for testing
+        function simulateServerDelay(strDemo) {
+            var objDemo = window[strDemo];
+            if (objDemo) {
+                logEvent('log1', 'Simulating server delay (2 seconds)...');
+                setTimeout(function() {
+                    objDemo.setData(generateMockData(0, 20));
+                    logEvent('log1', 'Data refreshed from "server"');
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>

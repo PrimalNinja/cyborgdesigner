@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>listRenderer - Inline Editing Demo</title>
+    <link href="3p/bootstrap.min.css" rel="stylesheet">
+    <link href="listRenderer.css" rel="stylesheet">
+    <style>
+        body { padding: 20px; }
+        .demo-section { margin-bottom: 40px; }
+        .demo-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .demo-grid { margin-bottom: 15px; }
+        .instructions { background: #e7f3ff; padding: 15px; border-left: 4px solid #007bff; margin-bottom: 20px; }
+        .instructions h4 { margin-top: 0; }
+        .instructions ul { margin-bottom: 0; }
+        .with-addnew { border-left: 4px solid #28a745; }
+        .without-addnew { border-left: 4px solid #dc3545; }
+        .feature-box { background: #f8f9fa; padding: 12px; border-radius: 4px; margin-bottom: 10px; }
+        .feature-yes { border-left: 3px solid #28a745; }
+        .feature-no { border-left: 3px solid #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>Inline Editing Demo - Side by Side Comparison</h1>
+        
+        <div class="instructions">
+            <h4>Excel-Like Editing</h4>
+            <ul>
+                <li><strong>Click any cell</strong> or navigate with keyboard to start editing</li>
+                <li><strong>Tab / Shift+Tab</strong> - Move forward/backward through cells</li>
+                <li><strong>Up/Down Arrows</strong> - Move up/down same column</li>
+                <li><strong>Enter</strong> - Move down (same as Down Arrow)</li>
+                <li><strong>Home / End</strong> - Jump to top-left / bottom-right</li>
+                <li><strong>Escape</strong> - Cancel edit</li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <!-- WITH Add New -->
+            <div class="col-md-6">
+                <div class="demo-section">
+                    <div class="demo-container with-addnew">
+                        <h3>WITH Add New Row</h3>
+                        <div class="feature-box feature-yes">
+                            <strong>allowaddnew = true</strong>
+                            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+                                <li>✓ Gray blank row at bottom with <strong>*</strong> selector</li>
+                                <li>✓ Tab/Down Arrow to blank row and start typing</li>
+                                <li>✓ New green rows created automatically</li>
+                                <li>✓ Blank row stays at bottom for next record</li>
+                            </ul>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label>Test Tab Navigation:</label>
+                            <input type="text" class="form-control" placeholder="Tab from here into grid below...">
+                        </div>
+                        <div id="demo-with-addnew" class="demo-grid"></div>
+                        <button id="btn-commit-1" class="btn btn-success btn-sm">Commit Changes</button>
+                        <button id="btn-changes-1" class="btn btn-info btn-sm">Show Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WITHOUT Add New -->
+            <div class="col-md-6">
+                <div class="demo-section">
+                    <div class="demo-container without-addnew">
+                        <h3>WITHOUT Add New Row</h3>
+                        <div class="feature-box feature-no">
+                            <strong>allowaddnew = false</strong>
+                            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+                                <li>✗ No blank row at bottom</li>
+                                <li>✗ No <strong>*</strong> selector</li>
+                                <li>✗ Tab/Down stops at last data row</li>
+                                <li>✓ Can only edit existing rows (turn yellow)</li>
+                            </ul>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label>Test Tab Navigation:</label>
+                            <input type="text" class="form-control" placeholder="Tab from here into grid below...">
+                        </div>
+                        <div id="demo-without-addnew" class="demo-grid"></div>
+                        <button id="btn-commit-2" class="btn btn-success btn-sm">Commit Changes</button>
+                        <button id="btn-changes-2" class="btn btn-info btn-sm">Show Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Edit Only (No Add/Delete) -->
+            <div class="col-md-6">
+                <div class="demo-section">
+                    <div class="demo-container" style="border-left: 4px solid #ffc107;">
+                        <h3>Edit Only (No Add/Delete)</h3>
+                        <div class="feature-box" style="border-left: 3px solid #ffc107;">
+                            <strong>allowedit = true, allowaddnew = false, allowdelete = false</strong>
+                            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+                                <li>✓ Can edit existing rows (turn yellow)</li>
+                                <li>✗ No blank row at bottom</li>
+                                <li>✗ No delete functionality</li>
+                                <li>✓ Tab/Down stays at last cell</li>
+                            </ul>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label>Test Tab Navigation:</label>
+                            <input type="text" class="form-control" placeholder="Tab from here into grid below...">
+                        </div>
+                        <div id="demo-edit-only" class="demo-grid"></div>
+                        <button id="btn-commit-3" class="btn btn-success btn-sm">Commit Changes</button>
+                        <button id="btn-changes-3" class="btn btn-info btn-sm">Show Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Editing (Read-Only) -->
+            <div class="col-md-6">
+                <div class="demo-section">
+                    <div class="demo-container" style="border-left: 4px solid #6c757d;">
+                        <h3>Read-Only Override</h3>
+                        <div class="feature-box" style="border-left: 3px solid #6c757d;">
+                            <strong>readonly = true (overrides allowedit/allowaddnew/allowdelete)</strong>
+                            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+                                <li>✓ Editable grid config with readonly override</li>
+                                <li>✓ Has row selector column (from editable config)</li>
+                                <li>✓ EXPAND mode (no pagination, like editable)</li>
+                                <li>✗ No search toolbar</li>
+                                <li>✗ No editing allowed</li>
+                                <li>✓ Click row to select</li>
+                            </ul>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label>Test Tab Navigation:</label>
+                            <input type="text" class="form-control" placeholder="Tab skips grid entirely...">
+                        </div>
+                        <div id="demo-readonly" class="demo-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Callbacks Reject All -->
+            <div class="col-md-6">
+                <div class="demo-section">
+                    <div class="demo-container" style="border-left: 4px solid #dc3545;">
+                        <h3>Callbacks Reject All Changes</h3>
+                        <div class="feature-box" style="border-left: 3px solid #dc3545;">
+                            <strong>All 3 callbacks return false</strong>
+                            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+                                <li>✗ onRowUpdate returns false → No yellow status</li>
+                                <li>✗ onRowAddNew returns false → Can't add rows</li>
+                                <li>✗ onRowDelete returns false → Can't delete rows</li>
+                                <li>✓ All changes are rejected (validation demo)</li>
+                            </ul>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label>Test Tab Navigation:</label>
+                            <input type="text" class="form-control" placeholder="Tab from here into grid below...">
+                        </div>
+                        <div id="demo-reject-all" class="demo-grid"></div>
+                        <button id="btn-commit-4" class="btn btn-success btn-sm">Commit Changes</button>
+                        <button id="btn-changes-4" class="btn btn-info btn-sm">Show Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="output" style="margin-top: 20px; padding: 15px; background: #f8f9fa; font-family: monospace; white-space: pre; max-height: 300px; overflow: auto; display: none; border-radius: 4px;"></div>
+    </div>
+    
+    <script src="3p/jquery-3.7.1.min.js"></script>
+    <script src="listRenderer.js"></script>
+    
+    <script>
+        var api = {
+            element: function(strScope_a, strClass_a) {
+                if (arguments.length === 1) {
+                    return $(strScope_a);
+                } else {
+                    return $(strClass_a, strScope_a);
+                }
+            }
+        };
+        
+        // Sample data for both grids
+        var makeData = function() {
+            return {
+                control: { offset: 0, limit: 100, more: false, total: 3 },
+                operations: [],
+                fields: [
+                    { code: 'ID', caption: 'ID', type: 'STRING', visible: false },
+                    { code: 'CODE', caption: 'Code', type: 'STRING', visible: true, editable: false },
+                    { code: 'NAME', caption: 'Name', type: 'STRING', visible: true, editable: true },
+                    { code: 'ENABLED', caption: 'Enabled', type: 'STRING', visible: true, editable: true }
+                ],
+                data: [
+                    ['ID001', 'CODE1', 'Name 1', 'Yes'],
+                    ['ID002', 'CODE2', 'Name 2', 'No'],
+                    ['ID003', 'CODE3', 'Name 3', 'Yes']
+                ]
+            };
+        };
+        
+        console.log('Creating listRenderer instances...');
+        
+        // Grid WITH allowaddnew
+        var lister1 = new listRenderer(api, 'demo-with-addnew', {
+            type: 'LIST',
+            allowedit: true,
+            allowaddnew: true,  // ENABLED
+            allowdelete: true,
+            enabledebug: true,  // Enable debug to see what's happening
+            initialData: makeData(),
+            onRowUpdate: function(arrRow, strID) {
+                console.log('[WITH] UPDATE:', strID, arrRow);
+                return true;
+            },
+            onRowDelete: function(arrRow, strID) {
+                console.log('[WITH] DELETE:', strID, arrRow);
+                return true;
+            },
+            onRowAddNew: function(arrRow, strID) {
+                console.log('[WITH] ADD NEW:', strID, arrRow);
+                return true;
+            }
+        });
+        
+        // Grid WITHOUT allowaddnew
+        var lister2 = new listRenderer(api, 'demo-without-addnew', {
+            type: 'LIST',
+            allowedit: true,
+            allowaddnew: false,  // DISABLED
+            allowdelete: true,
+            initialData: makeData(),
+            onRowUpdate: function(arrRow, strID) {
+                console.log('[WITHOUT] UPDATE:', strID, arrRow);
+                return true;
+            },
+            onRowDelete: function(arrRow, strID) {
+                console.log('[WITHOUT] DELETE:', strID, arrRow);
+                return true;
+            },
+            onRowAddNew: function(arrRow, strID) {
+                console.log('[WITHOUT] ADD NEW:', strID, arrRow);
+                return true;
+            }
+        });
+        
+        // Grid edit-only (no add/delete)
+        var lister3 = new listRenderer(api, 'demo-edit-only', {
+            type: 'LIST',
+            allowedit: true,
+            allowaddnew: false,
+            allowdelete: false,  // NO DELETE
+            initialData: makeData(),
+            onRowUpdate: function(arrRow, strID) {
+                console.log('[EDIT-ONLY] UPDATE:', strID, arrRow);
+                return true;
+            },
+            onRowDelete: function(arrRow, strID) {
+                console.log('[EDIT-ONLY] DELETE:', strID, arrRow);
+                return true;
+            },
+            onRowAddNew: function(arrRow, strID) {
+                console.log('[EDIT-ONLY] ADD NEW:', strID, arrRow);
+                return true;
+            }
+        });
+        
+        // Grid read-only (readonly override of editable grid)
+        var lister4 = new listRenderer(api, 'demo-readonly', {
+            type: 'LIST',
+            allowedit: true,
+            allowaddnew: true,
+            allowdelete: true,
+            readonly: true,  // Override all editing
+            initialData: makeData()
+        });
+        
+        // Grid with callbacks that reject all changes
+        var lister5 = new listRenderer(api, 'demo-reject-all', {
+            type: 'LIST',
+            allowedit: true,
+            allowaddnew: true,
+            allowdelete: true,
+            enabledebug: true,  // Enable debug output
+            initialData: makeData(),
+            onRowUpdate: function(arrRow, strID) {
+                console.log('[REJECT] UPDATE rejected:', strID, arrRow);
+                return false;  // REJECT
+            },
+            onRowDelete: function(arrRow, strID) {
+                console.log('[REJECT] DELETE rejected:', strID, arrRow);
+                return false;  // REJECT
+            },
+            onRowAddNew: function(arrRow, strID) {
+                console.log('[REJECT] ADD NEW rejected:', strID, arrRow);
+                return false;  // REJECT
+            }
+        });
+        
+        console.log('All 5 grids initialized');
+        
+        // Button handlers for grid 1 (WITH addnew)
+        $('#btn-commit-1').on('click', function() {
+            console.log('Committing changes - Grid 1...');
+            lister1.CommitRows(); // Flush any active edit
+            
+            // Real workflow:
+            // var changes = lister1.getDataChanges();
+            // $.post('/save', changes).done(function(newData) {
+            //     lister1.setData(newData);  // Reload from server
+            // });
+            
+            $('#output').show().text('✓ Grid 1 committed. Changes ready to post to server. Click "Show Changes".');
+        });
+        
+        $('#btn-changes-1').on('click', function() {
+            var changes = lister1.getDataChanges();
+            console.log('Grid 1 changes:', changes);
+            $('#output').show().text('Grid 1 (WITH add new) changed rows (' + changes.length + '):\n' + JSON.stringify(changes, null, 2));
+        });
+        
+        // Button handlers for grid 2 (WITHOUT addnew)
+        $('#btn-commit-2').on('click', function() {
+            console.log('Committing changes - Grid 2...');
+            lister2.CommitRows();
+            $('#output').show().text('✓ Grid 2 committed. Changes ready to post to server.');
+        });
+        
+        $('#btn-changes-2').on('click', function() {
+            var changes = lister2.getDataChanges();
+            console.log('Grid 2 changes:', changes);
+            $('#output').show().text('Grid 2 (WITHOUT add new) changed rows (' + changes.length + '):\n' + JSON.stringify(changes, null, 2));
+        });
+        
+        // Button handlers for grid 3 (edit-only, no add/delete)
+        $('#btn-commit-3').on('click', function() {
+            console.log('Committing changes - Grid 3...');
+            lister3.CommitRows();
+            $('#output').show().text('✓ Grid 3 committed. Changes ready to post to server.');
+        });
+        
+        $('#btn-changes-3').on('click', function() {
+            var changes = lister3.getDataChanges();
+            console.log('Grid 3 changes:', changes);
+            $('#output').show().text('Grid 3 (Edit-only) changed rows (' + changes.length + '):\n' + JSON.stringify(changes, null, 2));
+        });
+        
+        // Button handlers for grid 5 (callbacks reject all)
+        $('#btn-commit-4').on('click', function() {
+            console.log('Committing changes - Grid 5...');
+            lister5.CommitRows();
+            $('#output').show().text('✓ Grid 5 committed. Changes ready to post to server (should be none).');
+        });
+        
+        $('#btn-changes-4').on('click', function() {
+            var changes = lister5.getDataChanges();
+            console.log('Grid 5 changes:', changes);
+            $('#output').show().text('Grid 5 (Callbacks reject all) changed rows (' + changes.length + '):\n' + JSON.stringify(changes, null, 2));
+        });
+    </script>
+</body>
+</html>
