@@ -229,7 +229,7 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 	
 	function formatValue(value_a, strType_a)
 	{
-		var strResult = '&nbsp;';
+		var strResult = '';
 		
 		if (value_a !== null && value_a !== undefined && value_a !== '')
 		{
