@@ -20,6 +20,17 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 		});
 	}
 	
+    function htmlEncode(strValue_a)
+    {
+        var strResult = strValue_a || '';
+        strResult = String(strResult).replace(/&/g, '&amp;');
+        strResult = strResult.replace(/</g, '&lt;');
+        strResult = strResult.replace(/>/g, '&gt;');
+        strResult = strResult.replace(/"/g, '&quot;');
+        strResult = strResult.replace(/'/g, '&#39;');
+        return strResult;
+    }
+
 	var m_strInstanceGUID = getGUID();
 	
 	// Debug output function
@@ -227,18 +238,23 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 				case 'BOOLEAN':
 					strResult = value_a ? 'Yes' : 'No';
 					break;
+					
 				case 'DATE':
 					// Basic date formatting - can be enhanced
 					strResult = new Date(value_a).toLocaleDateString();
 					break;
+					
 				case 'NUMBER':
 					strResult = value_a.toString();
 					break;
+					
 				default:
 					strResult = value_a.toString();
 					break;
 			}
 		}
+		
+		strResult = htmlEncode(strResult);
 		
 		return strResult;
 	}
