@@ -1,0 +1,98 @@
+/* css/os.css */
+/* CyborgDesktop MDI form styles */
+/* (c) 2025 Cyborg Unicorn Pty Ltd. */
+
+#ge-formcontainer
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.gs-form
+{
+    position: absolute;
+    background: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    pointer-events: all;
+    min-width: 300px;
+    min-height: 200px;
+}
+
+.gs-form-titlebar
+{
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: white;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px 4px 0 0;
+    cursor: move;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.gs-form-title
+{
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.gs-form-close
+{
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 0 4px;
+    border-radius: 3px;
+    transition: background 0.2s;
+}
+
+.gs-form-close:hover
+{
+    background: rgba(255,255,255,0.25);
+}
+
+.gs-form-body
+{
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+.gs-form-toolbar
+{
+    background: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.gs-toolbar-btn
+{
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.gs-toolbar-btn:hover
+{
+    background: #2980b9;
+}

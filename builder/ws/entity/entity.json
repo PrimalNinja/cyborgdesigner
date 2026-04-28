@@ -1,0 +1,143 @@
+{
+    "code": "entity",
+    "title": "Entity",
+    "sections": [
+        {
+            "id": "9ba5d24f-dd6e-435f-98d3-1e7aad3ba7f0",
+            "caption": "Form Header",
+            "containers": [
+                {
+                    "id": "efd2e2a2-5948-497f-bf1b-f6cc24e69d80",
+                    "type": "verticalcontainer",
+                    "name": "FORMHEADER",
+                    "label": "Form Header",
+                    "children": [
+                        {
+                            "id": "a1b2c3d4-0001-0001-0001-000000000001",
+                            "type": "textbox",
+                            "caption": "Entity Name",
+                            "label": "Entity Name",
+                            "name": "ENTITYNAME",
+                            "value": "Entity",
+                            "container": false
+                        },
+                        {
+                            "id": "a1b2c3d4-0001-0001-0001-000000000002",
+                            "type": "number",
+                            "caption": "Form Version",
+                            "label": "Form Version",
+                            "name": "FORMVERSION",
+                            "value": "1",
+                            "container": false
+                        },
+                        {
+                            "id": "a1b2c3d4-0001-0001-0001-000000000003",
+                            "type": "textbox",
+                            "caption": "Code",
+                            "label": "Code",
+                            "name": "CODE",
+                            "value": "entity",
+                            "container": false
+                        },
+                        {
+                            "id": "a1b2c3d4-0001-0001-0001-000000000004",
+                            "type": "textbox",
+                            "caption": "Description",
+                            "label": "Description",
+                            "name": "DESCRIPTION",
+                            "value": "Entity",
+                            "container": false
+                        },
+                        {
+                            "id": "a1b2c3d4-0001-0001-0001-000000000005",
+                            "type": "checkbox",
+                            "caption": "Is Enabled?",
+                            "label": "Is Enabled?",
+                            "name": "ISENABLED",
+                            "value": "yes",
+                            "container": false
+                        }
+                    ],
+                    "caption": "Form Header"
+                }
+            ]
+        },
+        {
+            "id": "5dcb780d-143c-4a21-bf5d-e9dcb269aeee",
+            "caption": "Data Header",
+            "containers": [
+                {
+                    "id": "4c364be4-2e45-4c17-8b05-43dd878a6d25",
+                    "type": "verticalcontainer",
+                    "name": "DATAHEADER",
+                    "label": "Data Header",
+                    "children": [
+                        {
+                            "id": "a1b2c3d4-0002-0001-0001-000000000001",
+                            "type": "number",
+                            "caption": "Data Version",
+                            "label": "Data Version",
+                            "name": "DATAVERSION",
+                            "value": "1",
+                            "container": false
+                        }
+                    ],
+                    "caption": "Data Header"
+                }
+            ]
+        },
+        {
+            "id": "66c32d3c-e39d-4e02-a5b8-280bc059cc6a",
+            "caption": "Entity Details",
+            "containers": [
+                {
+                    "id": "f25a6ced-ee01-4c35-8734-344b723dfa98",
+                    "type": "verticalcontainer",
+                    "name": "ENTITY",
+                    "label": "Entity Details",
+                    "children": [
+                        {
+                            "id": "169c6e1f-616c-4404-aafc-20abe6251edd",
+                            "type": "textbox",
+                            "caption": "Code",
+                            "label": "Code",
+                            "name": "CODE",
+                            "required": "yes",
+                            "value": "entity",
+                            "container": false
+                        },
+                        {
+                            "id": "1eda9d12-8a74-4926-8dc6-97627fcc8f62",
+                            "type": "textbox",
+                            "caption": "Description",
+                            "label": "Description",
+                            "name": "DESCRIPTION",
+                            "required": "yes",
+                            "value": "Entity",
+                            "container": false
+                        },
+                        {
+                            "id": "402b3fe7-e640-4257-8b8a-915e74936938",
+                            "type": "checkbox",
+                            "caption": "Is Enabled?",
+                            "label": "Is Enabled?",
+                            "name": "ISENABLED",
+                            "value": "yes",
+                            "container": false
+                        },
+                        {
+                            "id": "66c32d3c-e39d-4e02-a5b8-280bc059cc6b",
+                            "type": "multilinetextbox",
+                            "caption": "Notes",
+                            "label": "Notes",
+                            "name": "NOTES",
+                            "value": "Core entity type. Defines the data entities used across the system.",
+                            "container": false
+                        }
+                    ],
+                    "caption": "Entity Details"
+                }
+            ]
+        }
+    ]
+}

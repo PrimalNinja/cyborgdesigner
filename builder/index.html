@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyborg App Builder</title>
+    <link rel="stylesheet" href="css/cyborgDesigner.css">
+    <link rel="stylesheet" href="css/formRenderer.css">
+    <link rel="stylesheet" href="css/listRenderer.css">
+    <link rel="stylesheet" href="css/os.css">
+    <link href="3p/bootstrap.min.css" rel="stylesheet">
+    <script src="3p/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div class="gscd-title">Cyborg App Builder</div>
+
+    <div id="gecd-maintabbar" class="gscd-maintabbar">
+        <button class="gecd-entities gecd-maintabbutton gscd-maintabbutton">Entities</button>
+        <button class="gecd-layouts gecd-maintabbutton gscd-maintabbutton">Layouts</button>
+        <button class="gecd-application gecd-maintabbutton gscd-maintabbutton" style="display:none;">Application</button>
+        <button class="gecd-dashboard gecd-maintabbutton gscd-maintabbutton" style="display:none;">Dashboard</button>
+        <button class="gecd-database gecd-maintabbutton gscd-maintabbutton" style="display:none;">Database Schema</button>
+        <button class="gecd-form gecd-maintabbutton gscd-maintabbutton" style="display:none;">Form</button>
+        <button class="gecd-menu gecd-maintabbutton gscd-maintabbutton" style="display:none;">Menu</button>
+        <button class="gecd-report gecd-maintabbutton gscd-maintabbutton" style="display:none;">Report</button>
+        <button class="gecd-aiorchestration gecd-maintabbutton gscd-maintabbutton" style="display:none;">AI Orchestration</button>
+    </div>
+
+    <div id="ge-formcontainer"></div>
+
+    <div id="gecd" class="gscd" style="display:none;"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/os.js"></script>
+    <script src="js/formRenderer.js"></script>
+    <script src="js/listRenderer.js"></script>
+    <script src="js/cyborgDesigner.js"></script>
+    <script src="js/frmLister.js"></script>
+    <script src="js/frmEntity.js"></script>
+    <script src="js/frmLayoutLister.js"></script>
+    <script src="js/frmLayoutDesigner.js"></script>
+    <script src="js/startup.js"></script>
+</body>
+</html>

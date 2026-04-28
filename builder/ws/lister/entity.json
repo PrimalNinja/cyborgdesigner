@@ -1,0 +1,39 @@
+{
+    "code": "entity",
+    "title": "Entities",
+    "fields": [
+        {
+            "code": "CODE",
+            "caption": "Code",
+            "type": "STRING",
+            "visible": true,
+            "sortable": true
+        },
+        {
+            "code": "DESCRIPTION",
+            "caption": "Description",
+            "type": "STRING",
+            "visible": true,
+            "sortable": true
+        },
+        {
+            "code": "ISENABLED",
+            "caption": "Enabled",
+            "type": "BOOLEAN",
+            "visible": true,
+            "sortable": true
+        }
+    ],
+    "operations": [
+        {
+            "code": "ADD",
+            "caption": "Add",
+            "requiresselection": false
+        },
+        {
+            "code": "EDIT",
+            "caption": "Edit",
+            "requiresselection": true
+        }
+    ]
+}
