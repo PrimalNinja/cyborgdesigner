@@ -9,15 +9,14 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 	var api             = objOS_a;
 	var m_objParameters = objParameters_a || {};
 
-	var m_strType   = m_objParameters.type   || 'form';
 	var m_strEntity = m_objParameters.entity || '';
 	var m_strCode   = m_objParameters.code   || '';
+	var m_strMode   = m_objParameters.mode   || 'edit';   // add | edit | view
 	var m_cbOnSave  = m_objParameters.onSave || null;
 
-	var m_blnIsNew        = (m_strCode.length === 0);
+	var m_objFormLayout   = null;   // loaded from form/<entity>.json
 	var m_objFormRenderer = null;
 	var m_blnDirty        = false;
-	var m_objConfig       = null;
 
 	// ============================================================
 	// PRIVATE
@@ -28,18 +27,20 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 		return 'ge-frmEntity-' + m_strFormID.replace(/[^a-zA-Z0-9]/g, '');
 	}
 
-	function fetchConfig(cb_a)
+	function fetchLayout(cb_a)
 	{
-		api.loadFile(m_strType, m_strEntity, function(objResponse_a)
+		console.log('frmEntity fetchLayout loading form/' + m_strEntity);
+		api.loadFile('form', m_strEntity, function(objResponse_a)
 		{
+			console.log('frmEntity fetchLayout response error=' + (objResponse_a.error || '') + ' hasData=' + !!objResponse_a.data);
 			if (objResponse_a.error && objResponse_a.error.length > 0)
 			{
-				api.print('frmEntity: form config not found for ' + m_strType + '/' + m_strEntity);
-				m_objConfig = { title: m_strEntity, sections: [] };
+				api.print('frmEntity: layout not found for form/' + m_strEntity);
+				m_objFormLayout = { title: m_strEntity, sections: [] };
 			}
 			else
 			{
-				m_objConfig = objResponse_a.data || { title: m_strEntity, sections: [] };
+				m_objFormLayout = objResponse_a.data || { title: m_strEntity, sections: [] };
 			}
 
 			if (api.isFunction(cb_a))
@@ -64,15 +65,21 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 	{
 		var strTargetClass = getTargetClass();
 		var objBody        = api.element('#' + m_strFormID, '.ge-formbody');
-		var arrSections    = m_objConfig.sections || [];
+		var blnReadOnly    = (m_strMode === 'view');
+		var arrSections    = JSON.parse(JSON.stringify(m_objFormLayout.sections || []));
 
 		var strHTML = '<div class="gs-form-toolbar">';
 		strHTML    += '<button type="button" class="gs-toolbar-btn" data-operation="CLOSE">Close</button>';
-		strHTML    += '<button type="button" class="gs-toolbar-btn" data-operation="SAVE">Save</button>';
-		strHTML    += '</div>';
-		strHTML    += '<div style="width:100%; height:100%; overflow:auto; padding:10px;">';
-		strHTML    += '<div class="' + strTargetClass + '"></div>';
-		strHTML    += '</div>';
+
+		if (!blnReadOnly)
+		{
+			strHTML += '<button type="button" class="gs-toolbar-btn" data-operation="SAVE">Save</button>';
+		}
+
+		strHTML += '</div>';
+		strHTML += '<div style="width:100%; height:100%; overflow:auto; padding:10px;">';
+		strHTML += '<div class="' + strTargetClass + '"></div>';
+		strHTML += '</div>';
 
 		objBody.html(strHTML);
 
@@ -85,7 +92,7 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 		m_objFormRenderer = new formRenderer(api, m_strFormID,
 		{
 			layoutSections: arrSections,
-			readonly:       false,
+			readonly:       blnReadOnly,
 			target:         strTargetClass,
 			onChange: function(blnDirty_a)
 			{
@@ -96,17 +103,6 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 				onToolbarOperation(strOperation_a);
 			}
 		});
-
-		if (!m_blnIsNew)
-		{
-			fetchRecord(function(objResponse_a)
-			{
-				if (objResponse_a.error.length === 0 && objResponse_a.data)
-				{
-					populateRecord(objResponse_a.data);
-				}
-			});
-		}
 	}
 
 	function onToolbarOperation(strOperation_a)
@@ -126,117 +122,6 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 		api.closeForm(m_strFormID);
 	}
 
-	function populateRecord(objRecord_a)
-	{
-		var arrSections = objRecord_a.sections || [];
-		var objFormData = {};
-
-		for (var intS = 0; intS < arrSections.length; intS++)
-		{
-			var objSection = arrSections[intS];
-
-			if (objSection.containers)
-			{
-				for (var intC = 0; intC < objSection.containers.length; intC++)
-				{
-					populateContainer(objSection.containers[intC], objFormData);
-				}
-			}
-		}
-
-		m_objFormRenderer.setData(objFormData);
-	}
-
-	function populateContainer(objContainer_a, objFormData_a)
-	{
-		var arrChildren      = objContainer_a.children || [];
-		var strContainerName = objContainer_a.name     || '';
-
-		for (var intI = 0; intI < arrChildren.length; intI++)
-		{
-			var objChild = arrChildren[intI];
-
-			if (objChild.children)
-			{
-				populateContainer(objChild, objFormData_a);
-			}
-			else
-			{
-				var strFieldName = objChild.name || '';
-				var strType      = objChild.type || '';
-				var strKey       = strContainerName.toUpperCase() + '__' + strFieldName.toUpperCase();
-
-				if (strType !== 'toolbarbutton' && strType !== 'button' && strType !== 'heading' && strType !== 'spacer')
-				{
-					if (objChild.hasOwnProperty('value'))
-					{
-						objFormData_a[strKey] = objChild.value;
-					}
-				}
-			}
-		}
-	}
-
-	function collectRecord()
-	{
-		var objFormData  = m_objFormRenderer.getData();
-
-		// Deep clone the full form config structure
-		var objRecord = JSON.parse(JSON.stringify(m_objConfig));
-
-		for (var intS = 0; intS < objRecord.sections.length; intS++)
-		{
-			var objSection = objRecord.sections[intS];
-
-			if (objSection.containers)
-			{
-				for (var intC = 0; intC < objSection.containers.length; intC++)
-				{
-					embedValuesInContainer(objSection.containers[intC], objFormData);
-				}
-			}
-		}
-
-		return objRecord;
-	}
-
-	function embedValuesInContainer(objContainer_a, objFormData_a)
-	{
-		var arrChildren      = objContainer_a.children || [];
-		var strContainerName = objContainer_a.name     || '';
-
-		for (var intI = 0; intI < arrChildren.length; intI++)
-		{
-			var objChild = arrChildren[intI];
-
-			if (objChild.children)
-			{
-				embedValuesInContainer(objChild, objFormData_a);
-			}
-			else
-			{
-				var strFieldName = objChild.name || '';
-				var strType      = objChild.type || '';
-				var strKey       = strContainerName.toUpperCase() + '__' + strFieldName.toUpperCase();
-
-				if (strType !== 'toolbarbutton' && strType !== 'button' && strType !== 'heading' && strType !== 'spacer' && strType !== 'instructionaltext')
-				{
-					if (objFormData_a.hasOwnProperty(strKey))
-					{
-						var varValue = objFormData_a[strKey];
-
-						if (strType === 'checkbox' || strType === 'yesno')
-						{
-							varValue = (varValue === true || varValue === 'yes' || varValue === 'true') ? 'yes' : 'no';
-						}
-
-						objChild.value = varValue;
-					}
-				}
-			}
-		}
-	}
-
 	function doSave()
 	{
 		var arrErrors = m_objFormRenderer.validate();
@@ -247,19 +132,11 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 		}
 		else
 		{
-			var objRecord   = collectRecord();
-			var objFormData = m_objFormRenderer.getData();
-			var strCode     = '';
-			var blnFound    = false;
+			var arrSections    = m_objFormRenderer.getFormJSON();
+			var strCode        = (getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'CODE') || '').toLowerCase().replace(/[^a-z0-9_\-]/g, '');
+			var intDataVersion = parseInt(getFieldValueByContainerNameAndFieldName(arrSections, 'DATAHEADER', 'DATAVERSION') || '1', 10);
 
-			for (var strKey in objFormData)
-			{
-				if (blnFound === false && objFormData.hasOwnProperty(strKey) && strKey.toUpperCase().indexOf('__CODE') !== -1)
-				{
-					strCode  = (objFormData[strKey] || '').toLowerCase().replace(/[^a-z0-9_\-]/g, '');
-					blnFound = true;
-				}
-			}
+			setFieldValueByContainerNameAndFieldName(arrSections, 'DATAHEADER', 'DATAVERSION', String(intDataVersion + 1));
 
 			if (strCode.length === 0)
 			{
@@ -267,7 +144,9 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 			}
 			else
 			{
-				api.saveFile(m_strEntity, strCode, objRecord, function(objResponse_a)
+				var objSaveData = { code: strCode, title: m_objFormLayout.title || m_strEntity, sections: arrSections };
+
+				api.saveFile(m_strEntity, strCode, objSaveData, function(objResponse_a)
 				{
 					if (objResponse_a.error && objResponse_a.error.length > 0)
 					{
@@ -279,7 +158,7 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 
 						if (api.isFunction(m_cbOnSave))
 						{
-							m_cbOnSave(objRecord);
+							m_cbOnSave(objSaveData);
 						}
 
 						api.closeForm(m_strFormID);
@@ -353,17 +232,72 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 			'top':    intFormTop    + 'px'
 		});
 
-		api.setFormTitle(m_strFormID, m_blnIsNew ? 'New ' + m_strEntity : 'Edit ' + m_strEntity + ': ' + m_strCode);
+		var strModeLabel = m_strMode === 'add' ? 'New' : m_strMode === 'view' ? 'View' : 'Edit';
+		api.setFormTitle(m_strFormID, strModeLabel + ' ' + m_strEntity);
 
-		fetchConfig(function()
+		console.log('frmEntity Form_onLoad mode=' + m_strMode + ' entity=' + m_strEntity + ' code=' + m_strCode);
+
+		if (m_strMode === 'view')
 		{
-			if (m_objConfig.title)
+			// View: load entity record directly, render readonly - no layout needed
+			fetchRecord(function(objResponse_a)
 			{
-				var strTitle = m_blnIsNew ? 'New ' + m_objConfig.title : 'Edit ' + m_objConfig.title + ': ' + m_strCode;
-				api.setFormTitle(m_strFormID, strTitle);
-			}
-			renderForm();
-		});
+				var objRecord = {};
+
+				if (objResponse_a.error && objResponse_a.error.length > 0)
+				{
+					api.print('frmEntity: record not found for ' + m_strEntity + '/' + m_strCode);
+					m_objFormLayout = { title: m_strEntity, sections: [] };
+				}
+				else
+				{
+					objRecord       = objResponse_a.data || {};
+					m_objFormLayout = objRecord;
+					api.setFormTitle(m_strFormID, 'View ' + (m_objFormLayout.title || m_strEntity) + ': ' + m_strCode);
+				}
+
+				renderForm();
+			});
+		}
+		else if (m_strMode === 'add')
+		{
+			// Add: load layout, render blank form
+			fetchLayout(function()
+			{
+				api.setFormTitle(m_strFormID, 'New ' + (m_objFormLayout.title || m_strEntity));
+				renderForm();
+			});
+		}
+		else
+		{
+			// Edit: load layout then record, transfer data if version is newer
+			fetchLayout(function()
+			{
+				api.setFormTitle(m_strFormID, 'Edit ' + (m_objFormLayout.title || m_strEntity) + ': ' + m_strCode);
+
+				fetchRecord(function(objResponse_a)
+				{
+					var arrSections = JSON.parse(JSON.stringify(m_objFormLayout.sections || []));
+
+					if (objResponse_a.error.length === 0 && objResponse_a.data)
+					{
+						var arrOldSections = objResponse_a.data.sections || [];
+
+						if (isLayoutVersionNewer(arrSections, arrOldSections))
+						{
+							arrSections = transferFieldValues(arrSections, arrOldSections);
+						}
+						else
+						{
+							arrSections = arrOldSections;
+						}
+					}
+
+					m_objFormLayout.sections = arrSections;
+					renderForm();
+				});
+			});
+		}
 	};
 
 	this.Form_onResize = function(intWidth_a, intHeight_a)

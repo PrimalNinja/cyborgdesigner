@@ -26,40 +26,6 @@ function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
 		return 'ge-frmLayoutLister-' + m_strFormID.replace(/[^a-zA-Z0-9]/g, '');
 	}
 
-	function extractFieldValue(objItem_a, strFieldCode_a)
-	{
-		// Layout records store display fields in the Form Header section
-		var arrSections = objItem_a.sections || [];
-		var varResult   = '';
-
-		for (var intS = 0; intS < arrSections.length; intS++)
-		{
-			var strCaption = (arrSections[intS].caption || '').toLowerCase();
-
-			if (strCaption === 'form header')
-			{
-				var arrContainers = arrSections[intS].containers || [];
-
-				for (var intC = 0; intC < arrContainers.length; intC++)
-				{
-					var arrChildren = arrContainers[intC].children || [];
-
-					for (var intF = 0; intF < arrChildren.length; intF++)
-					{
-						var objField = arrChildren[intF];
-
-						if (varResult === '' && (objField.name || '').toLowerCase() === strFieldCode_a)
-						{
-							varResult = objField.value !== undefined ? objField.value : '';
-						}
-					}
-				}
-			}
-		}
-
-		return varResult;
-	}
-
 	function buildServerResponse(arrItems_a, intOffset_a, intLimit_a, strSearch_a, arrOrder_a)
 	{
 		var arrFields     = m_objConfig.fields     || [];
@@ -71,21 +37,16 @@ function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
 			var objItem = arrItems_a[intI];
 			var arrRow  = [];
 
-			arrRow.push(objItem.code || '');
+			arrRow.push(getFieldValueByContainerNameDotFieldName(objItem, m_objConfig.rowid || '') || '');
 
 			for (var intJ = 0; intJ < arrFields.length; intJ++)
 			{
 				var strFieldCode = arrFields[intJ].code.toLowerCase();
-				var varValue     = extractFieldValue(objItem, strFieldCode);
+				var varValue     = getFieldValueByContainerNameDotFieldName(objItem, strFieldCode);
 
 				if (varValue === undefined || varValue === null)
 				{
 					varValue = '';
-				}
-
-				if (arrFields[intJ].type === 'BOOLEAN')
-				{
-					varValue = (varValue === 'yes' || varValue === true) ? 'Yes' : 'No';
 				}
 
 				arrRow.push(varValue);
@@ -236,10 +197,12 @@ function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
 				},
 				cbOnOperation: function(strOperation_a, arrRow_a, strID_a)
 				{
+					console.log('frmLayoutLister cbOnOperation', strOperation_a, strID_a);
 					onOperation(strOperation_a, strID_a);
 				},
 				cbOnDblClick: function(arrRow_a, strID_a)
 				{
+					console.log('frmLayoutLister cbOnDblClick', strID_a);
 					if (strID_a)
 					{
 						onOperation('EDIT', strID_a);
@@ -252,16 +215,20 @@ function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
 	function onOperation(strOperation_a, strCode_a)
 	{
 		var strCode = strCode_a || '';
+		var strMode = strOperation_a.toLowerCase();
 
 		if (strOperation_a === 'ADD')
 		{
 			strCode = '';
 		}
 
+		console.log('frmLayoutLister onOperation mode=' + strMode + ' code=' + strCode);
+
 		api.openForm('frmLayoutDesigner',
 		{
 			entity: m_strDataFolder,
 			code:   strCode,
+			mode:   strMode,
 			onSave: function()
 			{
 				if (m_objLister)

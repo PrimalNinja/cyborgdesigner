@@ -822,6 +822,61 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
 		}
     };
     
+	this.getFormJSON = function()
+	{
+		var arrSections = JSON.parse(JSON.stringify(m_arrLayoutSections));
+
+		for (var intS = 0; intS < arrSections.length; intS++)
+		{
+			var arrContainers = arrSections[intS].containers || [];
+
+			for (var intC = 0; intC < arrContainers.length; intC++)
+			{
+				getFormJSON_container(arrContainers[intC]);
+			}
+		}
+
+		return arrSections;
+	};
+
+	function getFormJSON_container(objContainer_a)
+	{
+		var arrChildren = objContainer_a.children || [];
+
+		for (var intI = 0; intI < arrChildren.length; intI++)
+		{
+			var objChild = arrChildren[intI];
+
+			if (objChild.children)
+			{
+				getFormJSON_container(objChild);
+			}
+			else
+			{
+				var strName    = getFullName(objContainer_a.name, objChild.name);
+				var objElement = os.element('#' + m_strFormID, '[name="' + strName + '"]');
+
+				if (objElement.length > 0)
+				{
+					if (objChild.type === 'checkbox')
+					{
+						objChild.value = objElement.is(':checked') ? 'yes' : 'no';
+					}
+					else
+					{
+						objChild.value = objElement.val();
+					}
+				}
+			}
+		}
+	}
+
+	this.setFormJSON = function(arrSections_a)
+	{
+		m_arrLayoutSections = JSON.parse(JSON.stringify(arrSections_a));
+		m_objThis.render();
+	};
+
 	this.getData = function()
 	{
 		var objData = {};
@@ -870,10 +925,12 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
 					if (objField.fieldType === 'checkbox')
 					{
 						objInput.prop('checked', toBoolean(strValue));
+						objInput.attr('checked', toBoolean(strValue) ? 'checked' : null);
 					}
 					else
 					{
 						objInput.val(strValue);
+						objInput.attr('value', strValue);
 					}
 				}
 			}

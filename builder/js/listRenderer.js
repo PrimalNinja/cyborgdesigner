@@ -240,7 +240,7 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 			switch (strType_a)
 			{
 				case 'BOOLEAN':
-					strResult = value_a ? 'Yes' : 'No';
+					strResult = toBoolean(value_a) ? 'Yes' : 'No';
 					break;
 					
 				case 'DATE':

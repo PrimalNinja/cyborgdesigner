@@ -299,37 +299,9 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 	// PRIVATE
 	// ============================================================
 
-	function extractFromFormHeader(arrSections_a, strFieldName_a)
-	{
-		var strResult = '';
-
-		for (var intS = 0; intS < arrSections_a.length; intS++)
-		{
-			if ((arrSections_a[intS].caption || '').toLowerCase() === 'form header')
-			{
-				var arrContainers = arrSections_a[intS].containers || [];
-
-				for (var intC = 0; intC < arrContainers.length; intC++)
-				{
-					var arrChildren = arrContainers[intC].children || [];
-
-					for (var intF = 0; intF < arrChildren.length; intF++)
-					{
-						if (strResult === '' && (arrChildren[intF].name || '').toLowerCase() === strFieldName_a.toLowerCase())
-						{
-							strResult = arrChildren[intF].value || '';
-						}
-					}
-				}
-			}
-		}
-
-		return strResult;
-	}
-
 	function doSave()
 	{
-		var strCode = (extractFromFormHeader(m_arrSections, 'CODE') || '').toLowerCase().replace(/[^a-z0-9_\-]/g, '');
+		var strCode = (getFieldValueByContainerNameAndFieldName(m_arrSections, 'FORMHEADER', 'CODE') || '').toLowerCase().replace(/[^a-z0-9_\-]/g, '');
 
 		if (strCode.length === 0)
 		{
@@ -337,6 +309,9 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 		}
 		else
 		{
+			var intVersion = parseInt(getFieldValueByContainerNameAndFieldName(m_arrSections, 'FORMHEADER', 'FORMVERSION') || '1', 10);
+			setFieldValueByContainerNameAndFieldName(m_arrSections, 'FORMHEADER', 'FORMVERSION', String(intVersion + 1));
+
 			var objRecord = {
 				code:     strCode,
 				sections: m_arrSections
@@ -380,12 +355,13 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 						type: 'verticalcontainer',
 						name: 'FORMHEADER',
 						label: 'Form Header',
+						caption: 'Form Header',
 						children: [
-							{ id: getGUID('field-'), type: 'textbox', caption: 'Entity Name', label: 'Entity Name', name: 'ENTITYNAME', container: false },
+							{ id: getGUID('field-'), type: 'textbox', caption: 'Entity Name', label: 'Entity Name', name: 'ENTITYNAME', value: '', container: false },
 							{ id: getGUID('field-'), type: 'number', caption: 'Form Version', label: 'Form Version', name: 'FORMVERSION', value: '1', container: false },
-							{ id: getGUID('field-'), type: 'textbox', caption: 'Code', label: 'Code', name: 'CODE', container: false },
-							{ id: getGUID('field-'), type: 'textbox', caption: 'Description', label: 'Description', name: 'DESCRIPTION', container: false },
-							{ id: getGUID('field-'), type: 'checkbox', caption: 'Is Enabled?', label: 'Is Enabled?', name: 'ISENABLED', container: false }
+							{ id: getGUID('field-'), type: 'textbox', caption: 'Code', label: 'Code', name: 'CODE', value: '', container: false },
+							{ id: getGUID('field-'), type: 'textbox', caption: 'Description', label: 'Description', name: 'DESCRIPTION', value: '', container: false },
+							{ id: getGUID('field-'), type: 'checkbox', caption: 'Is Enabled?', label: 'Is Enabled?', name: 'ISENABLED', value: '', container: false }
 						]
 					}
 				]
@@ -399,6 +375,7 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 						type: 'verticalcontainer',
 						name: 'DATAHEADER',
 						label: 'Data Header',
+						caption: 'Data Header',
 						children: [
 							{ id: getGUID('field-'), type: 'number', caption: 'Data Version', label: 'Data Version', name: 'DATAVERSION', value: '1', container: false }
 						]
@@ -458,6 +435,8 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 
 		api.setFormTitle(m_strFormID, m_blnIsNew ? 'New Layout' : 'Edit Layout: ' + m_strCode);
 
+		console.log('frmLayoutDesigner Form_onLoad isNew=' + m_blnIsNew + ' entity=' + m_strEntity + ' code=' + m_strCode);
+
 		// Designer fills the entire form body
 		api.element('#' + m_strFormID, '.ge-formbody').css({'display':'flex','flex-direction':'column'}).html(
 			'<div class="gs-form-toolbar">' +
@@ -481,7 +460,49 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 				cbElement: api.element,
 				//            api.element,
 				cbTransformer:        function(objRaw_a) { return objRaw_a; },
-				cbDataRenderer:       function(objRaw_a) { m_arrSections = objRaw_a; if (m_blnInitialised) { m_blnDirty = true; } m_blnInitialised = true; },
+				cbDataRenderer:       function(objRaw_a)
+				{
+					m_arrSections = objRaw_a;
+
+					if (m_blnInitialised)
+					{
+						m_blnDirty = true;
+					}
+
+					m_blnInitialised = true;
+
+					var strMinified = JSON.stringify(objRaw_a);
+					var strPretty    = JSON.stringify(objRaw_a, null, 4);
+					var strDataHTML  = '';
+
+					strDataHTML += '<div style="padding:8px;border-bottom:1px solid #dee2e6;background:#f8f9fa;">';
+					strDataHTML += '<button class="gs-toolbar-btn ge-data-tab-btn" data-subtab="minified" style="margin-right:4px;">Data</button>';
+					strDataHTML += '<button class="gs-toolbar-btn ge-data-tab-btn" data-subtab="pretty">Pretty</button>';
+					strDataHTML += '</div>';
+					strDataHTML += '<div class="ge-data-subtab-minified" style="padding:8px;overflow:auto;display:block;word-break:break-all;"><code>' + strMinified + '</code></div>';
+					strDataHTML += '<div class="ge-data-subtab-pretty" style="padding:8px;overflow:auto;display:none;"><pre>' + strPretty + '</pre></div>';
+
+					api.element('#' + m_strTargetID, '.gecd-layoutdata').html(strDataHTML);
+
+					api.element('#' + m_strTargetID, '.ge-data-tab-btn').off('click').on('click', function()
+					{
+						var strSubTab = api.element(this).attr('data-subtab');
+						api.element('#' + m_strTargetID, '.ge-data-subtab-minified, .ge-data-subtab-pretty').hide();
+						api.element('#' + m_strTargetID, '.ge-data-subtab-' + strSubTab).show();
+					});
+				},
+				cbPreviewRenderer:    function(objRaw_a)
+				{
+					var objPreviewTarget = api.element('#' + m_strTargetID, '.gecd-layoutpreview');
+					objPreviewTarget.html('');
+
+					new formRenderer(api, m_strFormID,
+					{
+						layoutSections: objRaw_a,
+						readonly:       true,
+						target:         'gecd-layoutpreview'
+					});
+				},
 				cbSave:               function() { doSave(); },
 				cbClose:              function() { doClose(); },
 				target:               '#' + m_strTargetID,

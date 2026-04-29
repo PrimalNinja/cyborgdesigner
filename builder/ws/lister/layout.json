@@ -1,23 +1,24 @@
 {
     "code": "layout",
     "title": "Layouts",
+	"rowid": "FORMHEADER.CODE",
     "fields": [
         {
-            "code": "CODE",
+            "code": "FORMHEADER.CODE",
             "caption": "Code",
             "type": "STRING",
             "visible": true,
             "sortable": true
         },
         {
-            "code": "DESCRIPTION",
+            "code": "FORMHEADER.DESCRIPTION",
             "caption": "Description",
             "type": "STRING",
             "visible": true,
             "sortable": true
         },
         {
-            "code": "ISENABLED",
+            "code": "FORMHEADER.ISENABLED",
             "caption": "Enabled",
             "type": "BOOLEAN",
             "visible": true,

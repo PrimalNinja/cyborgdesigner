@@ -54,6 +54,10 @@
     cursor: default;
 }
 
+.form-control[readonly]:focus {
+    background-color: #e9ecef;
+}
+
 .form-control:disabled {
     background-color: #e9ecef;
     opacity: 1;
@@ -156,6 +160,11 @@
     color: #495057;
     margin-bottom: 0.5rem;
     display: inline-block;
+}
+
+.gscr-form-control[readonly],
+.gscr-form-control[readonly]:focus {
+    background-color: #e9ecef;
 }
 
 .gscr-form-control {

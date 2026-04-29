@@ -11,6 +11,7 @@
                     "type": "verticalcontainer",
                     "name": "FORMHEADER",
                     "label": "Form Header",
+                    "caption": "Form Header",
                     "children": [
                         {
                             "id": "a1b2c3d4-0001-0001-0001-000000000001",
@@ -57,8 +58,7 @@
                             "value": "yes",
                             "container": false
                         }
-                    ],
-                    "caption": "Form Header"
+                    ]
                 }
             ]
         },
@@ -71,6 +71,7 @@
                     "type": "verticalcontainer",
                     "name": "DATAHEADER",
                     "label": "Data Header",
+                    "caption": "Data Header",
                     "children": [
                         {
                             "id": "a1b2c3d4-0002-0001-0001-000000000001",
@@ -81,8 +82,7 @@
                             "value": "1",
                             "container": false
                         }
-                    ],
-                    "caption": "Data Header"
+                    ]
                 }
             ]
         },
@@ -93,8 +93,9 @@
                 {
                     "id": "f25a6ced-ee01-4c35-8734-344b723dfa98",
                     "type": "verticalcontainer",
-                    "name": "ENTITY",
+                    "name": "FORMDATA",
                     "label": "Entity Details",
+                    "caption": "Entity Details",
                     "children": [
                         {
                             "id": "169c6e1f-616c-4404-aafc-20abe6251edd",
@@ -103,7 +104,7 @@
                             "label": "Code",
                             "name": "CODE",
                             "required": "yes",
-                            "value": "entity",
+                            "value": "",
                             "container": false
                         },
                         {
@@ -113,7 +114,7 @@
                             "label": "Description",
                             "name": "DESCRIPTION",
                             "required": "yes",
-                            "value": "Entity",
+                            "value": "",
                             "container": false
                         },
                         {
@@ -131,11 +132,10 @@
                             "caption": "Notes",
                             "label": "Notes",
                             "name": "NOTES",
-                            "value": "Core entity type. Defines the data entities used across the system.",
+                            "value": "",
                             "container": false
                         }
-                    ],
-                    "caption": "Entity Details"
+                    ]
                 }
             ]
         }

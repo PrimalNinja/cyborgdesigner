@@ -31,3 +31,16 @@ function getGUID(strPrefix_a)
 	}
 	);
 }
+
+function toBoolean(strVal_a)
+{
+    var blnResult = false;
+
+    if (strVal_a !== null && strVal_a !== undefined)
+    {
+        var strVal = String(strVal_a).toLowerCase().trim();
+        blnResult = (strVal === 'true' || strVal === 't' || strVal === 'yes' || strVal === 'y' || strVal === '1');
+    }
+
+    return blnResult;
+}

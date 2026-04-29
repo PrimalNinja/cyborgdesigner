@@ -25,40 +25,6 @@ function frmLister(strFormID_a, objOS_a, objParameters_a)
 		return 'ge-frmLister-' + m_strFormID.replace(/[^a-zA-Z0-9]/g, '');
 	}
 
-	function extractFieldValue(objItem_a, strFieldCode_a)
-	{
-		// Only look in Form Data sections (not Form Header or Data Header)
-		var arrSections = objItem_a.sections || [];
-		var varResult   = '';
-
-		for (var intS = 0; intS < arrSections.length; intS++)
-		{
-			var strCaption = (arrSections[intS].caption || '').toLowerCase();
-
-			if (strCaption !== 'form header' && strCaption !== 'data header')
-			{
-				var arrContainers = arrSections[intS].containers || [];
-
-				for (var intC = 0; intC < arrContainers.length; intC++)
-				{
-					var arrChildren = arrContainers[intC].children || [];
-
-					for (var intF = 0; intF < arrChildren.length; intF++)
-					{
-						var objField = arrChildren[intF];
-
-						if ((objField.name || '').toLowerCase() === strFieldCode_a && varResult === '')
-						{
-							varResult = objField.value !== undefined ? objField.value : '';
-						}
-					}
-				}
-			}
-		}
-
-		return varResult;
-	}
-
 	function buildServerResponse(arrItems_a, intOffset_a, intLimit_a, strSearch_a, arrOrder_a)
 	{
 		var arrFields     = m_objConfig.fields     || [];
@@ -71,21 +37,16 @@ function frmLister(strFormID_a, objOS_a, objParameters_a)
 			var arrRow  = [];
 
 			// first column is always the ID (code)
-			arrRow.push(objItem.code || '');
+			arrRow.push(getFieldValueByContainerNameDotFieldName(objItem, m_objConfig.rowid || '') || '');
 
 			for (var intJ = 0; intJ < arrFields.length; intJ++)
 			{
 				var strFieldCode = arrFields[intJ].code.toLowerCase();
-				var varValue     = extractFieldValue(objItem, strFieldCode);
+				var varValue     = getFieldValueByContainerNameDotFieldName(objItem, strFieldCode);
 
 				if (varValue === undefined || varValue === null)
 				{
 					varValue = '';
-				}
-
-				if (arrFields[intJ].type === 'BOOLEAN')
-				{
-					varValue = (varValue === 'yes' || varValue === true) ? 'Yes' : 'No';
 				}
 
 				arrRow.push(varValue);
@@ -200,7 +161,7 @@ function frmLister(strFormID_a, objOS_a, objParameters_a)
 		fetchData(function()
 		{
 			var objInitialData = buildServerResponse(m_arrData, 0, 9999, '', []);
-
+console.log(JSON.stringify(objInitialData));
 			m_objLister = new listRenderer(api, m_strFormID,
 			{
 				type:        'LIST',
@@ -237,10 +198,12 @@ function frmLister(strFormID_a, objOS_a, objParameters_a)
 				},
 				cbOnOperation: function(strOperation_a, arrRow_a, strID_a)
 				{
+					console.log('frmLister cbOnOperation', strOperation_a, strID_a);
 					onOperation(strOperation_a, strID_a);
 				},
 				cbOnDblClick: function(arrRow_a, strID_a)
 				{
+					console.log('frmLister cbOnDblClick', strID_a);
 					if (strID_a)
 					{
 						onOperation('EDIT', strID_a);
@@ -253,19 +216,23 @@ function frmLister(strFormID_a, objOS_a, objParameters_a)
 	function onOperation(strOperation_a, strCode_a)
 	{
 		var strCode = strCode_a || '';
+		var strMode = strOperation_a.toLowerCase();   // add | edit | view
 
 		if (strOperation_a === 'ADD')
 		{
 			strCode = '';
 		}
 
+		console.log('frmLister onOperation mode=' + strMode + ' code=' + strCode);
+
 		api.openForm('frmEntity',
 		{
-			type:   'form',
 			entity: m_strEntity,
 			code:   strCode,
+			mode:   strMode,
 			onSave: function()
 			{
+				console.log('frmLister onSave refresh');
 				if (m_objLister)
 				{
 					m_objLister.refresh();
