@@ -6,33 +6,6 @@ var g_objOS = new os();
 
 $(document).ready(function()
 {
-	$('.gecd-entities').on('click', function()
-	{
-		$('.gecd-maintabbutton').removeClass('active');
-		$(this).addClass('active');
-
-		g_objOS.openForm('frmLister',
-		{
-			type:   'lister',
-			entity: 'entity'
-		},
-		null);
-	});
-
-	$('.gecd-layouts').on('click', function()
-	{
-		$('.gecd-maintabbutton').removeClass('active');
-		$(this).addClass('active');
-
-		g_objOS.openForm('frmLayoutLister',
-		{
-			type:       'lister',
-			entity:     'layout',
-			datafolder: 'form'
-		},
-		null);
-	});
-
-	// open entities on load
-	//$('.gecd-entities').trigger('click');
+	var g_objDeveloperMenu = new menuRenderer(g_objOS, '#ge-developermenu', 'developer');
+	var g_objMainMenu = new menuRenderer(g_objOS, '#ge-mainmenu', 'main');
 });

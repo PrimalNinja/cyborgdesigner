@@ -1,5 +1,5 @@
 {
-    "code": "entity",
+    "code": "ENTITY",
     "title": "Entities",
 	"rowid": "FORMDATA.CODE",
     "fields": [
@@ -23,23 +23,27 @@
             "type": "BOOLEAN",
             "visible": true,
             "sortable": true
-        }
-    ],
-    "operations": [
-        {
-            "code": "ADD",
-            "caption": "Add",
-            "requiresselection": false
         },
         {
-            "code": "EDIT",
-            "caption": "Edit",
-            "requiresselection": true
+            "code": "FORMDATA.NOTES",
+            "caption": "Notes",
+            "type": "STRING",
+            "visible": true,
+            "sortable": true
         },
-        {
-            "code": "VIEW",
-            "caption": "View",
-            "requiresselection": true
-        }
-    ]
+		{
+			"code": "FORMHEADER.FORMVERSION",
+			"caption": "Form Ver",
+			"type": "STRING",
+			"visible": true,
+			"sortable": true
+		},
+		{
+			"code": "DATAHEADER.DATAVERSION",
+			"caption": "Data Ver",
+			"type": "STRING",
+			"visible": true,
+			"sortable": true
+		}
+	]
 }

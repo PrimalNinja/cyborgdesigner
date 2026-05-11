@@ -1,26 +1,26 @@
 {
-    "code": "ENTITY",
+    "code": "FORMLAYOUT",
     "sections": [
         {
-            "id": "9ba5d24f-dd6e-435f-98d3-1e7aad3ba7f0",
+            "id": "section-5dd0815a-0580-4d41-8cf8-4b723631b739",
             "caption": "Form Header",
             "visible": false,
             "containers": [
                 {
-                    "id": "efd2e2a2-5948-497f-bf1b-f6cc24e69d80",
+                    "id": "container-52688014-0d7f-4fac-9878-b80ee8a25be7",
                     "type": "verticalcontainer",
                     "name": "FORMHEADER",
                     "label": "Form Header",
                     "caption": "Form Header",
                     "children": [
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000001",
+                            "id": "field-7bed4ae4-fac9-47aa-aec5-10f60ac6cf53",
                             "type": "textbox",
                             "caption": "Entity Name",
                             "label": "Entity Name",
                             "name": "ENTITYNAME",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "MENUITEM",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -29,28 +29,28 @@
                             "visible": true
                         },
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000002",
+                            "id": "field-1c6052e8-e763-4a49-ac47-1fa72599c8ef",
                             "type": "number",
                             "caption": "Form Version",
                             "label": "Form Version",
                             "name": "FORMVERSION",
                             "required": true,
-                            "value": "13",
+                            "value": "8",
                             "container": false,
                             "classes": "",
+                            "visible": true,
                             "readonly": false,
                             "tooltip": "",
-                            "metadata": "",
-                            "visible": true
+                            "metadata": ""
                         },
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000003",
+                            "id": "field-6c3dc9a9-4dc3-4521-9c72-093ecd19fdf4",
                             "type": "textbox",
                             "caption": "Code",
                             "label": "Code",
                             "name": "CODE",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "MENUITEM",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -59,13 +59,13 @@
                             "visible": true
                         },
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000004",
+                            "id": "field-6317ea49-fb46-4fd3-93d9-5da764cbef6b",
                             "type": "textbox",
                             "caption": "Description",
                             "label": "Description",
                             "name": "DESCRIPTION",
                             "required": true,
-                            "value": "Entity",
+                            "value": "Menu Item",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -74,7 +74,7 @@
                             "visible": true
                         },
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000005",
+                            "id": "field-1192faa3-f418-4098-b848-38b2ecb0f26b",
                             "type": "checkbox",
                             "caption": "Is Enabled?",
                             "label": "Is Enabled?",
@@ -82,11 +82,11 @@
                             "value": true,
                             "container": false,
                             "classes": "",
+                            "visible": true,
                             "required": false,
                             "readonly": false,
                             "tooltip": "",
-                            "metadata": "",
-                            "visible": true
+                            "metadata": ""
                         }
                     ],
                     "visible": true,
@@ -97,31 +97,31 @@
             ]
         },
         {
-            "id": "5dcb780d-143c-4a21-bf5d-e9dcb269aeee",
+            "id": "section-14366233-e116-4dfc-ba4e-8fed42a2fd45",
             "caption": "Data Header",
             "visible": false,
             "containers": [
                 {
-                    "id": "4c364be4-2e45-4c17-8b05-43dd878a6d25",
+                    "id": "container-259b7a19-bcf3-4e81-b553-725b4749addf",
                     "type": "verticalcontainer",
                     "name": "DATAHEADER",
                     "label": "Data Header",
                     "caption": "Data Header",
                     "children": [
                         {
-                            "id": "a1b2c3d4-0002-0001-0001-000000000001",
+                            "id": "field-c778201e-f3ac-4c8f-b9cd-6fa9ddad26d0",
                             "type": "number",
                             "caption": "Data Version",
                             "label": "Data Version",
                             "name": "DATAVERSION",
                             "required": true,
-                            "value": "20",
+                            "value": "12",
                             "container": false,
                             "classes": "",
+                            "visible": true,
                             "readonly": false,
                             "tooltip": "",
-                            "metadata": "",
-                            "visible": true
+                            "metadata": ""
                         }
                     ],
                     "visible": true,
@@ -132,56 +132,71 @@
             ]
         },
         {
-            "id": "66c32d3c-e39d-4e02-a5b8-280bc059cc6a",
-            "caption": "Entity Details",
+            "id": "section-fa08ab71-e8a2-4844-bdf2-eb387b194bed",
+            "caption": "Form Data",
             "visible": true,
             "containers": [
                 {
-                    "id": "f25a6ced-ee01-4c35-8734-344b723dfa98",
+                    "id": "container-073eeecd-8e82-4c9b-bd66-a478ec630f65",
                     "type": "verticalcontainer",
                     "name": "FORMDATA",
-                    "label": "Entity Details",
-                    "caption": "Entity Details",
+                    "label": "Form Data",
+                    "caption": "Form Data",
                     "children": [
                         {
-                            "id": "169c6e1f-616c-4404-aafc-20abe6251edd",
+                            "id": "field-2e2d0d1e-3cfc-4371-b107-d482643d2948",
                             "type": "textbox",
                             "caption": "Code",
                             "label": "Code",
                             "name": "CODE",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "FORMLAYOUT",
                             "container": false,
                             "classes": "",
+                            "visible": true,
                             "readonly": false,
                             "tooltip": "",
-                            "metadata": "",
-                            "visible": true
+                            "metadata": ""
                         },
                         {
-                            "id": "1eda9d12-8a74-4926-8dc6-97627fcc8f62",
+                            "id": "field-e9cbaed1-c126-410b-afc7-76d03cd3f2ce",
                             "type": "textbox",
                             "caption": "Description",
                             "label": "Description",
                             "name": "DESCRIPTION",
                             "required": true,
-                            "value": "Entity",
+                            "value": "Form Layouts",
                             "container": false,
                             "classes": "",
+                            "visible": true,
+                            "readonly": false,
+                            "tooltip": "",
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-ce4478b2-aa83-4002-8b26-a1cd6430e601",
+                            "type": "textbox",
+                            "caption": "Text",
+                            "container": false,
+                            "name": "ACTION",
+                            "label": "Action",
+                            "classes": "",
+                            "value": "LAYOUTLISTER",
+                            "required": true,
                             "readonly": false,
                             "tooltip": "",
                             "metadata": "",
                             "visible": true
                         },
                         {
-                            "id": "402b3fe7-e640-4257-8b8a-915e74936938",
-                            "type": "checkbox",
-                            "caption": "Is Enabled?",
-                            "label": "Is Enabled?",
-                            "name": "ISENABLED",
-                            "value": true,
+                            "id": "field-99d47a79-e8cb-49cc-b8f8-ac9e7afb4edf",
+                            "type": "multilinetextbox",
+                            "caption": "Multiline Text",
                             "container": false,
+                            "name": "ACTIONDATA",
+                            "label": "Action Data",
                             "classes": "",
+                            "value": "{\n\ttype: 'LAYOUTLISTER',\n\tsubtype: 'FORMLAYOUT',\n\tdesigner: 'frmFormDesigner'\n}",
                             "required": false,
                             "readonly": false,
                             "tooltip": "",
@@ -189,7 +204,22 @@
                             "visible": true
                         },
                         {
-                            "id": "66c32d3c-e39d-4e02-a5b8-280bc059cc6b",
+                            "id": "field-1347cb38-6681-4a9e-90e9-ff421cf53c57",
+                            "type": "checkbox",
+                            "caption": "Is Enabled?",
+                            "label": "Is Enabled?",
+                            "name": "ISENABLED",
+                            "value": true,
+                            "container": false,
+                            "classes": "",
+                            "visible": true,
+                            "required": false,
+                            "readonly": false,
+                            "tooltip": "",
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-9629e4d9-d4e6-4ed6-9a31-238584749067",
                             "type": "multilinetextbox",
                             "caption": "Notes",
                             "label": "Notes",
@@ -197,15 +227,15 @@
                             "value": "",
                             "container": false,
                             "classes": "",
+                            "visible": true,
                             "required": false,
                             "readonly": false,
                             "tooltip": "",
-                            "metadata": "",
-                            "visible": true
+                            "metadata": ""
                         }
                     ],
-                    "classes": "",
                     "visible": true,
+                    "classes": "",
                     "tooltip": "",
                     "metadata": ""
                 }

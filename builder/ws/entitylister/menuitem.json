@@ -1,0 +1,49 @@
+{
+    "code": "MENUITEM",
+    "title": "Entity Operations",
+	"rowid": "FORMDATA.CODE",
+    "fields": [
+        {
+            "code": "FORMDATA.CODE",
+            "caption": "Code",
+            "type": "STRING",
+            "visible": true,
+            "sortable": true
+        },
+        {
+            "code": "FORMDATA.DESCRIPTION",
+            "caption": "Description",
+            "type": "STRING",
+            "visible": true,
+            "sortable": true
+        },
+        {
+            "code": "FORMDATA.ORDER",
+            "caption": "Order",
+            "type": "NUMBER",
+            "visible": true,
+            "sortable": true
+        },
+        {
+            "code": "FORMDATA.ISENABLED",
+            "caption": "Enabled",
+            "type": "BOOLEAN",
+            "visible": true,
+            "sortable": true
+        },
+		{
+			"code": "FORMHEADER.FORMVERSION",
+			"caption": "Form Ver",
+			"type": "STRING",
+			"visible": true,
+			"sortable": true
+		},
+		{
+			"code": "DATAHEADER.DATAVERSION",
+			"caption": "Data Ver",
+			"type": "STRING",
+			"visible": true,
+			"sortable": true
+		}
+	]
+}

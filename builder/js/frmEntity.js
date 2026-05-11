@@ -30,7 +30,7 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 	function fetchLayout(cb_a)
 	{
 		console.log('frmEntity fetchLayout loading form/' + m_strEntity);
-		api.loadFile('form', m_strEntity, function(objResponse_a)
+		api.loadFile('formlayout', m_strEntity, function(objResponse_a)
 		{
 			console.log('frmEntity fetchLayout response error=' + (objResponse_a.error || '') + ' hasData=' + !!objResponse_a.data);
 			if (objResponse_a.error && objResponse_a.error.length > 0)
@@ -133,7 +133,8 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 		else
 		{
 			var arrSections    = m_objFormRenderer.getFormJSON();
-			var strCode        = (getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'CODE') || '').toLowerCase().replace(/[^a-z0-9_\-]/g, '');
+			var strCode   = (getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'CODE') || '').replace(/[^a-zA-Z0-9_\-]/g, '');
+			var strPrefix = (m_objParameters.prefix || '').replace(/[^a-zA-Z0-9_\-]/g, '');			var strFullCode    = strPrefix.length > 0 ? strPrefix + '--' + strCode : strCode;
 			var intDataVersion = parseInt(getFieldValueByContainerNameAndFieldName(arrSections, 'DATAHEADER', 'DATAVERSION') || '1', 10);
 
 			setFieldValueByContainerNameAndFieldName(arrSections, 'DATAHEADER', 'DATAVERSION', String(intDataVersion + 1));
@@ -144,9 +145,10 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 			}
 			else
 			{
-				var objSaveData = { code: strCode, title: m_objFormLayout.title || m_strEntity, sections: arrSections };
+				//var objSaveData = { code: strFullCode, sections: arrSections };
+				var objSaveData = { code: strCode, sections: arrSections };
 
-				api.saveFile(m_strEntity, strCode, objSaveData, function(objResponse_a)
+				api.saveFile(m_strEntity, strFullCode, objSaveData, function(objResponse_a)
 				{
 					if (objResponse_a.error && objResponse_a.error.length > 0)
 					{
@@ -261,9 +263,15 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 		}
 		else if (m_strMode === 'add')
 		{
-			// Add: load layout, render blank form
 			fetchLayout(function()
 			{
+				// setFieldValueByContainerNameAndFieldName(m_objFormLayout.sections, 'FORMHEADER', 'ENTITYNAME',  '');
+				// setFieldValueByContainerNameAndFieldName(m_objFormLayout.sections, 'FORMHEADER', 'CODE',        '');
+				// setFieldValueByContainerNameAndFieldName(m_objFormLayout.sections, 'FORMHEADER', 'DESCRIPTION', '');
+				// setFieldValueByContainerNameAndFieldName(m_objFormLayout.sections, 'FORMDATA',   'CODE',        '');
+				// setFieldValueByContainerNameAndFieldName(m_objFormLayout.sections, 'FORMDATA',   'DESCRIPTION', '');
+				// setFieldValueByContainerNameAndFieldName(m_objFormLayout.sections, 'DATAHEADER', 'DATAVERSION', '0');
+
 				api.setFormTitle(m_strFormID, 'New ' + (m_objFormLayout.title || m_strEntity));
 				renderForm();
 			});
@@ -285,7 +293,9 @@ function frmEntity(strFormID_a, objOS_a, objParameters_a)
 
 						if (isLayoutVersionNewer(arrSections, arrOldSections))
 						{
+							var strNewVersion = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMHEADER', 'FORMVERSION');
 							arrSections = transferFieldValues(arrSections, arrOldSections);
+							setFieldValueByContainerNameAndFieldName(arrSections, 'FORMHEADER', 'FORMVERSION', strNewVersion);
 						}
 						else
 						{

@@ -36,9 +36,15 @@
     justify-content: space-between;
     align-items: center;
     border-radius: 4px 4px 0 0;
-    cursor: move;
+    cursor: default;
     user-select: none;
     flex-shrink: 0;
+}
+
+.gs-resizable
+{
+    resize: both;
+    overflow: auto;
 }
 
 .gs-form-title

@@ -32,6 +32,28 @@ function getGUID(strPrefix_a)
 	);
 }
 
+function processArray(arr_a, cb_a)
+{
+	if (arr_a !== null)
+	{
+		var intRowNum = 1;
+		var intI = 0;
+		var blnAbort = false;
+		while ((!blnAbort) && (intI < arr_a.length))
+		{
+			if (arr_a[intI] !== undefined)
+			{
+				if ($.isFunction(cb_a))
+				{
+					blnAbort = cb_a(arr_a[intI], intRowNum, intI);
+				}
+			}
+			intRowNum++;
+			intI++;
+		}
+	}
+}
+
 function toBoolean(strVal_a)
 {
     var blnResult = false;

@@ -1,8 +1,8 @@
-// js/frmLister.js
+// js/frmEntityLister.js
 // Generic metadata-driven lister form
 // (c) 2025 Cyborg Unicorn Pty Ltd.
 
-function frmLister(strFormID_a, objOS_a, objParameters_a)
+function frmEntityLister(strFormID_a, objOS_a, objParameters_a)
 {
 	var m_objThis     = this;
 	var m_strFormID   = strFormID_a;
@@ -22,7 +22,7 @@ function frmLister(strFormID_a, objOS_a, objParameters_a)
 
 	function getTargetClass()
 	{
-		return 'ge-frmLister-' + m_strFormID.replace(/[^a-zA-Z0-9]/g, '');
+		return 'ge-frmEntityLister-' + m_strFormID.replace(/[^a-zA-Z0-9]/g, '');
 	}
 
 	function buildServerResponse(arrItems_a, intOffset_a, intLimit_a, strSearch_a, arrOrder_a)
@@ -37,7 +37,8 @@ function frmLister(strFormID_a, objOS_a, objParameters_a)
 			var arrRow  = [];
 
 			// first column is always the ID (code)
-			arrRow.push(getFieldValueByContainerNameDotFieldName(objItem, m_objConfig.rowid || '') || '');
+			//arrRow.push(getFieldValueByContainerNameDotFieldName(objItem, m_objConfig.rowid || '') || '');
+			arrRow.push(objItem.code || '');
 
 			for (var intJ = 0; intJ < arrFields.length; intJ++)
 			{
@@ -129,7 +130,7 @@ function frmLister(strFormID_a, objOS_a, objParameters_a)
 
 	function fetchData(cb_a)
 	{
-		api.listFiles(m_strEntity, function(objResponse_a)
+		api.listFiles(m_strEntity, m_objParameters.prefix || '', function(objResponse_a)
 		{
 			if (objResponse_a.error && objResponse_a.error.length > 0)
 			{
@@ -161,7 +162,7 @@ function frmLister(strFormID_a, objOS_a, objParameters_a)
 		fetchData(function()
 		{
 			var objInitialData = buildServerResponse(m_arrData, 0, 9999, '', []);
-console.log(JSON.stringify(objInitialData));
+//console.log(">>>" + JSON.stringify(objInitialData) + "<<<");
 			m_objLister = new listRenderer(api, m_strFormID,
 			{
 				type:        'LIST',
@@ -198,15 +199,15 @@ console.log(JSON.stringify(objInitialData));
 				},
 				cbOnOperation: function(strOperation_a, arrRow_a, strID_a)
 				{
-					console.log('frmLister cbOnOperation', strOperation_a, strID_a);
+					console.log('frmEntityLister cbOnOperation', strOperation_a, strID_a);
 					onOperation(strOperation_a, strID_a);
 				},
 				cbOnDblClick: function(arrRow_a, strID_a)
 				{
-					console.log('frmLister cbOnDblClick', strID_a);
+					console.log('frmEntityLister cbOnDblClick', strID_a);
 					if (strID_a)
 					{
-						onOperation('EDIT', strID_a);
+						setTimeout(function() { onOperation('EDIT', strID_a); }, 100);
 					}
 				}
 			});
@@ -215,31 +216,84 @@ console.log(JSON.stringify(objInitialData));
 
 	function onOperation(strOperation_a, strCode_a)
 	{
-		var strCode = strCode_a || '';
-		var strMode = strOperation_a.toLowerCase();   // add | edit | view
+		var strCode      = strCode_a || '';
+		var strFullCode = '';
+		var objOperation = null;
 
-		if (strOperation_a === 'ADD')
+		for (var intI = 0; intI < (m_objConfig.operations || []).length; intI++)
 		{
-			strCode = '';
+			if (m_objConfig.operations[intI].code === strOperation_a)
+			{
+				objOperation = m_objConfig.operations[intI];
+			}
 		}
 
-		console.log('frmLister onOperation mode=' + strMode + ' code=' + strCode);
-
-		api.openForm('frmEntity',
+		if (objOperation)
 		{
-			entity: m_strEntity,
-			code:   strCode,
-			mode:   strMode,
-			onSave: function()
+			if (objOperation.command === 'ENTITYLISTER')
 			{
-				console.log('frmLister onSave refresh');
-				if (m_objLister)
+				api.openForm('frmEntityLister',
 				{
-					m_objLister.refresh();
+					type:   objOperation.parameters.type   || 'entitylister',
+					entity: objOperation.parameters.entity || '',
+					prefix: strCode
+				},
+				null);
+			}
+			else if (objOperation.command === 'LAYOUTLISTER')
+			{
+				api.openForm('frmLayoutLister',
+				{
+					type:     objOperation.parameters.type     || 'layoutlister',
+					subtype:  objOperation.parameters.subtype  || '',
+					designer: objOperation.parameters.designer || 'frmFormDesigner'
+				},
+				null);
+			}
+			else if (objOperation.command === 'DELETE')
+			{
+				strFullCode = (m_objParameters.prefix || '').length > 0 ? m_objParameters.prefix + '--' + strCode : strCode;
+
+				if (confirm('Are you sure you want to delete ' + strFullCode.replace('--', ' \\ ') + '?'))
+				{
+					api.deleteFile(m_strEntity, strFullCode, function(objResponse_a)
+					{
+						if (objResponse_a.error && objResponse_a.error.length > 0)
+						{
+							alert('Delete failed: ' + objResponse_a.error);
+						}
+						else if (m_objLister)
+						{
+							m_objLister.refresh();
+						}
+					});
 				}
 			}
-		},
-		null);
+			else if (objOperation.command === 'ADD' || objOperation.command === 'EDIT' || objOperation.command === 'VIEW')
+			{
+				strFullCode = (m_objParameters.prefix || '').length > 0 ? m_objParameters.prefix + '--' + strCode : strCode;
+
+				api.openForm('frmEntity',
+				{
+					entity: m_strEntity,
+					code:   strFullCode,
+					mode:   objOperation.command.toLowerCase(),
+					prefix: m_objParameters.prefix || '',
+					onSave: function()
+					{
+						if (m_objLister)
+						{
+							m_objLister.refresh();
+						}
+					}
+				},
+				null);
+			}
+			else
+			{
+				api.print('frmEntityLister: unknown command: ' + objOperation.command);
+			}
+		}
 	}
 
 	function fetchConfig(cb_a)
@@ -248,17 +302,67 @@ console.log(JSON.stringify(objInitialData));
 		{
 			if (objResponse_a.error && objResponse_a.error.length > 0)
 			{
-				api.print('frmLister: config not found for ' + m_strType + '/' + m_strEntity);
+				api.print('frmEntityLister: config not found for ' + m_strType + '/' + m_strEntity);
 				m_objConfig = { fields: [], operations: [] };
+
+				if (api.isFunction(cb_a))
+				{
+					cb_a();
+				}
 			}
 			else
 			{
 				m_objConfig = objResponse_a.data || { fields: [], operations: [] };
-			}
+				m_objConfig.operations = [];
 
-			if (api.isFunction(cb_a))
-			{
-				cb_a();
+				api.listFiles('entityoperation', m_strEntity, function(objListResponse_a)
+				{
+					var arrItems = objListResponse_a.data || [];
+
+					for (var intI = 0; intI < arrItems.length; intI++)
+					{
+						var arrSections      = arrItems[intI].sections || [];
+						var strCode          = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'CODE');
+						var strCaption       = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'CAPTION');
+						var strCommand       = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'COMMAND');
+						var strRequires      = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'REQUIRESSELECTION');
+						var strParameters    = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'PARAMETERS');
+						var strOrder         = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'ORDER');
+						var objParameters    = {};
+
+						if (strParameters.length > 0)
+						{
+							try
+							{
+								objParameters = (new Function('return (' + strParameters + ')'))();
+							}
+							catch (objE)
+							{
+								api.print('frmEntityLister: failed to parse parameters for ' + strCode);
+							}
+						}
+
+						m_objConfig.operations.push(
+						{
+							code:               strCode,
+							caption:            strCaption,
+							command:            strCommand,
+							requiresselection:  toBoolean(strRequires),
+							parameters:         objParameters,
+							order:              parseInt(strOrder, 10) || 0
+						});
+					}
+
+					m_objConfig.operations.sort(function(objA_a, objB_a)
+					{
+						return objA_a.order - objB_a.order;
+					});
+
+					if (api.isFunction(cb_a))
+					{
+						cb_a();
+					}
+				});
 			}
 		});
 	}

@@ -6,98 +6,184 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-$strAction = isset($_POST['action']) ? $_POST['action'] : '';
-$strType   = isset($_POST['type'])   ? $_POST['type']   : '';
-$strCode   = isset($_POST['code'])   ? $_POST['code']   : '';
-$strData   = isset($_POST['data'])   ? $_POST['data']   : '';
+// ============================================================
+// DEBUG
+// ============================================================
 
-function fnSanitise($strValue_a)
+define('DEBUG', true);
+
+function logDebug($str_a)
 {
-    return preg_replace('/[^a-zA-Z0-9_\-]/', '', $strValue_a);
+	if (DEBUG)
+	{
+		file_put_contents(__DIR__ . '/server.log', date('Y-m-d H:i:s') . ' ' . $str_a . "\n", FILE_APPEND);
+	}
 }
 
-$strType = strtolower(fnSanitise($strType));
-$strCode = strtolower(fnSanitise($strCode));
+// ============================================================
+// SANITIZE
+// ============================================================
 
-function fnBuildPath($strType_a, $strCode_a)
+function sanitize($strValue_a)
 {
-    return __DIR__ . '/' . $strType_a . '/' . $strCode_a . '.json';
+	return preg_replace('/[^a-zA-Z0-9_\-]/', '', $strValue_a);
 }
 
-function fnBuildDir($strType_a)
+// ============================================================
+// PARAMETERS
+// ============================================================
+
+$strAction = isset($_POST['action']) ? strtolower($_POST['action'])           : '';
+$strType   = isset($_POST['type'])   ? strtolower(sanitize($_POST['type']))   : '';
+$strCode   = isset($_POST['code'])   ? strtolower(sanitize($_POST['code']))   : '';
+$strData   = isset($_POST['data'])   ? $_POST['data']                         : '';
+$strPrefix = isset($_POST['prefix']) ? strtolower(sanitize($_POST['prefix'])) : '';
+
+// ============================================================
+// FUNCTIONS
+// ============================================================
+
+function buildPath($strType_a, $strCode_a)
 {
-    return __DIR__ . '/' . $strType_a;
+	return __DIR__ . '/' . $strType_a . '/' . $strCode_a . '.json';
 }
+
+function buildDir($strType_a)
+{
+	return __DIR__ . '/' . $strType_a;
+}
+
+function doDelete($strType_a, $strCode_a)
+{
+	$objResult = array('error' => '');
+
+	if (empty($strType_a) || empty($strCode_a))
+	{
+		$objResult['error'] = 'Missing type or code';
+	}
+	else
+	{
+		$strPath = buildPath($strType_a, $strCode_a);
+		logDebug('DELETE type=' . $strType_a . ' code=' . $strCode_a . ' path=' . $strPath);
+
+		if (!file_exists($strPath))
+		{
+			$objResult['error'] = 'Not found';
+		}
+		else
+		{
+			unlink($strPath);
+		}
+	}
+
+	return $objResult;
+}
+
+function doLoad($strType_a, $strCode_a)
+{
+	$objResult = array('error' => '', 'data' => null);
+
+	if (empty($strType_a) || empty($strCode_a))
+	{
+		$objResult['error'] = 'Missing type or code';
+	}
+	else
+	{
+		$strPath = buildPath($strType_a, $strCode_a);
+		logDebug('LOAD type=' . $strType_a . ' code=' . $strCode_a . ' found=' . (file_exists($strPath) ? 'yes' : 'no'));
+
+		if (!file_exists($strPath))
+		{
+			$objResult['error'] = 'Not found';
+		}
+		else
+		{
+			$strContent        = file_get_contents($strPath);
+			$objResult['data'] = json_decode($strContent, true);
+		}
+	}
+
+	return $objResult;
+}
+
+function doSave($strType_a, $strCode_a, $strData_a)
+{
+	$objResult = array('error' => '');
+
+	if (empty($strType_a) || empty($strCode_a) || empty($strData_a))
+	{
+		$objResult['error'] = 'Missing type, code or data';
+	}
+	else
+	{
+		$objData = json_decode($strData_a, true);
+
+		if ($objData === null)
+		{
+			$objResult['error'] = 'Invalid JSON data';
+		}
+		else
+		{
+			$strDir = buildDir($strType_a);
+
+			if (!is_dir($strDir))
+			{
+				mkdir($strDir, 0755, true);
+			}
+
+			$strPath = buildPath($strType_a, $strCode_a);
+			logDebug('SAVE type=' . $strType_a . ' code=' . $strCode_a . ' path=' . $strPath);
+			file_put_contents($strPath, json_encode($objData, JSON_PRETTY_PRINT));
+		}
+	}
+
+	return $objResult;
+}
+
+function doList($strType_a, $strPrefix_a)
+{
+	$objResult = array('error' => '', 'data' => array());
+
+	if (empty($strType_a))
+	{
+		$objResult['error'] = 'Missing type';
+	}
+	else
+	{
+		$strDir = buildDir($strType_a);
+
+		if (is_dir($strDir))
+		{
+			$strGlob  = !empty($strPrefix_a) ? $strDir . '/' . $strPrefix_a . '--*.json' : $strDir . '/*.json';
+			$arrFiles = glob($strGlob);
+			logDebug('LIST type=' . $strType_a . ' prefix=' . $strPrefix_a . ' glob=' . $strGlob . ' count=' . count($arrFiles));
+
+			foreach ($arrFiles as $strFile)
+			{
+				$strContent = file_get_contents($strFile);
+				$objItem    = json_decode($strContent, true);
+
+				if ($objItem !== null)
+				{
+					$objResult['data'][] = $objItem;
+				}
+			}
+		}
+	}
+
+	return $objResult;
+}
+
+// ============================================================
+// ROUTING
+// ============================================================
 
 switch ($strAction)
 {
-    case 'load':
-        if (empty($strType) || empty($strCode))
-        {
-            echo json_encode(array('error' => 'Missing type or code', 'data' => null));
-            break;
-        }
-        $strPath = fnBuildPath($strType, $strCode);
-        if (!file_exists($strPath))
-        {
-            echo json_encode(array('error' => 'Not found', 'data' => null));
-            break;
-        }
-        $strContent = file_get_contents($strPath);
-        $objData    = json_decode($strContent, true);
-        echo json_encode(array('error' => '', 'data' => $objData));
-        break;
-
-    case 'save':
-        if (empty($strType) || empty($strCode) || empty($strData))
-        {
-            echo json_encode(array('error' => 'Missing type, code or data'));
-            break;
-        }
-        $strDir = fnBuildDir($strType);
-        if (!is_dir($strDir))
-        {
-            mkdir($strDir, 0755, true);
-        }
-        $strPath = fnBuildPath($strType, $strCode);
-        $objData = json_decode($strData, true);
-        if ($objData === null)
-        {
-            echo json_encode(array('error' => 'Invalid JSON data'));
-            break;
-        }
-        file_put_contents($strPath, json_encode($objData, JSON_PRETTY_PRINT));
-        echo json_encode(array('error' => ''));
-        break;
-
-    case 'list':
-        if (empty($strType))
-        {
-            echo json_encode(array('error' => 'Missing type', 'data' => array()));
-            break;
-        }
-        $strDir = fnBuildDir($strType);
-        if (!is_dir($strDir))
-        {
-            echo json_encode(array('error' => '', 'data' => array()));
-            break;
-        }
-        $arrFiles = glob($strDir . '/*.json');
-        $arrItems = array();
-        foreach ($arrFiles as $strFile)
-        {
-            $strContent = file_get_contents($strFile);
-            $objItem    = json_decode($strContent, true);
-            if ($objItem !== null)
-            {
-                $arrItems[] = $objItem;
-            }
-        }
-        echo json_encode(array('error' => '', 'data' => $arrItems));
-        break;
-
-    default:
-        echo json_encode(array('error' => 'Unknown action'));
-        break;
+	case 'delete': echo json_encode(doDelete($strType, $strCode));         break;
+	case 'load':   echo json_encode(doLoad($strType, $strCode));           break;
+	case 'save':   echo json_encode(doSave($strType, $strCode, $strData)); break;
+	case 'list':   echo json_encode(doList($strType, $strPrefix));         break;
+	default:       echo json_encode(array('error' => 'Unknown action'));   break;
 }
 ?>

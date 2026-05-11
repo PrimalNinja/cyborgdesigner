@@ -14,18 +14,8 @@
 <body>
     <div class="gscd-title">Cyborg App Builder</div>
 
-    <div id="gecd-maintabbar" class="gscd-maintabbar">
-        <button class="gecd-entities gecd-maintabbutton gscd-maintabbutton">Entities</button>
-        <button class="gecd-layouts gecd-maintabbutton gscd-maintabbutton">Layouts</button>
-        <button class="gecd-application gecd-maintabbutton gscd-maintabbutton" style="display:none;">Application</button>
-        <button class="gecd-dashboard gecd-maintabbutton gscd-maintabbutton" style="display:none;">Dashboard</button>
-        <button class="gecd-database gecd-maintabbutton gscd-maintabbutton" style="display:none;">Database Schema</button>
-        <button class="gecd-form gecd-maintabbutton gscd-maintabbutton" style="display:none;">Form</button>
-        <button class="gecd-menu gecd-maintabbutton gscd-maintabbutton" style="display:none;">Menu</button>
-        <button class="gecd-report gecd-maintabbutton gscd-maintabbutton" style="display:none;">Report</button>
-        <button class="gecd-aiorchestration gecd-maintabbutton gscd-maintabbutton" style="display:none;">AI Orchestration</button>
-    </div>
-
+	<div id="ge-developermenu" class="gscd-maintabbar"></div>
+	<div id="ge-mainmenu" class="gscd-maintabbar"></div>
     <div id="ge-formcontainer"></div>
 
     <div id="gecd" class="gscd" style="display:none;"></div>
@@ -35,11 +25,12 @@
     <script src="js/os.js"></script>
     <script src="js/formRenderer.js"></script>
     <script src="js/listRenderer.js"></script>
+	<script src="js/menuRenderer.js"></script>
     <script src="js/cyborgDesigner.js"></script>
-    <script src="js/frmLister.js"></script>
+    <script src="js/frmEntityLister.js"></script>
     <script src="js/frmEntity.js"></script>
     <script src="js/frmLayoutLister.js"></script>
-    <script src="js/frmLayoutDesigner.js"></script>
+    <script src="js/frmFormDesigner.js"></script>
     <script src="js/startup.js"></script>
 </body>
 </html>

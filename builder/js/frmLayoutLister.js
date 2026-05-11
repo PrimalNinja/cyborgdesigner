@@ -1,5 +1,5 @@
 // js/frmLayoutLister.js
-// Layout lister - opens cyborgDesigner for add/edit
+// Layout lister - opens designer for add/edit
 // (c) 2025 Cyborg Unicorn Pty Ltd.
 
 function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
@@ -9,9 +9,8 @@ function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
 	var api             = objOS_a;
 	var m_objParameters = objParameters_a || {};
 
-	var m_strType       = m_objParameters.type       || '';
-	var m_strEntity     = m_objParameters.entity     || '';
-	var m_strDataFolder = m_objParameters.datafolder || m_strEntity;
+	var m_strType    = m_objParameters.type    || '';
+	var m_strSubType = m_objParameters.subtype || '';
 
 	var m_objLister = null;
 	var m_objConfig = null;
@@ -128,7 +127,7 @@ function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
 
 	function fetchData(cb_a)
 	{
-		api.listFiles(m_strDataFolder, function(objResponse_a)
+		api.listFiles(m_strSubType, '', function(objResponse_a)
 		{
 			if (objResponse_a.error && objResponse_a.error.length > 0)
 			{
@@ -205,7 +204,7 @@ function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
 					console.log('frmLayoutLister cbOnDblClick', strID_a);
 					if (strID_a)
 					{
-						onOperation('EDIT', strID_a);
+						setTimeout(function() { onOperation('EDIT', strID_a); }, 100);
 					}
 				}
 			});
@@ -214,49 +213,149 @@ function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
 
 	function onOperation(strOperation_a, strCode_a)
 	{
-		var strCode = strCode_a || '';
-		var strMode = strOperation_a.toLowerCase();
+		var strCode      = strCode_a || '';
+		var objOperation = null;
 
-		if (strOperation_a === 'ADD')
+		for (var intI = 0; intI < (m_objConfig.operations || []).length; intI++)
 		{
-			strCode = '';
+			if (m_objConfig.operations[intI].code === strOperation_a)
+			{
+				objOperation = m_objConfig.operations[intI];
+			}
 		}
 
-		console.log('frmLayoutLister onOperation mode=' + strMode + ' code=' + strCode);
-
-		api.openForm('frmLayoutDesigner',
+		if (objOperation)
 		{
-			entity: m_strDataFolder,
-			code:   strCode,
-			mode:   strMode,
-			onSave: function()
+			if (objOperation.command === 'ENTITYLISTER')
 			{
-				if (m_objLister)
+				api.openForm('frmEntityLister',
 				{
-					m_objLister.refresh();
+					type:   objOperation.parameters.type   || 'entitylister',
+					entity: objOperation.parameters.entity || '',
+					prefix: strCode
+				},
+				null);
+			}
+			else if (objOperation.command === 'LAYOUTLISTER')
+			{
+				api.openForm('frmLayoutLister',
+				{
+					type:     objOperation.parameters.type     || 'layoutlister',
+					subtype:  objOperation.parameters.subtype  || '',
+					designer: objOperation.parameters.designer || 'frmFormDesigner'
+				},
+				null);
+			}
+			else if (objOperation.command === 'DELETE')
+			{
+				if (confirm('Are you sure you want to delete ' + strCode + '?'))
+				{
+					api.deleteFile(m_strSubType, strCode, function(objResponse_a)
+					{
+						if (objResponse_a.error && objResponse_a.error.length > 0)
+						{
+							alert('Delete failed: ' + objResponse_a.error);
+						}
+						else if (m_objLister)
+						{
+							m_objLister.refresh();
+						}
+					});
 				}
 			}
-		},
-		null);
+			else if (objOperation.command === 'ADD' || objOperation.command === 'EDIT' || objOperation.command === 'VIEW')
+			{
+				var strDesigner = m_objParameters.designer || 'frmFormDesigner';
+
+				api.openForm(strDesigner,
+				{
+					subtype: m_strSubType,
+					code:    strCode,
+					mode:    objOperation.command.toLowerCase(),
+					onSave: function()
+					{
+						if (m_objLister)
+						{
+							m_objLister.refresh();
+						}
+					}
+				},
+				null);
+			}
+			else
+			{
+				api.print('frmLayoutLister: unknown command: ' + objOperation.command);
+			}
+		}
 	}
 
 	function fetchConfig(cb_a)
 	{
-		api.loadFile(m_strType, m_strEntity, function(objResponse_a)
+		api.loadFile(m_strType, m_strSubType, function(objResponse_a)
 		{
 			if (objResponse_a.error && objResponse_a.error.length > 0)
 			{
-				api.print('frmLayoutLister: config not found for ' + m_strType + '/' + m_strEntity);
+				api.print('frmLayoutLister: config not found for ' + m_strType + '/' + m_strSubType);
 				m_objConfig = { fields: [], operations: [] };
+
+				if (api.isFunction(cb_a))
+				{
+					cb_a();
+				}
 			}
 			else
 			{
 				m_objConfig = objResponse_a.data || { fields: [], operations: [] };
-			}
+				m_objConfig.operations = [];
 
-			if (api.isFunction(cb_a))
-			{
-				cb_a();
+				api.listFiles('entityoperation', m_strSubType, function(objListResponse_a)
+				{
+					var arrItems = objListResponse_a.data || [];
+
+					for (var intI = 0; intI < arrItems.length; intI++)
+					{
+						var arrSections   = arrItems[intI].sections || [];
+						var strCode       = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'CODE');
+						var strCaption    = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'CAPTION');
+						var strCommand    = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'COMMAND');
+						var strRequires   = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'REQUIRESSELECTION');
+						var strParameters = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'PARAMETERS');
+						var strOrder      = getFieldValueByContainerNameAndFieldName(arrSections, 'FORMDATA', 'ORDER');
+						var objParameters = {};
+
+						if (strParameters.length > 0)
+						{
+							try
+							{
+								objParameters = (new Function('return (' + strParameters + ')'))();
+							}
+							catch (objE)
+							{
+								api.print('frmLayoutLister: failed to parse parameters for ' + strCode);
+							}
+						}
+
+						m_objConfig.operations.push(
+						{
+							code:              strCode,
+							caption:           strCaption,
+							command:           strCommand,
+							requiresselection: toBoolean(strRequires),
+							parameters:        objParameters,
+							order:             parseInt(strOrder, 10) || 0
+						});
+					}
+
+					m_objConfig.operations.sort(function(objA_a, objB_a)
+					{
+						return objA_a.order - objB_a.order;
+					});
+
+					if (api.isFunction(cb_a))
+					{
+						cb_a();
+					}
+				});
 			}
 		});
 	}
@@ -322,11 +421,11 @@ function frmLayoutLister(strFormID_a, objOS_a, objParameters_a)
 			'top':    intFormTop    + 'px'
 		});
 
-		api.setFormTitle(m_strFormID, m_objConfig ? (m_objConfig.title || m_strEntity) : m_strEntity);
+		api.setFormTitle(m_strFormID, m_objConfig ? (m_objConfig.title || m_strSubType) : m_strSubType);
 
 		fetchConfig(function()
 		{
-			api.setFormTitle(m_strFormID, m_objConfig.title || m_strEntity);
+			api.setFormTitle(m_strFormID, m_objConfig.title || m_strSubType);
 			renderLister();
 		});
 	};

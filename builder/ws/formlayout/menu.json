@@ -1,5 +1,5 @@
 {
-    "code": "ENTITY",
+    "code": "menu",
     "sections": [
         {
             "id": "9ba5d24f-dd6e-435f-98d3-1e7aad3ba7f0",
@@ -20,7 +20,7 @@
                             "label": "Entity Name",
                             "name": "ENTITYNAME",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "MENU",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -35,7 +35,7 @@
                             "label": "Form Version",
                             "name": "FORMVERSION",
                             "required": true,
-                            "value": "13",
+                            "value": "16",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -50,7 +50,7 @@
                             "label": "Code",
                             "name": "CODE",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "MENU",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -65,7 +65,7 @@
                             "label": "Description",
                             "name": "DESCRIPTION",
                             "required": true,
-                            "value": "Entity",
+                            "value": "Menu",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -89,8 +89,8 @@
                             "visible": true
                         }
                     ],
-                    "visible": true,
                     "classes": "",
+                    "visible": true,
                     "tooltip": "",
                     "metadata": ""
                 }
@@ -115,7 +115,7 @@
                             "label": "Data Version",
                             "name": "DATAVERSION",
                             "required": true,
-                            "value": "20",
+                            "value": "2",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -150,7 +150,7 @@
                             "label": "Code",
                             "name": "CODE",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -165,7 +165,7 @@
                             "label": "Description",
                             "name": "DESCRIPTION",
                             "required": true,
-                            "value": "Entity",
+                            "value": "",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -204,8 +204,8 @@
                             "visible": true
                         }
                     ],
-                    "classes": "",
                     "visible": true,
+                    "classes": "",
                     "tooltip": "",
                     "metadata": ""
                 }

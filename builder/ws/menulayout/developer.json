@@ -1,0 +1,123 @@
+{
+    "code": "DEVELOPER",
+    "sections": [
+        {
+            "id": "section-5a243861-5694-4d2f-bba7-a16902192e54",
+            "caption": "Menu Header",
+            "visible": false,
+            "containers": [
+                {
+                    "id": "container-325a5e45-7561-45ec-8af5-7d85bcf9e1d3",
+                    "type": "verticalcontainer",
+                    "name": "MENUHEADER",
+                    "label": "Menu Header",
+                    "caption": "Menu Header",
+                    "children": [
+                        {
+                            "id": "field-1ceb3f4d-28ae-465f-8ca1-4a4206fbb814",
+                            "type": "textbox",
+                            "caption": "Code",
+                            "label": "Code",
+                            "name": "CODE",
+                            "value": "DEVELOPER",
+                            "container": false,
+                            "classes": "",
+                            "tooltip": "",
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-217af1d9-0cd4-4277-8dcc-244a66f6f857",
+                            "type": "textbox",
+                            "caption": "Description",
+                            "label": "Description",
+                            "name": "DESCRIPTION",
+                            "value": "Developer",
+                            "container": false
+                        },
+                        {
+                            "id": "field-12c96833-d50d-469a-95f3-8f3c61d7c15a",
+                            "type": "checkbox",
+                            "caption": "Is Enabled?",
+                            "label": "Is Enabled?",
+                            "name": "ISENABLED",
+                            "value": true,
+                            "container": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "section-0c370e9f-5107-41c2-b280-55b6840e48e0",
+            "caption": "Menu Section",
+            "visible": true,
+            "containers": [
+                {
+                    "id": "container-fe0f2f2d-2109-49c8-8caf-3d1274d41d99",
+                    "type": "verticalcontainer",
+                    "name": "MENUITEMS",
+                    "caption": "Menu Items",
+                    "label": "Menu Items",
+                    "children": [
+                        {
+                            "id": "field-2ffa7b69-faa0-405f-a629-dbda6b3a70fa",
+                            "type": "menuitem",
+                            "caption": "Entities",
+                            "name": "ENTITY",
+                            "classes": "",
+                            "action": "ENTITYLISTER",
+                            "actiondata": "{\n\ttype: 'ENTITYLISTER',\n\tentity: 'ENTITY'\n}",
+                            "permissions": "",
+                            "tip": "Click here to list entities.",
+                            "isenabled": true,
+                            "container": false,
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-ee2f9102-f6f9-49de-84e7-2596fea7e1ea",
+                            "type": "menuitem",
+                            "caption": "Form Layouts",
+                            "name": "FORMLAYOUT",
+                            "classes": "",
+                            "action": "LAYOUTLISTER",
+                            "actiondata": "{\n\ttype: 'ENTITYLISTER',\n\tsubtype: 'FORMLAYOUT',\n\tdesigner: 'frmFormDesigner'\n}",
+                            "permissions": "",
+                            "tip": "Click here to list form layouts.",
+                            "isenabled": true,
+                            "container": false,
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-0858e3cf-e3cb-4233-b964-bf1f6b74baae",
+                            "type": "menuitem",
+                            "caption": "Menus",
+                            "container": false,
+                            "name": "MENU",
+                            "classes": "",
+                            "action": "ENTITYLISTER",
+                            "actiondata": "{\n\ttype: 'ENTITYLISTER',\n\tentity: 'MENU'\n}",
+                            "permissions": "",
+                            "tip": "Click here to list menus.",
+                            "isenabled": true,
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-a7aba9a4-bea2-4dfb-86f2-2d26548ead1d",
+                            "type": "menuitem",
+                            "caption": "Menu Layouts",
+                            "name": "MENULAYOUT",
+                            "classes": "",
+                            "action": "LAYOUTLISTER",
+                            "actiondata": "{\n\ttype: 'ENTITYLISTER',\n\tsubtype: 'MENULAYOUT',\n\tdesigner: 'frmMenuDesigner'\n}",
+                            "permissions": "",
+                            "tip": "Click here to list menu layouts.",
+                            "isenabled": true,
+                            "container": false,
+                            "metadata": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

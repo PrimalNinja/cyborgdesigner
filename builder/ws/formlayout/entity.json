@@ -1,5 +1,5 @@
 {
-    "code": "ENTITY",
+    "code": "entity",
     "sections": [
         {
             "id": "9ba5d24f-dd6e-435f-98d3-1e7aad3ba7f0",
@@ -115,7 +115,7 @@
                             "label": "Data Version",
                             "name": "DATAVERSION",
                             "required": true,
-                            "value": "20",
+                            "value": "2",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -150,7 +150,7 @@
                             "label": "Code",
                             "name": "CODE",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -165,7 +165,7 @@
                             "label": "Description",
                             "name": "DESCRIPTION",
                             "required": true,
-                            "value": "Entity",
+                            "value": "",
                             "container": false,
                             "classes": "",
                             "readonly": false,

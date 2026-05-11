@@ -1,6 +1,6 @@
 {
-    "code": "layout",
-    "title": "Layouts",
+    "code": "FORMLAYOUT",
+    "title": "Form Layouts",
 	"rowid": "FORMHEADER.CODE",
     "fields": [
         {
@@ -23,18 +23,20 @@
             "type": "BOOLEAN",
             "visible": true,
             "sortable": true
-        }
-    ],
-    "operations": [
-        {
-            "code": "ADD",
-            "caption": "Add",
-            "requiresselection": false
         },
-        {
-            "code": "EDIT",
-            "caption": "Edit",
-            "requiresselection": true
-        }
+		{
+			"code": "FORMHEADER.FORMVERSION",
+			"caption": "Form Ver",
+			"type": "STRING",
+			"visible": true,
+			"sortable": true
+		},
+		{
+			"code": "DATAHEADER.DATAVERSION",
+			"caption": "Data Ver",
+			"type": "STRING",
+			"visible": true,
+			"sortable": true
+		}		
     ]
 }

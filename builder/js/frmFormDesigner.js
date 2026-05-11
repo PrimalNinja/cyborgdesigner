@@ -1,14 +1,14 @@
-// js/frmLayoutDesigner.js
-// Layout Designer - wraps cyborgDesigner full screen
+// js/frmFormDesigner.js
+// Form Designer - wraps cyborgDesigner full screen
 // (c) 2025 Cyborg Unicorn Pty Ltd.
 
-function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
+function frmFormDesigner(strFormID_a, objOS_a, objParameters_a)
 {
 	var m_strFormID     = strFormID_a;
 	var api             = objOS_a;
 	var m_objParameters = objParameters_a || {};
 
-	var m_strEntity = m_objParameters.entity || 'form';
+	var m_strEntity = m_objParameters.entity || 'formlayout';
 	var m_strCode   = m_objParameters.code   || '';
 	var m_cbOnSave  = m_objParameters.onSave || null;
 
@@ -17,7 +17,7 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 	var m_blnInitialised = false;
 	var m_arrSections = [];
 
-	var m_strTargetID = 'ge-frmLayoutDesigner-' + m_strFormID.replace(/[^a-zA-Z0-9]/g, '');
+	var m_strTargetID = 'ge-frmFormDesigner-' + m_strFormID.replace(/[^a-zA-Z0-9]/g, '');
 
 	// ============================================================
 	// DATATYPES
@@ -116,7 +116,7 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 			{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 			{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 			{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-			{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
+			{ name: 'value', label: 'Value', datatype: 'nativeyesno', showinbuilder: true },
 			{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
 			{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
 			{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
@@ -261,7 +261,7 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 			{ name: 'name', label: 'Name', datatype: 'nativetextbox', showinbuilder: true },
 			{ name: 'label', label: 'Label', datatype: 'nativetextbox', showinbuilder: true },
 			{ name: 'classes', label: 'Classes', datatype: 'nativetextbox' },
-			{ name: 'value', label: 'Value', datatype: 'nativetextbox', showinbuilder: true },
+			{ name: 'value', label: 'Value', datatype: 'nativeyesno', showinbuilder: true },
 			{ name: 'required', label: 'Required', datatype: 'nativeyesno', showinbuilder: true },
 			{ name: 'readonly', label: 'Read Only', datatype: 'nativeyesno', showinbuilder: true },
 			{ name: 'tooltip', label: 'Tool Tip', datatype: 'nativetextbox' },
@@ -349,6 +349,7 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 			{
 				id: getGUID('section-'),
 				caption: 'Form Header',
+				visible: false,
 				containers: [
 					{
 						id: getGUID('container-'),
@@ -357,11 +358,55 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 						label: 'Form Header',
 						caption: 'Form Header',
 						children: [
-							{ id: getGUID('field-'), type: 'textbox', caption: 'Entity Name', label: 'Entity Name', name: 'ENTITYNAME', value: '', container: false },
-							{ id: getGUID('field-'), type: 'number', caption: 'Form Version', label: 'Form Version', name: 'FORMVERSION', value: '1', container: false },
-							{ id: getGUID('field-'), type: 'textbox', caption: 'Code', label: 'Code', name: 'CODE', value: '', container: false },
-							{ id: getGUID('field-'), type: 'textbox', caption: 'Description', label: 'Description', name: 'DESCRIPTION', value: '', container: false },
-							{ id: getGUID('field-'), type: 'checkbox', caption: 'Is Enabled?', label: 'Is Enabled?', name: 'ISENABLED', value: '', container: false }
+							{ 
+								id: getGUID('field-'), 
+								type: 'textbox', 
+								caption: 'Entity Name', 
+								label: 'Entity Name', 
+								name: 'ENTITYNAME', 
+								required: true,
+								value: '', 
+								container: false 
+							},
+							{ 
+								id: getGUID('field-'), 
+								type: 'number', 
+								caption: 'Form Version', 
+								label: 'Form Version', 
+								name: 'FORMVERSION', 
+								required: true,
+								value: '1', 
+								container: false 
+							},
+							{ 
+								id: getGUID('field-'), 
+								type: 'textbox', 
+								caption: 'Code', 
+								label: 'Code', 
+								name: 'CODE', 
+								required: true,
+								value: '', 
+								container: false 
+							},
+							{ 
+								id: getGUID('field-'), 
+								type: 'textbox', 
+								caption: 'Description', 
+								label: 'Description', 
+								name: 'DESCRIPTION', 
+								required: true,
+								value: '', 
+								container: false 
+							},
+							{ 
+								id: getGUID('field-'), 
+								type: 'checkbox', 
+								caption: 'Is Enabled?', 
+								label: 'Is Enabled?', 
+								name: 'ISENABLED', 
+								value: true, 
+								container: false 
+							}
 						]
 					}
 				]
@@ -369,6 +414,7 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 			{
 				id: getGUID('section-'),
 				caption: 'Data Header',
+				visible: false,
 				containers: [
 					{
 						id: getGUID('container-'),
@@ -377,7 +423,16 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 						label: 'Data Header',
 						caption: 'Data Header',
 						children: [
-							{ id: getGUID('field-'), type: 'number', caption: 'Data Version', label: 'Data Version', name: 'DATAVERSION', value: '1', container: false }
+							{ 
+								id: getGUID('field-'), 
+								type: 'number', 
+								caption: 'Data Version', 
+								label: 'Data Version', 
+								name: 'DATAVERSION', 
+								required: true,
+								value: '1', 
+								container: false 
+							}
 						]
 					}
 				]
@@ -385,7 +440,56 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 			{
 				id: getGUID('section-'),
 				caption: 'Form Data',
-				containers: []
+				visible: true,
+				containers: [
+                {
+                    id: getGUID('container-'),
+                    type: "verticalcontainer",
+                    name: "FORMDATA",
+                    label: "Form Data",
+                    caption: "Form Data",
+                    children: [
+                        {
+                            id: getGUID('field-'),
+                            type: "textbox",
+                            caption: "Code",
+                            label: "Code",
+                            name: "CODE",
+                            required: true,
+                            value: "",
+                            container: false
+                        },
+                        {
+                            id: getGUID('field-'),
+                            type: "textbox",
+                            caption: "Description",
+                            label: "Description",
+                            name: "DESCRIPTION",
+                            required: true,
+                            value: "",
+                            container: false
+                        },
+                        {
+                            id: getGUID('field-'),
+                            type: "checkbox",
+                            caption: "Is Enabled?",
+                            label: "Is Enabled?",
+                            name: "ISENABLED",
+                            value: true,
+                            container: false
+                        },
+                        {
+                            id: getGUID('field-'),
+                            type: "multilinetextbox",
+                            caption: "Notes",
+                            label: "Notes",
+                            name: "NOTES",
+                            value: "",
+                            container: false
+                        }
+                    ]
+                }
+            ]
 			}
 		];
 	}
@@ -433,9 +537,9 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 			'top':    intFormTop    + 'px'
 		});
 
-		api.setFormTitle(m_strFormID, m_blnIsNew ? 'New Layout' : 'Edit Layout: ' + m_strCode);
+		api.setFormTitle(m_strFormID, m_blnIsNew ? 'New Form Layout' : 'Edit Form Layout: ' + m_strCode);
 
-		console.log('frmLayoutDesigner Form_onLoad isNew=' + m_blnIsNew + ' entity=' + m_strEntity + ' code=' + m_strCode);
+		console.log('frmFormDesigner Form_onLoad isNew=' + m_blnIsNew + ' entity=' + m_strEntity + ' code=' + m_strCode);
 
 		// Designer fills the entire form body
 		api.element('#' + m_strFormID, '.ge-formbody').css({'display':'flex','flex-direction':'column'}).html(
@@ -499,7 +603,7 @@ function frmLayoutDesigner(strFormID_a, objOS_a, objParameters_a)
 					new formRenderer(api, m_strFormID,
 					{
 						layoutSections: objRaw_a,
-						readonly:       true,
+						readonly:       false,
 						target:         'gecd-layoutpreview'
 					});
 				},

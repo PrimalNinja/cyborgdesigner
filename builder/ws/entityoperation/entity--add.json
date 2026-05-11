@@ -1,26 +1,26 @@
 {
-    "code": "ENTITY",
+    "code": "ADD",
     "sections": [
         {
-            "id": "9ba5d24f-dd6e-435f-98d3-1e7aad3ba7f0",
+            "id": "section-369ba845-195b-4b97-a3a9-9da2c452a8ca",
             "caption": "Form Header",
             "visible": false,
             "containers": [
                 {
-                    "id": "efd2e2a2-5948-497f-bf1b-f6cc24e69d80",
+                    "id": "container-578646ae-b740-46df-bf86-7fe2a3e3dd7c",
                     "type": "verticalcontainer",
                     "name": "FORMHEADER",
                     "label": "Form Header",
                     "caption": "Form Header",
                     "children": [
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000001",
+                            "id": "field-49dcb373-92e8-4788-8b24-6b61ba4a9a3b",
                             "type": "textbox",
                             "caption": "Entity Name",
                             "label": "Entity Name",
                             "name": "ENTITYNAME",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "ENTITYOPERATION",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -29,28 +29,28 @@
                             "visible": true
                         },
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000002",
+                            "id": "field-7028027f-8cc7-44eb-84e8-7c870be4d6f7",
                             "type": "number",
                             "caption": "Form Version",
                             "label": "Form Version",
                             "name": "FORMVERSION",
                             "required": true,
-                            "value": "13",
+                            "value": "15",
                             "container": false,
                             "classes": "",
+                            "visible": true,
                             "readonly": false,
                             "tooltip": "",
-                            "metadata": "",
-                            "visible": true
+                            "metadata": ""
                         },
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000003",
+                            "id": "field-10274b89-22fe-4adf-b351-cbf9f709978f",
                             "type": "textbox",
                             "caption": "Code",
                             "label": "Code",
                             "name": "CODE",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "ENTITYOPERATION",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -59,13 +59,13 @@
                             "visible": true
                         },
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000004",
+                            "id": "field-05f21702-6ce0-4eee-8076-e0b593517b86",
                             "type": "textbox",
                             "caption": "Description",
                             "label": "Description",
                             "name": "DESCRIPTION",
                             "required": true,
-                            "value": "Entity",
+                            "value": "Entity Operation",
                             "container": false,
                             "classes": "",
                             "readonly": false,
@@ -74,7 +74,7 @@
                             "visible": true
                         },
                         {
-                            "id": "a1b2c3d4-0001-0001-0001-000000000005",
+                            "id": "field-52b24945-8b01-478d-99ec-2a8d8d6a405c",
                             "type": "checkbox",
                             "caption": "Is Enabled?",
                             "label": "Is Enabled?",
@@ -82,11 +82,11 @@
                             "value": true,
                             "container": false,
                             "classes": "",
+                            "visible": true,
                             "required": false,
                             "readonly": false,
                             "tooltip": "",
-                            "metadata": "",
-                            "visible": true
+                            "metadata": ""
                         }
                     ],
                     "visible": true,
@@ -97,31 +97,31 @@
             ]
         },
         {
-            "id": "5dcb780d-143c-4a21-bf5d-e9dcb269aeee",
+            "id": "section-b2ad214f-5ff1-4b96-868b-22dd4bf8e20f",
             "caption": "Data Header",
             "visible": false,
             "containers": [
                 {
-                    "id": "4c364be4-2e45-4c17-8b05-43dd878a6d25",
+                    "id": "container-f410deb1-d583-4eb4-a082-02611b56a154",
                     "type": "verticalcontainer",
                     "name": "DATAHEADER",
                     "label": "Data Header",
                     "caption": "Data Header",
                     "children": [
                         {
-                            "id": "a1b2c3d4-0002-0001-0001-000000000001",
+                            "id": "field-062d6edf-dff2-42da-9e96-85f91c045a0f",
                             "type": "number",
                             "caption": "Data Version",
                             "label": "Data Version",
                             "name": "DATAVERSION",
                             "required": true,
-                            "value": "20",
+                            "value": "6",
                             "container": false,
                             "classes": "",
+                            "visible": true,
                             "readonly": false,
                             "tooltip": "",
-                            "metadata": "",
-                            "visible": true
+                            "metadata": ""
                         }
                     ],
                     "visible": true,
@@ -132,56 +132,116 @@
             ]
         },
         {
-            "id": "66c32d3c-e39d-4e02-a5b8-280bc059cc6a",
-            "caption": "Entity Details",
+            "id": "section-5b4fea20-0db9-464f-bec1-1219a5559308",
+            "caption": "Form Data",
             "visible": true,
             "containers": [
                 {
-                    "id": "f25a6ced-ee01-4c35-8734-344b723dfa98",
+                    "id": "container-07c5c495-41b0-4562-9256-d6faa9b19f1a",
                     "type": "verticalcontainer",
                     "name": "FORMDATA",
-                    "label": "Entity Details",
-                    "caption": "Entity Details",
+                    "label": "Form Data",
+                    "caption": "Form Data",
                     "children": [
                         {
-                            "id": "169c6e1f-616c-4404-aafc-20abe6251edd",
+                            "id": "field-a8f7b87e-a1a1-4c3b-9541-3ab22429098e",
                             "type": "textbox",
                             "caption": "Code",
                             "label": "Code",
                             "name": "CODE",
                             "required": true,
-                            "value": "ENTITY",
+                            "value": "ADD",
                             "container": false,
                             "classes": "",
+                            "visible": true,
+                            "readonly": false,
+                            "tooltip": "",
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-44647334-32e4-48ae-82e1-4e4093060346",
+                            "type": "textbox",
+                            "caption": "Caption",
+                            "container": false,
+                            "name": "CAPTION",
+                            "label": "Caption",
+                            "classes": "",
+                            "value": "Add",
+                            "required": true,
                             "readonly": false,
                             "tooltip": "",
                             "metadata": "",
                             "visible": true
                         },
                         {
-                            "id": "1eda9d12-8a74-4926-8dc6-97627fcc8f62",
+                            "id": "field-4c4c4b30-5e2d-4642-819c-307d12d855ec",
                             "type": "textbox",
                             "caption": "Description",
                             "label": "Description",
                             "name": "DESCRIPTION",
                             "required": true,
-                            "value": "Entity",
+                            "value": "Add",
                             "container": false,
                             "classes": "",
+                            "visible": true,
+                            "readonly": false,
+                            "tooltip": "",
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-3c4c3877-91e8-4a25-ad6c-f88be200253c",
+                            "type": "number",
+                            "caption": "Order",
+                            "container": false,
+                            "name": "ORDER",
+                            "label": "Order",
+                            "classes": "",
+                            "value": "11",
+                            "required": true,
                             "readonly": false,
                             "tooltip": "",
                             "metadata": "",
                             "visible": true
                         },
                         {
-                            "id": "402b3fe7-e640-4257-8b8a-915e74936938",
+                            "id": "field-848ae197-30fe-4fd2-8244-59d632f4e62c",
                             "type": "checkbox",
-                            "caption": "Is Enabled?",
-                            "label": "Is Enabled?",
-                            "name": "ISENABLED",
-                            "value": true,
+                            "caption": "Requires Selection?",
                             "container": false,
+                            "visible": true,
+                            "name": "REQUIRESSELECTION",
+                            "label": "Requires Selection?",
                             "classes": "",
+                            "value": false,
+                            "required": false,
+                            "readonly": false,
+                            "tooltip": "",
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-083c196e-e5e5-4b9e-94c3-a74bbf0117cb",
+                            "type": "textbox",
+                            "caption": "Command",
+                            "container": false,
+                            "name": "COMMAND",
+                            "label": "",
+                            "classes": "",
+                            "value": "ADD",
+                            "required": true,
+                            "readonly": false,
+                            "tooltip": "",
+                            "metadata": "",
+                            "visible": true
+                        },
+                        {
+                            "id": "field-bd605589-e3a0-4572-a10a-367dbc709982",
+                            "type": "multilinetextbox",
+                            "caption": "Parameters",
+                            "container": false,
+                            "name": "PARAMETERS",
+                            "label": "Parameters",
+                            "classes": "",
+                            "value": "",
                             "required": false,
                             "readonly": false,
                             "tooltip": "",
@@ -189,7 +249,22 @@
                             "visible": true
                         },
                         {
-                            "id": "66c32d3c-e39d-4e02-a5b8-280bc059cc6b",
+                            "id": "field-112b1f58-fe12-4a8f-9673-e23a43a0e762",
+                            "type": "checkbox",
+                            "caption": "Is Enabled?",
+                            "label": "Is Enabled?",
+                            "name": "ISENABLED",
+                            "value": true,
+                            "container": false,
+                            "classes": "",
+                            "visible": true,
+                            "required": false,
+                            "readonly": false,
+                            "tooltip": "",
+                            "metadata": ""
+                        },
+                        {
+                            "id": "field-4a4e8d21-9ee7-41ab-b637-53eb44b5538e",
                             "type": "multilinetextbox",
                             "caption": "Notes",
                             "label": "Notes",
@@ -197,15 +272,15 @@
                             "value": "",
                             "container": false,
                             "classes": "",
+                            "visible": true,
                             "required": false,
                             "readonly": false,
                             "tooltip": "",
-                            "metadata": "",
-                            "visible": true
+                            "metadata": ""
                         }
                     ],
-                    "classes": "",
                     "visible": true,
+                    "classes": "",
                     "tooltip": "",
                     "metadata": ""
                 }
