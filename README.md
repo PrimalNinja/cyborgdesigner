@@ -1,4 +1,4 @@
-# CyborgDesigner v20251009
+# CyborgDesigner v20260512
 
 CyborgDesigner is a JavaScript-based designer for layouts, currently including but not limited to:
 
