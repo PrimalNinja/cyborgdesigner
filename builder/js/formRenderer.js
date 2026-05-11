@@ -1,6 +1,6 @@
-// formRenderer.js
-// Modern form renderer for Cyborg Designer forms
-// (c) 2025 Cyborg Unicorn Pty Ltd.
+// Modern form renderer for Cyborg Designer forms v20260512
+// (c) 2026 Cyborg Unicorn Pty Ltd.
+// This software is released under MIT License.
 
 function formRenderer(objOS_a, strFormID_a, objParameters_a)
 {

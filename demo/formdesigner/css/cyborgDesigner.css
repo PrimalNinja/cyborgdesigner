@@ -70,7 +70,7 @@ body {
 /* Main Container */
 .gscd-container {
   display: flex;
-  height: calc(100vh - 120px);
+  height: 100%;
   background: white;
 }
 
@@ -367,6 +367,41 @@ body {
 .gscd-container-header:hover .gscd-remove-btn,
 .gscd-layouteditor-field:hover .gscd-remove-btn {
   opacity: 1;
+}
+
+.gscd-copy-btn {
+  background: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-weight: bold;
+  opacity: 0;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+
+.gscd-copy-btn:hover {
+  background: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.gscd-layouteditor-field:hover .gscd-copy-btn {
+  opacity: 1;
+}
+
+.gecd-field-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 /* Drop Zones */

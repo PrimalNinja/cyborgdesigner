@@ -1,6 +1,6 @@
-// listRenderer.js
-// Metadata-driven list and gallery renderer for CyborgDesktop
-// Supports pagination, sorting, searching, and custom operations
+// Metadata-driven list and gallery renderer for Cyborg Designer forms v20260512
+// (c) 2026 Cyborg Unicorn Pty Ltd.
+// This software is released under MIT License.
 
 function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 {
@@ -56,6 +56,11 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 				}
 			}
 		}
+	}
+	
+	function toBoolean(strValue_a)
+	{
+		return (strValue_a === 'yes' || strValue_a === 'true' || strValue_a === '1' || strValue_a === true);
 	}
 	
 	// Parameters
@@ -807,9 +812,9 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 						startEdit(intCurrentRow, intCurrentCol);
 					}
 				}
-				else if (e.keyCode === 38) // Up Arrow
+				else if (objEvent_a.keyCode === 38) // Up Arrow
 				{
-					e.preventDefault();
+					objEvent_a.preventDefault();
 					
 					// Save position
 					intCurrentRow = m_intEditRow;
@@ -828,17 +833,17 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 						startEdit(intCurrentRow, intCurrentCol);
 					}
 				}
-				else if (e.keyCode === 27) // Escape
+				else if (objEvent_a.keyCode === 27) // Escape
 				{
-					e.preventDefault();
+					objEvent_a.preventDefault();
 					hideFloatingEditor();
 					m_intEditRow = -1;
 					m_intEditCol = -1;
 					// No render needed - just hide the editor
 				}
-				else if (e.keyCode === 9) // Tab (or Shift+Tab)
+				else if (objEvent_a.keyCode === 9) // Tab (or Shift+Tab)
 				{
-					e.preventDefault();
+					objEvent_a.preventDefault();
 					
 					// Save position
 					var intCurrentRow = m_intEditRow;
@@ -846,7 +851,7 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 					
 					// Let startEdit handle committing
 					
-					if (e.shiftKey)
+					if (objEvent_a.shiftKey)
 					{
 						// Shift+Tab: Move backward
 						var intPrevCol = intCurrentCol - 1;
@@ -938,9 +943,9 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 						}
 					}
 				}
-				else if (e.keyCode === 36) // Home
+				else if (objEvent_a.keyCode === 36) // Home
 				{
-					e.preventDefault();
+					objEvent_a.preventDefault();
 					
 					// Find first editable column in first row
 					intCol = 0;
@@ -954,9 +959,9 @@ function listRenderer(objAPI_a, strFormID_a, objParameters_a)
 						}
 					}
 				}
-				else if (e.keyCode === 35) // End
+				else if (objEvent_a.keyCode === 35) // End
 				{
-					e.preventDefault();
+					objEvent_a.preventDefault();
 					
 					// Find last editable column in last DATA row (not blank row)
 					var intLastRow = m_arrData.length - 1;

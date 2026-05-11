@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyborg Suite</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- ── Header ──────────────────────────────────────────── -->
+  <header>
+    <div class="header-label">Cyborg Suite — Developer Tools</div>
+    <h1>Design.<br><span>Render.</span> Display.</h1>
+    <p class="header-tagline">
+      A set of standalone browser-based tools for designing forms,
+      rendering them at runtime, and displaying record lists — all
+      built around a common JSON schema with no server required.
+    </p>
+    <div style="margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap;">
+      <a class="link-btn link-btn--secondary" style="--card-accent: var(--accent-1);" href="https://github.com/PrimalNinja/cyborgdesigner" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:13px;height:13px;"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub — MIT License
+      </a>
+      <a class="link-btn link-btn--secondary" style="--card-accent: var(--accent-1);" href="https://cyborgunicorn.com.au" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        cyborgunicorn.com.au
+      </a>
+    </div>
+  </header>
+
+  <!-- ── List Renderer ────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">01 — List Renderer</div>
+
+    <div class="cards">
+
+      <div class="card card--list">
+        <div class="card-header">
+          <div class="card-title">List Renderer — Display</div>
+          <span class="card-tag">Data Views</span>
+        </div>
+        <p class="card-desc">
+          Renders record sets in multiple presentation modes from a
+          single data source. Supports <strong>List</strong> (tabular)
+          and <strong>Gallery</strong> (thumbnail grid) views, each
+          available in three flow strategies: paged navigation,
+          infinite/continuous scroll, and full-expand. Columns are
+          sortable (single and multi-column with Shift+Click) and the
+          table includes live search.
+        </p>
+        <div class="card-features">
+          <span class="chip">list + gallery views</span>
+          <span class="chip">paged / infinite / expand</span>
+          <span class="chip">multi-column sort</span>
+          <span class="chip">live search</span>
+        </div>
+        <div class="card-links">
+          <a class="link-btn link-btn--primary" href="listrenderer/listRendererDemo.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            View Demo
+          </a>
+        </div>
+      </div>
+
+      <div class="card card--list">
+        <div class="card-header">
+          <div class="card-title">List Renderer — Inline Editing</div>
+          <span class="card-tag">Editing Demo</span>
+        </div>
+        <p class="card-desc">
+          Extends the List Renderer with Excel-like inline cell editing.
+          Click any cell or navigate with keyboard shortcuts — Tab,
+          Shift+Tab, arrow keys, Home, End, and Enter — to move through
+          the grid. Supports optional "Add New Row" functionality.
+          A side-by-side comparison demo shows the difference between
+          grids with and without add-new enabled.
+        </p>
+        <div class="card-features">
+          <span class="chip">click-to-edit cells</span>
+          <span class="chip">keyboard navigation</span>
+          <span class="chip">add new row</span>
+          <span class="chip">side-by-side compare</span>
+        </div>
+        <div class="card-links">
+          <a class="link-btn link-btn--primary" href="listrenderer/listRendererEditingDemo.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            View Editing Demo
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Form Designer ───────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">02 — Form Designer</div>
+
+    <div class="cards">
+
+      <div class="card card--designer">
+        <div class="card-header">
+          <div class="card-title">Cyborg Designer</div>
+          <span class="card-tag">Visual IDE</span>
+        </div>
+        <p class="card-desc">
+          A drag-and-drop layout designer that outputs portable JSON
+          definitions. Design every aspect of a form — fields, sections,
+          validation, layout, and data types — through a tabbed visual
+          interface covering Application, Dashboard, Database Schema,
+          Form, Menu, Report, and AI Orchestration. Supports
+          <strong>unlimited field types</strong>: the architecture is
+          metadata-driven with callbacks, so you define your own types
+          without touching the designer core. The output JSON drives
+          both the Form Renderer and the List Renderer.
+        </p>
+        <div class="card-features">
+          <span class="chip">unlimited field types</span>
+          <span class="chip">drag &amp; drop</span>
+          <span class="chip">JSON output</span>
+          <span class="chip">multi-tab IDE</span>
+          <span class="chip">AI Orchestration tab</span>
+        </div>
+        <div class="card-links">
+          <a class="link-btn link-btn--primary" href="formdesigner/index.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+            Open Designer
+          </a>
+          <a class="link-btn link-btn--secondary" href="formdesigner/wiki/index.php">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Designer Wiki
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Form Renderer ────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">03 — Form Renderer</div>
+
+    <div class="cards">
+
+      <div class="card card--renderer">
+        <div class="card-header">
+          <div class="card-title">Form Renderer</div>
+          <span class="card-tag">Runtime Engine</span>
+        </div>
+        <p class="card-desc">
+          Takes a JSON form definition produced by Cyborg Designer and
+          renders it as a fully interactive HTML form at runtime — no
+          code changes needed. Ships with a comprehensive set of built-in
+          field types (textboxes, date pickers, GPS capture, barcode
+          scanners, rich HTML editors, code editors, charts, file uploads,
+          and more), and is <strong>designed to be extended</strong> —
+          register your own renderers for custom field types to match
+          whatever the designer sends down. Provides built-in validation,
+          data population, and a clean API for reading form values back
+          into your application.
+        </p>
+        <div class="card-features">
+          <span class="chip">extensible field types</span>
+          <span class="chip">validate + get data</span>
+          <span class="chip">test data population</span>
+          <span class="chip">connote / booking / tracking</span>
+        </div>
+        <div class="card-links">
+          <a class="link-btn link-btn--primary" href="formrenderer/formRendererDemo.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Open Demo
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  <footer>
+    <span class="footer-text">
+      <span class="footer-dot"></span>
+      &copy; 2026 Cyborg Unicorn Pty Ltd &mdash; MIT License
+    </span>
+    <span class="footer-links">
+      <a class="footer-link" href="https://github.com/PrimalNinja/cyborgdesigner" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+      <a class="footer-link" href="https://cyborgunicorn.com.au" target="_blank" rel="noopener">
+        cyborgunicorn.com.au
+      </a>
+    </span>
+  </footer>
+
+</div><!-- /wrapper -->
+
+</body>
+</html>

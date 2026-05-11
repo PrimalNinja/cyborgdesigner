@@ -1,5 +1,5 @@
-// CyborgDesigner v20251009
-// (c) 2025 Cyborg Unicorn Pty Ltd.
+// CyborgDesigner v20260512
+// (c) 2026 Cyborg Unicorn Pty Ltd.
 // This software is released under MIT License.
 
 // JQuery Usage is minimal and for most part easily mocked by cbElement if you don't want JQuery:
@@ -998,7 +998,10 @@ function cyborgDesigner(objOptions_a)
 					strContainerHtml += '<div class="gecd-layouteditor-field gscd-layouteditor-field" draggable="true" data-field-id="' + objChild.id + '">' +
 										'<span>' + objChild.caption + '</span>' +
 										'<span style="font-size:0.85em; color:#666;">' + buildDefaultDescription(objChild) + '</span>' +
-										'<span class="gecd-remove-btn gscd-remove-btn" data-field-id="' + objChild.id + '">×</span>' +
+										'<span class="gecd-field-actions">' +
+											'<span class="gecd-copy-btn gscd-copy-btn" data-field-id="' + objChild.id + '">⧉</span>' +
+											'<span class="gecd-remove-btn gscd-remove-btn" data-field-id="' + objChild.id + '">×</span>' +
+										'</span>' +
 										'</div>';
 				}
 			}
@@ -1185,6 +1188,7 @@ function cyborgDesigner(objOptions_a)
 
 		// Add remove button bindings
 		m_objOptions.cbElement(m_objOptions.layoutEditorTarget, '.gecd-remove-btn').on('click', onClick_Remove);
+		m_objOptions.cbElement(m_objOptions.layoutEditorTarget, '.gecd-copy-btn').on('click', onClick_CopyField);
 
 		// Click bindings
 		m_objOptions.cbElement(m_objOptions.layoutEditorTarget, '.gecd-vertical-header, .gecd-horizontal-header').on('click', onClick_ContainerHeader);
@@ -1352,25 +1356,37 @@ function cyborgDesigner(objOptions_a)
 			return objResult;
 		}
 
-		function renderMetaProperty(strPropertyName_a, strLabel_a, strValue_a, blnEditable_a)
+		function renderMetaProperty(strType_a, strPropertyName_a, strLabel_a, strValue_a, blnEditable_a)
 		{
 			var strMetaHtml = '';
 			var strSafeValue = strValue_a || '';
-			
+			var strType = strType_a || 'text';
+
 			strMetaHtml += '<div class="mb-3">';
 			strMetaHtml += '<label class="form-label" for="gecd-meta-' + strPropertyName_a + '">' + strLabel_a + '</label>';
-			
+
 			if (blnEditable_a)
 			{
-				strMetaHtml += '<input type="text" class="form-control gecd-meta-' + strPropertyName_a + '" data-prop-name="' + strPropertyName_a + '" value="' + strSafeValue + '">';
+				if (strType === 'checkbox')
+				{
+					var blnChecked = toBoolean(strSafeValue);
+					strMetaHtml += '<div class="form-check">';
+					strMetaHtml += '<input type="checkbox" class="form-check-input gecd-meta-' + strPropertyName_a + '" data-prop-name="' + strPropertyName_a + '"' + (blnChecked ? ' checked' : '') + '>';
+					strMetaHtml += '<label class="form-check-label">Yes / No</label>';
+					strMetaHtml += '</div>';
+				}
+				else
+				{
+					strMetaHtml += '<input type="text" class="form-control gecd-meta-' + strPropertyName_a + '" data-prop-name="' + strPropertyName_a + '" value="' + strSafeValue + '">';
+				}
 			}
 			else
 			{
 				strMetaHtml += '<input type="text" class="gscd-readonly form-control gecd-meta-' + strPropertyName_a + '" value="' + strSafeValue + '" readonly>';
 			}
-			
+
 			strMetaHtml += '</div>';
-			
+
 			return strMetaHtml;
 		}
 		
@@ -1617,25 +1633,22 @@ function cyborgDesigner(objOptions_a)
 			strHTML = '<form class="p-2" id="' + m_strPropertyLayout + '">';
 
 			// Render meta-properties first
-			if (objSelected.id !== undefined)
-			{
-				strHTML += renderMetaProperty('id', 'ID', objSelected.id, false);
-			}
+			var strSelectedID = objSelected.id || '';
+			strHTML += renderMetaProperty('textbox', 'id', 'ID', strSelectedID, false);
 			
-			if (objSelected.type !== undefined)
-			{
-				strHTML += renderMetaProperty('type', 'Type', objSelected.type, false);
-			}
+			var strSelectedType = objSelected.type || '';
+			strHTML += renderMetaProperty('textbox', 'type', 'Type', strSelectedType, false);
 			
-			if (objSelected.caption !== undefined)
-			{
-				strHTML += renderMetaProperty('caption', 'Caption', objSelected.caption, true);
-			}
+			var strSelectedCaption = objSelected.caption || '';
+			strHTML += renderMetaProperty('textbox', 'caption', 'Caption', strSelectedCaption, true);
+
+			var blnSelectedVisible = toBoolean(objSelected.visible);
+			strHTML += renderMetaProperty('checkbox', 'visible', 'Visible', blnSelectedVisible, true);
 			
 			// if (objSelected.container !== undefined)
 			// {
 				// var strContainerValue = objSelected.container ? 'Yes' : 'No';
-				// strHTML += renderMetaProperty('container', 'Container', strContainerValue, false);
+				// strHTML += renderMetaProperty('textbox', 'container', 'Container', strContainerValue, false);
 			// }
 
 			// Add separator if we have both meta-properties and schema properties
@@ -1670,15 +1683,20 @@ function cyborgDesigner(objOptions_a)
 					} 
 					else if (objProp.datatype === 'nativemultilinetextbox') 
 					{
-						strInputHtml = '<textarea class="form-control gecd-prop-' + strPropName + '" data-prop-name="' + strPropName + '">' + varValue + '</textarea>';
+						var intRows = objProp.lines | 0;
+						intRows = parseInt(intRows, 10);
+						if (intRows > 0)
+						{
+							strInputHtml = '<textarea class="form-control gecd-prop-' + strPropName + '" data-prop-name="' + strPropName + '" rows="' + intRows + '">' + varValue + '</textarea>';
+						}
+						else
+						{
+							strInputHtml = '<textarea class="form-control gecd-prop-' + strPropName + '" data-prop-name="' + strPropName + '">' + varValue + '</textarea>';
+						}
 					} 
 					else if (objProp.datatype === 'nativeyesno') 
 					{
-						blnChecked = false;
-						if (varValue === true || varValue === 'yes' || varValue === 'true' || varValue === 1 || varValue === '1') 
-						{
-							blnChecked = true;
-						}
+						blnChecked = toBoolean(varValue);
 						strInputHtml = '<div class="form-check">' +
 									  '<input type="checkbox" class="form-check-input gecd-prop-' + strPropName + '" data-prop-name="' + strPropName + '"';
 						if (blnChecked) 
@@ -1817,6 +1835,37 @@ function cyborgDesigner(objOptions_a)
 	}
    
     // event handler helpers
+
+	function onClick_CopyField(objEvent_a)
+	{
+		objEvent_a.preventDefault();
+		objEvent_a.stopPropagation();
+
+		var strFieldID = m_objOptions.cbElement(this).attr('data-field-id');
+		if (!strFieldID) { return; }
+
+		var objParent = findParentContainerOfField(strFieldID);
+		if (!objParent) { return; }
+
+		var intIndex = -1;
+		for (var intI = 0; intI < objParent.children.length; intI++)
+		{
+			if (objParent.children[intI].id === strFieldID)
+			{
+				intIndex = intI;
+				break;
+			}
+		}
+
+		if (intIndex === -1) { return; }
+
+		var objCopy = JSON.parse(JSON.stringify(objParent.children[intIndex]));
+		objCopy.id      = getGUID('field-');
+		objCopy.caption = 'Copy of ' + objCopy.caption;
+
+		objParent.children.splice(intIndex + 1, 0, objCopy);
+		renderLayout();
+	}
 
 	function onClick_RemoveContainer(strContainerID_a) 
 	{
@@ -2269,6 +2318,7 @@ function cyborgDesigner(objOptions_a)
 					{
 						id: getGUID('section-'),
 						caption: objContainer.caption,
+						visible: false,
 						containers: [],
 						fields: []
 					};
@@ -2609,6 +2659,7 @@ function cyborgDesigner(objOptions_a)
 							{
 								id: getGUID('section-'),
 								caption: objContainer.caption,
+								visible: false,
 								containers: [],
 								fields: []
 							};
@@ -2806,6 +2857,7 @@ function cyborgDesigner(objOptions_a)
 				{
 					id: getGUID('section-'),
 					caption: objContainer.caption,
+					visible: false,
 					containers: [],
 					fields: []
 				};
@@ -2893,6 +2945,7 @@ function cyborgDesigner(objOptions_a)
 				{
 					id: getGUID('section-'),
 					caption: objContainer.caption,
+					visible: false,
 					containers: [],
 					fields: []
 				};
@@ -2997,6 +3050,7 @@ function cyborgDesigner(objOptions_a)
 					{
 						id: getGUID('section-'),
 						caption: objContainer.caption,
+						visible: false,
 						containers: [],
 						fields: []
 					};
@@ -3388,6 +3442,7 @@ function cyborgDesigner(objOptions_a)
 				var objNewSection = {
 					id: getGUID('section-'),
 					caption: objContainerType.caption,
+					visible: false,
 					containers: [],
 					fields: []
 				};

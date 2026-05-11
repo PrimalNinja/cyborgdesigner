@@ -31,3 +31,9 @@ function getGUID(strPrefix_a)
 	}
 	);
 }
+
+function toBoolean(strValue_a)
+{
+	return (strValue_a === 'yes' || strValue_a === 'true' || strValue_a === '1' || strValue_a === true);
+}
+

@@ -5,6 +5,7 @@ var objFormConnote = [
     {
         "id": "section-connote-header",
         "caption": "Form Header",
+        "visible": false,
         "containers": [
             {
                 "id": "container-connote-header",
@@ -12,6 +13,7 @@ var objFormConnote = [
                 "caption": "Form Header Container",
                 "name": "FORMHEADER",
                 "label": "Form Header",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-connote-entity",
@@ -20,6 +22,7 @@ var objFormConnote = [
                         "label": "Entity Name",
                         "name": "ENTITYNAME",
                         "value": "Connote",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -29,6 +32,7 @@ var objFormConnote = [
                         "label": "Form Version",
                         "name": "FORMVERSION",
                         "value": "1",
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -38,6 +42,7 @@ var objFormConnote = [
     {
         "id": "section-connote-basic",
         "caption": "Connote Details",
+        "visible": true,
         "containers": [
             {
                 "id": "container-connote-basic",
@@ -45,6 +50,7 @@ var objFormConnote = [
                 "caption": "Basic Information",
                 "name": "CONNOTEBASIC",
                 "label": "Connote Information",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-connote-number",
@@ -52,8 +58,9 @@ var objFormConnote = [
                         "caption": "Connote Number",
                         "label": "Connote Number",
                         "name": "CONNOTENUMBER",
-                        "required": "yes",
-                        "readonly": "yes",
+                        "required": true,
+                        "readonly": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -62,7 +69,8 @@ var objFormConnote = [
                         "caption": "Connote Date",
                         "label": "Connote Date",
                         "name": "CONNOTEDATE",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -71,6 +79,7 @@ var objFormConnote = [
                         "caption": "Customer Reference",
                         "label": "Customer Reference",
                         "name": "CUSTOMERREFERENCE",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -79,9 +88,10 @@ var objFormConnote = [
                         "caption": "Carrier",
                         "label": "Carrier",
                         "name": "CARRIERCODE",
-                        "required": "yes",
+                        "required": true,
                         "datasource": "Carriers",
                         "datafilter": "ISENABLED=yes",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -90,9 +100,10 @@ var objFormConnote = [
                         "caption": "Service",
                         "label": "Service",
                         "name": "SERVICECODE",
-                        "required": "yes",
+                        "required": true,
                         "datasource": "Services",
                         "datafilter": "CARRIERCODE={CARRIERCODE} AND ISENABLED=yes",
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -102,18 +113,21 @@ var objFormConnote = [
     {
         "id": "section-connote-parties",
         "caption": "Parties",
+        "visible": true,
         "containers": [
             {
                 "id": "container-connote-parties",
                 "type": "horizontalcontainer",
                 "caption": "Sender and Receiver",
                 "name": "CONNOTEPARTIES",
+                "visible": true,
                 "children": [
                     {
                         "id": "container-connote-sender",
                         "type": "verticalcontainer",
                         "caption": "Sender",
                         "name": "CONNOTESENDER",
+                        "visible": true,
                         "children": [
                             {
                                 "id": "field-connote-sendercode",
@@ -121,9 +135,10 @@ var objFormConnote = [
                                 "caption": "Sender",
                                 "label": "Sender",
                                 "name": "SENDERCODE",
-                                "required": "yes",
+                                "required": true,
                                 "datasource": "Senders",
                                 "datafilter": "ISENABLED=yes",
+                                "visible": true,
                                 "container": false
                             }
                         ]
@@ -133,6 +148,7 @@ var objFormConnote = [
                         "type": "verticalcontainer",
                         "caption": "Receiver",
                         "name": "CONNOTERECEIVER",
+                        "visible": true,
                         "children": [
                             {
                                 "id": "field-connote-receivercode",
@@ -140,9 +156,10 @@ var objFormConnote = [
                                 "caption": "Receiver",
                                 "label": "Receiver",
                                 "name": "RECEIVERCODE",
-                                "required": "yes",
+                                "required": true,
                                 "datasource": "Receivers",
                                 "datafilter": "ISENABLED=yes",
+                                "visible": true,
                                 "container": false
                             }
                         ]
@@ -154,6 +171,7 @@ var objFormConnote = [
     {
         "id": "section-connote-payment",
         "caption": "Payment Details",
+        "visible": true,
         "containers": [
             {
                 "id": "container-connote-payment",
@@ -161,6 +179,7 @@ var objFormConnote = [
                 "caption": "Payment Information",
                 "name": "CONNOTEPAYMENT",
                 "label": "Payment",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-connote-paymenttype",
@@ -168,7 +187,8 @@ var objFormConnote = [
                         "caption": "Payment Type",
                         "label": "Payment Type",
                         "name": "PAYMENTTYPE",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "options": [
                             {
                                 "value": "SENDER",
@@ -194,6 +214,7 @@ var objFormConnote = [
                         "caption": "Freight Charge",
                         "label": "Freight Charge",
                         "name": "FREIGHTCHARGE",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -202,6 +223,7 @@ var objFormConnote = [
                         "caption": "Fuel Levy",
                         "label": "Fuel Levy",
                         "name": "FUELLEVY",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -210,7 +232,8 @@ var objFormConnote = [
                         "caption": "Total Charge",
                         "label": "Total Charge",
                         "name": "TOTALCHARGE",
-                        "readonly": "yes",
+                        "readonly": true,
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -220,6 +243,7 @@ var objFormConnote = [
     {
         "id": "section-connote-items",
         "caption": "Items",
+        "visible": true,
         "containers": [
             {
                 "id": "container-connote-items",
@@ -227,6 +251,7 @@ var objFormConnote = [
                 "caption": "Item Details",
                 "name": "CONNOTEITEMS",
                 "label": "Items",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-connote-pieces",
@@ -234,7 +259,8 @@ var objFormConnote = [
                         "caption": "Number of Pieces",
                         "label": "Number of Pieces",
                         "name": "NUMBEROFPIECES",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -243,7 +269,8 @@ var objFormConnote = [
                         "caption": "Total Weight (kg)",
                         "label": "Total Weight (kg)",
                         "name": "TOTALWEIGHT",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -252,6 +279,7 @@ var objFormConnote = [
                         "caption": "Total Volume (m³)",
                         "label": "Total Volume (m³)",
                         "name": "TOTALVOLUME",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -260,7 +288,8 @@ var objFormConnote = [
                         "caption": "Item Description",
                         "label": "Item Description",
                         "name": "ITEMDESCRIPTION",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -269,6 +298,7 @@ var objFormConnote = [
                         "caption": "Dangerous Goods?",
                         "label": "Dangerous Goods?",
                         "name": "ISDANGEROUS",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -277,6 +307,7 @@ var objFormConnote = [
                         "caption": "Special Instructions",
                         "label": "Special Instructions",
                         "name": "SPECIALINSTRUCTIONS",
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -286,6 +317,7 @@ var objFormConnote = [
     {
         "id": "section-connote-status",
         "caption": "Status",
+        "visible": true,
         "containers": [
             {
                 "id": "container-connote-status",
@@ -293,6 +325,7 @@ var objFormConnote = [
                 "caption": "Status Information",
                 "name": "CONNOTESTATUS",
                 "label": "Status",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-connote-status",
@@ -300,8 +333,9 @@ var objFormConnote = [
                         "caption": "Status",
                         "label": "Status",
                         "name": "STATUS",
-                        "required": "yes",
+                        "required": true,
                         "value": "CREATED",
+                        "visible": true,
                         "options": [
                             {
                                 "value": "CREATED",
@@ -346,6 +380,7 @@ var objFormBooking = [
     {
         "id": "section-form-header",
         "caption": "Form Header",
+        "visible": false,
         "containers": [
             {
                 "id": "container-form-header",
@@ -353,6 +388,7 @@ var objFormBooking = [
                 "caption": "Form Header Container",
                 "name": "FORMHEADER",
                 "label": "Form Header",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-entity-name",
@@ -361,6 +397,7 @@ var objFormBooking = [
                         "label": "Entity Name",
                         "name": "ENTITYNAME",
                         "value": "Software Agency",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -370,6 +407,7 @@ var objFormBooking = [
                         "label": "Form Version",
                         "name": "FORMVERSION",
                         "value": "1",
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -379,6 +417,7 @@ var objFormBooking = [
     {
         "id": "section-agency-info",
         "caption": "Agency Information",
+        "visible": true,
         "containers": [
             {
                 "id": "container-agency-info",
@@ -386,6 +425,7 @@ var objFormBooking = [
                 "caption": "Agency Information Container",
                 "name": "AGENCYINFO",
                 "label": "Agency Information",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-agency-name",
@@ -393,7 +433,8 @@ var objFormBooking = [
                         "caption": "Agency Name",
                         "label": "Agency Name",
                         "name": "AGENCYNAME",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -402,6 +443,7 @@ var objFormBooking = [
                         "caption": "ABN",
                         "label": "ABN",
                         "name": "ABN",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -410,6 +452,7 @@ var objFormBooking = [
                         "caption": "ACN",
                         "label": "ACN",
                         "name": "ACN",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -418,6 +461,7 @@ var objFormBooking = [
                         "caption": "Email",
                         "label": "Email",
                         "name": "EMAIL",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -426,6 +470,7 @@ var objFormBooking = [
                         "caption": "Phone",
                         "label": "Phone",
                         "name": "PHONE",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -434,6 +479,7 @@ var objFormBooking = [
                         "caption": "Mobile",
                         "label": "Mobile",
                         "name": "MOBILE",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -442,6 +488,7 @@ var objFormBooking = [
                         "caption": "Website",
                         "label": "Website",
                         "name": "WEBSITE",
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -451,6 +498,7 @@ var objFormBooking = [
     {
         "id": "section-project-details",
         "caption": "Project Details",
+        "visible": true,
         "containers": [
             {
                 "id": "container-project-details",
@@ -458,6 +506,7 @@ var objFormBooking = [
                 "caption": "Project Details Container",
                 "name": "PROJECTDETAILS",
                 "label": "Project Details",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-project-name",
@@ -465,7 +514,8 @@ var objFormBooking = [
                         "caption": "Project Name",
                         "label": "Project Name",
                         "name": "PROJECTNAME",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -474,6 +524,7 @@ var objFormBooking = [
                         "caption": "Project Description",
                         "label": "Project Description",
                         "name": "PROJECTDESCRIPTION",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -482,6 +533,7 @@ var objFormBooking = [
                         "caption": "Start Date",
                         "label": "Start Date",
                         "name": "STARTDATE",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -490,6 +542,7 @@ var objFormBooking = [
                         "caption": "End Date",
                         "label": "End Date",
                         "name": "ENDDATE",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -498,6 +551,7 @@ var objFormBooking = [
                         "caption": "Project Manager",
                         "label": "Project Manager",
                         "name": "PROJECTMANAGER",
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -507,6 +561,7 @@ var objFormBooking = [
     {
         "id": "section-client-info",
         "caption": "Client Information",
+        "visible": true,
         "containers": [
             {
                 "id": "container-client-info",
@@ -514,6 +569,7 @@ var objFormBooking = [
                 "caption": "Client Information Container",
                 "name": "CLIENTINFO",
                 "label": "Client Information",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-client-name",
@@ -521,7 +577,8 @@ var objFormBooking = [
                         "caption": "Client Name",
                         "label": "Client Name",
                         "name": "CLIENTNAME",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -530,6 +587,7 @@ var objFormBooking = [
                         "caption": "Client Email",
                         "label": "Client Email",
                         "name": "CLIENTEMAIL",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -538,6 +596,7 @@ var objFormBooking = [
                         "caption": "Client Phone",
                         "label": "Client Phone",
                         "name": "CLIENTPHONE",
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -547,6 +606,7 @@ var objFormBooking = [
     {
         "id": "section-form-actions",
         "caption": "Form Actions",
+        "visible": true,
         "containers": [
             {
                 "id": "container-form-actions",
@@ -554,6 +614,7 @@ var objFormBooking = [
                 "caption": "Form Actions Container",
                 "name": "FORMACTIONS",
                 "label": "Form Actions",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-submit",
@@ -561,6 +622,7 @@ var objFormBooking = [
                         "caption": "Submit",
                         "label": "Submit",
                         "name": "SUBMIT",
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -573,6 +635,7 @@ var objFormTracking = [
     {
         "id": "section-tracking-header",
         "caption": "Form Header",
+        "visible": false,
         "containers": [
             {
                 "id": "container-tracking-header",
@@ -580,6 +643,7 @@ var objFormTracking = [
                 "caption": "Form Header Container",
                 "name": "FORMHEADER",
                 "label": "Form Header",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-tracking-entity",
@@ -588,6 +652,7 @@ var objFormTracking = [
                         "label": "Entity Name",
                         "name": "ENTITYNAME",
                         "value": "Tracking",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -597,6 +662,7 @@ var objFormTracking = [
                         "label": "Form Version",
                         "name": "FORMVERSION",
                         "value": "1",
+                        "visible": true,
                         "container": false
                     }
                 ]
@@ -606,6 +672,7 @@ var objFormTracking = [
     {
         "id": "section-tracking-data",
         "caption": "Tracking Information",
+        "visible": true,
         "containers": [
             {
                 "id": "container-tracking-basic",
@@ -613,6 +680,7 @@ var objFormTracking = [
                 "caption": "Basic Information",
                 "name": "TRACKINGBASIC",
                 "label": "Tracking Details",
+                "visible": true,
                 "children": [
                     {
                         "id": "field-tracking-id",
@@ -620,8 +688,9 @@ var objFormTracking = [
                         "caption": "Tracking ID",
                         "label": "Tracking ID",
                         "name": "TRACKINGID",
-                        "required": "yes",
-                        "readonly": "yes",
+                        "required": true,
+                        "readonly": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -630,7 +699,8 @@ var objFormTracking = [
                         "caption": "Connote Number",
                         "label": "Connote Number",
                         "name": "CONNOTENUMBER",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -639,7 +709,8 @@ var objFormTracking = [
                         "caption": "Date/Time",
                         "label": "Date/Time",
                         "name": "TRACKINGDATETIME",
-                        "required": "yes",
+                        "required": true,
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -648,6 +719,7 @@ var objFormTracking = [
                         "caption": "Location",
                         "label": "Location",
                         "name": "LOCATION",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -656,6 +728,7 @@ var objFormTracking = [
                         "caption": "Notes",
                         "label": "Notes",
                         "name": "TRACKINGNOTES",
+                        "visible": true,
                         "container": false
                     },
                     {
@@ -664,6 +737,7 @@ var objFormTracking = [
                         "caption": "GPS Coordinates",
                         "label": "GPS Coordinates",
                         "name": "GPSCOORDINATES",
+                        "visible": true,
                         "container": false
                     }
                 ]

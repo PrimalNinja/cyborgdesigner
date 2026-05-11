@@ -14,4 +14,13 @@ Designed to be meta-data driven using JSON objects with callbacks for renderers.
 
 Live demonstration at https://cyborgunicorn.com.au
 
+# Cyborg App Builder v20260512
+
+Cyborg App Builder is a JavaScript-based application builder, a work in progress demonstrating:
+
+- CyborgDesigner
+- Basic Windowing
+
+Designed to be GUI/data driven with minimal code and infrastructure.
+
 - Julian
