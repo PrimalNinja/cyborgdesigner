@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Text Editor - Complete Demo</title>
+    <link href="3p/bootstrap.min.css" rel="stylesheet">
+    <link href="textEditorDemo.css" rel="stylesheet">
+    <link href="textEditor.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>Text Editor - Complete Demo</h1>
+        <p>All modes: TEXTAREA, INPUT, RICH, CODE, READONLY</p>
+
+        <div class="row">
+            <!-- TEXTAREA Mode -->
+            <div class="col-md-6">
+                <div class="gs-demo-container">
+                    <div class="gs-demo-title">📝 TEXTAREA Mode</div>
+                    <div class="gs-demo-subtitle">Multi-line text with load/save</div>
+                    <div id="demo-textarea"></div>
+                    <button class="btn btn-sm btn-primary mt-2" onclick="alert(demoTextarea.getValue())">Get Value</button>
+                </div>
+            </div>
+
+            <!-- INPUT Mode -->
+            <div class="col-md-6">
+                <div class="gs-demo-container">
+                    <div class="gs-demo-title">📌 INPUT Mode</div>
+                    <div class="gs-demo-subtitle">Single line input</div>
+                    <div id="demo-input"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- RICH Mode -->
+            <div class="col-md-6">
+                <div class="gs-demo-container">
+                    <div class="gs-demo-title">✨ RICH Mode</div>
+                    <div class="gs-demo-subtitle">Bold/Italic formatting with toolbar</div>
+                    <div id="demo-rich"></div>
+                </div>
+            </div>
+
+            <!-- CODE Mode -->
+            <div class="col-md-6">
+                <div class="gs-demo-container">
+                    <div class="gs-demo-title">💻 CODE Mode</div>
+                    <div class="gs-demo-subtitle">Syntax highlighting base, line numbers, format</div>
+                    <div id="demo-code"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- READONLY Mode -->
+            <div class="col-md-6">
+                <div class="gs-demo-container">
+                    <div class="gs-demo-title">🔒 READONLY Mode</div>
+                    <div class="gs-demo-subtitle">Textarea that cannot be edited</div>
+                    <div id="demo-readonly"></div>
+                </div>
+            </div>
+
+            <!-- JSON Editor -->
+            <div class="col-md-6">
+                <div class="gs-demo-container">
+                    <div class="gs-demo-title">📋 JSON Editor</div>
+                    <div class="gs-demo-subtitle">Code mode with JSON validation callback</div>
+                    <div id="demo-json"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="3p/jquery-3.7.1.min.js"></script>
+    <script src="textEditor.js"></script>
+    <script src="textEditorDemo.js"></script>
+</body>
+</html>
