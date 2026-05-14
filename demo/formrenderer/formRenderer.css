@@ -396,3 +396,10 @@
     color: #6c757d;
     font-size: 0.875rem;
 }
+
+/* Separator */
+.gs-form-separator {
+    border: none;
+    border-top: 1px solid var(--gs-border, #334155);
+    margin: 12px 0;
+}

@@ -17,6 +17,7 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
     var m_cbOnChange = m_objParameters.onChange || null;
     var m_cbOnValidate = m_objParameters.onValidate || null;
     var m_cbOnOperation = m_objParameters.onOperation || null;
+    var m_cbOnBrowse = m_objParameters.cbOnBrowse || null;
 
     // State
     var m_objData = {};
@@ -479,6 +480,38 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         return strHTML;
     }
 
+    function renderField_Folder(objField_a, strContainerName_a)
+    {
+        var strHTML       = '';
+        var strFieldClass = makeFieldClass(strContainerName_a, objField_a.name);
+        var strClasses    = htmlEncode(objField_a.classes || '');
+        var strValue      = htmlEncode(objField_a.value || '');
+        var blnReadOnly   = objField_a.readonly || false;
+
+        strHTML += '<div class="gscr-field-group">';
+        strHTML += '  <label class="gscr-label">' + htmlEncode(objField_a.caption || objField_a.label || '') + '</label>';
+        strHTML += '  <div class="gscr-input-group">';
+        strHTML += '    <input type="text" ';
+        strHTML += '      class="ge-input ge-folder ' + strFieldClass + ' form-control ' + strClasses + '" ';
+        strHTML += '      name="' + htmlEncode(getFullName(strContainerName_a, objField_a.name)) + '" ';
+        strHTML += '      value="' + strValue + '" ';
+        strHTML += '      placeholder="Folder path..." ';
+        strHTML += '      data-fieldname="' + htmlEncode(objField_a.name) + '" ';
+        strHTML += '      data-containername="' + htmlEncode(strContainerName_a) + '" ';
+        if (blnReadOnly)
+        {
+            strHTML += '      readonly ';
+        }
+        strHTML += '    />';
+        strHTML += '    <div class="gscr-input-group-append">';
+        strHTML += '      <button class="ge-folder-browse btn btn-outline-secondary" type="button" data-fieldclass="' + strFieldClass + '" data-classes="' + htmlEncode(strClasses) + '">Browse</button>';
+        strHTML += '    </div>';
+        strHTML += '  </div>';
+        strHTML += '</div>';
+
+        return strHTML;
+    }
+
     function renderField_ToolbarButton(objField_a)
     {
         var strHTML      = '';
@@ -540,6 +573,12 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
                     break;
                 case 'toolbarbutton':
                     strHTML = renderField_ToolbarButton(objField_a);
+                    break;
+                case 'folder':
+                    strHTML = renderField_Folder(objField_a, strContainerName_a);
+                    break;
+                case 'separator':
+                    strHTML = '<hr class="gs-form-separator">';
                     break;
                 default:
                     strHTML = renderField_Textbox(objField_a, strContainerName_a);
@@ -693,7 +732,7 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
 	
 		for (intI = 0; intI < m_arrLayoutSections.length; intI++)
 		{
-			if (toBoolean(m_arrLayoutSections[intI].visible) && m_arrLayoutSections[intI].type !== 'toolbar')
+			if ((m_arrLayoutSections[intI].visible === undefined || toBoolean(m_arrLayoutSections[intI].visible)) && m_arrLayoutSections[intI].type !== 'toolbar')
 			{ 
 				intVisibleCount++; 
 			}
@@ -702,7 +741,7 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
         for (intI = 0; intI < m_arrLayoutSections.length; intI++)
         {
             var objSection = m_arrLayoutSections[intI];
-			if (toBoolean(objSection.visible))
+			if (objSection.visible === undefined || toBoolean(objSection.visible))
 			{
 				if (objSection.type === 'toolbar')
 				{
@@ -756,6 +795,23 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
             getGPSLocation(strFieldClass);
         });
         
+        // Bind Folder browse button clicks
+        os.element('#' + m_strFormID, '.ge-folder-browse').on('click', function()
+        {
+            var strFieldClass = os.element(this).attr('data-fieldclass');
+            var strClasses = os.element(this).attr('data-classes') || '';
+
+            if (m_cbOnBrowse && typeof m_cbOnBrowse === 'function')
+            {
+                var strPath = m_cbOnBrowse(strFieldClass, strClasses);
+                if (strPath && strPath.length > 0)
+                {
+                    os.element('#' + m_strFormID, '.' + strFieldClass).val(strPath);
+                    setDirty(true);
+                }
+            }
+        });
+
         // Bind Document browse button clicks
         os.element('#' + m_strFormID, '.ge-document-browse').on('click', function()
         {
@@ -1005,7 +1061,7 @@ function formRenderer(objOS_a, strFormID_a, objParameters_a)
 				{
 					traverseChildren(objField.children, strContainerName_a);
 				}
-				else if (objField.type !== 'button' && objField.type !== 'heading' && toBoolean(objField.required))
+				else if (objField.type !== 'button' && objField.type !== 'heading' && objField.type !== 'separator' && toBoolean(objField.required))
 				{
 					var objElement = findFieldElement(strContainerName_a, objField.name);
 
